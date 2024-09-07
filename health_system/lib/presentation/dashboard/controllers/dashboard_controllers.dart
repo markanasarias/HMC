@@ -2,7 +2,9 @@ import 'package:get/get.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class DashboardController extends GetxController {
+  var loading = true.obs;
   // Observable list of PatientData
+
   RxList<PatientData> patientData = <PatientData>[].obs;
 
   // Columns for PlutoGrid
@@ -50,6 +52,16 @@ class DashboardController extends GetxController {
     super.onInit();
     // Initialize patient data
     fetchPatientData();
+
+    Future.delayed(Duration(seconds: 1), () {
+      loadings();
+    });
+  }
+
+  Future<void> loadings() async {
+    print('false');
+    loading.value = false;
+    print(loading.value);
   }
 
   void fetchPatientData() {

@@ -88,7 +88,7 @@ class TextStyles {
     decoration: TextDecoration.none,
     decorationColor: Colors.black,
     fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w500).fontFamily,
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: FontWeight.w500,
     color: Colors.black,
     overflow: TextOverflow.visible,
@@ -117,6 +117,33 @@ class TextStyles {
     fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w500).fontFamily,
     fontSize: 20,
     fontWeight: FontWeight.w500,
+    color: Colors.black,
+    overflow: TextOverflow.visible,
+  );
+  static final TextStyle AppBartext = TextStyle(
+    decoration: TextDecoration.none,
+    decorationColor: Colors.black,
+    fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w500).fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+    overflow: TextOverflow.visible,
+  );
+  static final TextStyle tabletext = TextStyle(
+    decoration: TextDecoration.none,
+    decorationColor: Colors.black,
+    fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.normal).fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.normal,
+    color: Colors.black,
+    overflow: TextOverflow.visible,
+  );
+  static final TextStyle Tableloc = TextStyle(
+    decoration: TextDecoration.none,
+    decorationColor: Colors.black,
+    fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.normal).fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.normal,
     color: Colors.black,
     overflow: TextOverflow.visible,
   );

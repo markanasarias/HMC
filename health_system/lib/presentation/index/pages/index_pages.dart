@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
+import 'package:health_system/presentation/appointment/pages/appointment_list_pages.dart';
+import 'package:health_system/presentation/calendar/pages/calendar_list_pages.dart';
 import 'package:health_system/presentation/dashboard/pages/dashaboard_pages.dart';
+import 'package:health_system/presentation/doctor/pages/doctor_list_pages.dart';
 import 'package:health_system/presentation/index/controllers/index_controller.dart';
-import 'package:health_system/presentation/patient/pages/patient_pages.dart';
+import 'package:health_system/presentation/inventory/pages/invertory_list_pages.dart';
+import 'package:health_system/presentation/logs/pages/logs_list_pages.dart';
+import 'package:health_system/presentation/patient/pages/patient_list_pages.dart';
+import 'package:health_system/presentation/services/pages/services_list_pages.dart';
+import 'package:health_system/presentation/staff/pages/staff_list_pages.dart';
 
 class Index extends StatelessWidget {
   @override
@@ -30,21 +37,17 @@ class Index extends StatelessWidget {
                 title: Column(
                   children: [
                     Container(
-                      color: Colors.blue,
-                      height: 56,
+                      color: Colors.white,
+                      height: 20,
                     ),
                     ConstrainedBox(
                       constraints: const BoxConstraints(
-                        maxHeight: 150,
-                        maxWidth: 150,
+                        maxHeight: 85,
+                        maxWidth: 85,
                       ),
                       child: Image.asset(
-                        'assets/logo.jpg',
+                        'assets/logo.png',
                       ),
-                    ),
-                    const Divider(
-                      indent: 8.0,
-                      endIndent: 8.0,
                     ),
                   ],
                 ),
@@ -90,6 +93,13 @@ class Index extends StatelessWidget {
                     icon: const Icon(Icons.person_outline_outlined),
                   ),
                   SideMenuItem(
+                    title: 'Appointment',
+                    onTap: (index, _) {
+                      controller.changePage(index);
+                    },
+                    icon: const Icon(Icons.person_outline_outlined),
+                  ),
+                  SideMenuItem(
                     title: 'Calendar',
                     onTap: (index, _) {
                       controller.changePage(index);
@@ -117,18 +127,6 @@ class Index extends StatelessWidget {
                     },
                     icon: const Icon(Icons.list_alt_outlined),
                   ),
-                  SideMenuItem(
-                    builder: (context, displayMode) {
-                      return const Divider(
-                        endIndent: 8,
-                        indent: 8,
-                      );
-                    },
-                  ),
-                  const SideMenuItem(
-                    title: 'Logout',
-                    icon: Icon(Icons.exit_to_app),
-                  ),
                 ],
               )),
           const VerticalDivider(
@@ -139,7 +137,14 @@ class Index extends StatelessWidget {
                   controller: controller.pageController.value,
                   children: [
                     DashboardPages(),
-                    PatientPages(),
+                    PatientListPages(),
+                    DoctorListPages(),
+                    StaffListPages(),
+                    AppointmentListPages(),
+                    CalendarListPages(),
+                    InvertoryListPages(),
+                    ServicesListPages(),
+                    LogsListPages()
                   ],
                 )),
           ),
