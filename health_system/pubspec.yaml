@@ -9,6 +9,7 @@ environment:
 dependencies:
   calendar_view: ^1.2.0
   cell_calendar: ^0.8.0
+  dotted_border: ^2.1.0
   dropdown_button2: ^2.3.9
   easy_sidemenu: ^0.6.0
   expandable_datatable: ^0.0.7
@@ -23,6 +24,7 @@ dependencies:
   syncfusion_flutter_calendar: ^26.2.13
   syncfusion_flutter_charts: ^26.2.11
   syncfusion_flutter_datagrid: ^26.2.11
+  toastification: ^2.2.0
 
 dev_dependencies:
   flutter_test:

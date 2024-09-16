@@ -3,6 +3,7 @@ import 'package:health_system/presentation/patient/pages/patient_add_pages.dart'
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:health_system/widget/success.dart';
 
 class PatientListPages extends StatelessWidget {
   const PatientListPages({super.key});
@@ -66,7 +67,7 @@ class PatientListPages extends StatelessWidget {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 500,
+                height: 475,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.white,
@@ -91,7 +92,8 @@ class PatientListPages extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               print('add');
-                              AddPatient();
+                              AddPatient(context);
+                            
                             },
                             child: Container(
                               width: 100,
@@ -142,7 +144,7 @@ class PatientListPages extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width,
@@ -239,7 +241,8 @@ class PatientListPages extends StatelessWidget {
                               height: 5,
                             ),
                             Expanded(
-                              child: ListView.builder(
+                              child:
+                               ListView.builder(
                                 itemCount: patients.length,
                                 itemBuilder: (context, index) {
                                   final patient = patients[index];
@@ -333,14 +336,15 @@ class PatientListPages extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
-                      ),
+                        height: 10,
+                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
+                       
+                           Container(
                             width: 50,
-                            height: 40,
+                            height: 30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white,
@@ -376,7 +380,7 @@ class PatientListPages extends StatelessWidget {
                           ),
                           Container(
                             width: 50,
-                            height: 40,
+                            height: 30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white,

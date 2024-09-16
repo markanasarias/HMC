@@ -63,9 +63,9 @@ class AppointmentListPages extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Container(
+                 Container(
                 width: MediaQuery.of(context).size.width,
-                height: 500,
+                height: 475,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.white,
@@ -90,6 +90,8 @@ class AppointmentListPages extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               print('add');
+                              //AddPatient(context);
+                             
                             },
                             child: Container(
                               width: 100,
@@ -140,7 +142,7 @@ class AppointmentListPages extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width,
@@ -331,14 +333,15 @@ class AppointmentListPages extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
-                      ),
+                        height: 10,
+                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
+                       
+                           Container(
                             width: 50,
-                            height: 40,
+                            height: 30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white,
@@ -374,7 +377,7 @@ class AppointmentListPages extends StatelessWidget {
                           ),
                           Container(
                             width: 50,
-                            height: 40,
+                            height: 30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white,

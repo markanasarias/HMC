@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/presentation/inventory/pages/inventory_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,9 +64,9 @@ class InvertoryListPages extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Container(
+                Container(
                 width: MediaQuery.of(context).size.width,
-                height: 500,
+                height: 475,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.white,
@@ -90,6 +91,8 @@ class InvertoryListPages extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               print('add');
+                              AddInventory(context);
+                      
                             },
                             child: Container(
                               width: 100,
@@ -108,7 +111,7 @@ class InvertoryListPages extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Add Patient',
+                                  'Add Inventory',
                                   style: TextStyles.Textwhite,
                                 ),
                               ),
@@ -140,7 +143,7 @@ class InvertoryListPages extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width,
@@ -331,14 +334,15 @@ class InvertoryListPages extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
-                      ),
+                        height: 10,
+                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
+                       
+                           Container(
                             width: 50,
-                            height: 40,
+                            height: 30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white,
@@ -374,7 +378,7 @@ class InvertoryListPages extends StatelessWidget {
                           ),
                           Container(
                             width: 50,
-                            height: 40,
+                            height: 30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white,

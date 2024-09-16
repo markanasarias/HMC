@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:health_system/presentation/patient/controllers/patient_controllers.dart';
-import 'package:health_system/presentation/patient/forms/epi_form.dart';
-import 'package:health_system/widget/loading_form.dart';
 import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 
-void AddPatient(BuildContext context) {
+void EPIFORM(BuildContext context) {
    final PatientControllers controller = Get.put(PatientControllers());
   showDialog(
     context: context,
-      barrierDismissible: false,
     builder: (BuildContext context) {
       return Dialog(
         shape: RoundedRectangleBorder(
@@ -35,7 +30,7 @@ void AddPatient(BuildContext context) {
                ),
                color: Colors.blue,
              ),
-             child: Padding(padding: EdgeInsets.only(left: 20, top: 12), child: Text('Add New Patient', style: TextStyles.Text4,),),
+             child: Padding(padding: EdgeInsets.only(left: 20, top: 12), child: Text('EPI FORM', style: TextStyles.Text4,),),
              ),
           //     SizedBox(
           //   height: 30,
@@ -80,7 +75,7 @@ void AddPatient(BuildContext context) {
                     right: 30,
                   ),
                   child: Text(
-                    'Middle Name (optional)',
+                    'Middle Name',
                     style: TextStyles.Text,
                   ),
                 ),
@@ -91,12 +86,11 @@ void AddPatient(BuildContext context) {
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               children: [
-                //lastname
                 SizedBox(
                   width: 185,
                     height: 35,
                   child: CupertinoTextField(
-                    padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     style: TextStyles.Text,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
@@ -105,12 +99,11 @@ void AddPatient(BuildContext context) {
                   ),
                 ),
                 SizedBox(width: 10),
-                 //firstname
                 SizedBox(
                   width: 185,
                     height: 35,
                   child: CupertinoTextField(
-                   padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     style: TextStyles.Text,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
@@ -119,12 +112,11 @@ void AddPatient(BuildContext context) {
                   ),
                 ),
                 SizedBox(width: 10),
-                 //middlename
                SizedBox(
                   width: 180,
                     height: 35,
                   child: CupertinoTextField(
-                    padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     style: TextStyles.Text,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
@@ -157,7 +149,7 @@ void AddPatient(BuildContext context) {
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 10,
-                    left: 65,
+                    left: 35,
                     right: 30,
                   ),
                   child: Text(
@@ -171,7 +163,7 @@ void AddPatient(BuildContext context) {
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 10,
-                    left: 162,
+                    left: 112,
                     right: 30,
                   ),
                   child: Text(
@@ -180,39 +172,32 @@ void AddPatient(BuildContext context) {
                   ),
                 ),
               ),
-             
+               Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    left: 33,
+                    right: 30,
+                  ),
+                  child: Text(
+                    'Civil Status',
+                    style: TextStyles.Text,
+                  ),
+                ),
+              ),
             ],
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               children: [
-              Obx(() =>  GestureDetector(onTap: () async {
-                                await showDatePicker(
-                                        context: context,
-                                        firstDate: DateTime(1940),
-                                        lastDate: DateTime(2015),
-                                        currentDate: DateTime(2008))
-                                    .then((date) {
-                                  controller.birthdayC.value =
-                                      DateFormat('MMMM dd, y').format(date!);
-                                });
-                              },
-                              child: Container(
-                  width: 150,
-                    height: 35,
-                    decoration: BoxDecoration(color: Color(0xFFEFF1F6),
-                      borderRadius: BorderRadius.circular(10.0),),
-                  child: Padding(padding: EdgeInsets.only(top: 7, left: 10),child: 
-                   Text(controller.birthdayC.value),
-                ),) ),),
-                SizedBox(width: 10),
                 SizedBox(
-                  width: 250,
+                  width: 120,
                     height: 35,
                   child: CupertinoTextField(
-                    padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    style: TextStyles.Text,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
                       borderRadius: BorderRadius.circular(10.0),
@@ -220,55 +205,44 @@ void AddPatient(BuildContext context) {
                   ),
                 ),
                 SizedBox(width: 10),
- SizedBox(
-  width: 148,
+                SizedBox(
+                  width: 200,
                     height: 35,
-   child: Container(
-          
-          decoration: BoxDecoration(
-            color: Color(0xFFEFF1F6),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Obx(() {
-            return DropdownButtonHideUnderline(
-              child: DropdownButton2(
-                items: controller.genders.map((String gender) {
-                  return DropdownMenuItem<String>(
-                    value: gender,
-                    child: Text(
-                      gender,
-                      style: TextStyles.Text,
+                  child: CupertinoTextField(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEFF1F6),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  );
-                }).toList(),
-                value: controller.selectedGender.value,
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    controller.selectedGender.value = newValue;
-                  }
-                },
-                hint: Text(
-                  'Select Gender',
-                  style: TextStyles.Text,
+                  ),
                 ),
-              ),
-            );
-          }),
-        ),
- ),
-              //   SizedBox(width: 10),
-              //  SizedBox(
-              //     width: 110,
-              //       height: 35,
-              //     child: CupertinoTextField(
-              //         padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-              //       style: TextStyles.Text,
-              //       decoration: BoxDecoration(
-              //         color: Color(0xFFEFF1F6),
-              //         borderRadius: BorderRadius.circular(10.0),
-              //       ),
-              //     ),
-              //   ),
+                SizedBox(width: 10),
+               SizedBox(
+                  width: 100,
+                    height: 35,
+                  child: CupertinoTextField(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEFF1F6),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+               SizedBox(
+                  width: 120,
+                    height: 35,
+                  child: CupertinoTextField(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEFF1F6),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -341,8 +315,8 @@ void AddPatient(BuildContext context) {
                    width: 120,
                     height: 35,
                   child: CupertinoTextField(
-                   padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    style: TextStyles.Text,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
                       borderRadius: BorderRadius.circular(10.0),
@@ -354,8 +328,8 @@ void AddPatient(BuildContext context) {
                   width: 120,
                     height: 35,
                   child: CupertinoTextField(
-                     padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    style: TextStyles.Text,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
                       borderRadius: BorderRadius.circular(10.0),
@@ -367,8 +341,8 @@ void AddPatient(BuildContext context) {
                   width: 150,
                     height: 35,
                   child: CupertinoTextField(
-                     padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    style: TextStyles.Text,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
                       borderRadius: BorderRadius.circular(10.0),
@@ -380,8 +354,8 @@ void AddPatient(BuildContext context) {
                    width: 150,
                     height: 35,
                   child: CupertinoTextField(
-                     padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    style: TextStyles.Text,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
                       borderRadius: BorderRadius.circular(10.0),
@@ -391,96 +365,81 @@ void AddPatient(BuildContext context) {
               ],
             ),
           ),
-            Row(
+          Row(
             children: [
-             
+              SizedBox(width: 10),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 10,
-                   left: 20,
+                    left: 80,
                     right: 30,
                   ),
                   child: Text(
-                    'Civil Status',
+                    'Contact Number',
                     style: TextStyles.Text,
                   ),
                 ),
               ),
-              
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 10,
-                    left: 57,
+                    left: 60,
                     right: 30,
                   ),
                   child: Text(
-                    'Complete Address',
+                    'Email',
                     style: TextStyles.Text,
                   ),
                 ),
               ),
             ],
           ),
-              
-          
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Row(
-              children: [    
-               SizedBox(
-  width: 148,
-  height: 35,
-  child: Container(
-    decoration: BoxDecoration(
-      color: Color(0xFFEFF1F6),
-      borderRadius: BorderRadius.circular(10.0),
-    ),
-    child: Obx(() {
-      return DropdownButtonHideUnderline(
-        child: DropdownButton2(
-          items: controller.civilstatus.map((String status) {
-            return DropdownMenuItem<String>(
-              value: status,
-              child: Text(
-                status,
-                style: TextStyles.Text,
-              ),
-            );
-          }).toList(),
-          value: controller.selectedcivilstatus.value,
-          onChanged: (String? newValue) {
-            if (newValue != null) {
-              controller.selectedcivilstatus.value = newValue;
-            }
-          },
-          hint: Text(
-            '',
-            style: TextStyles.Text,
-          ),
-        ),
-      );
-    }),
-  ),
-),
-
-                 SizedBox(width: 10),
+              children: [
                 SizedBox(
-                  width: 412,
+                  width: 185,
                     height: 35,
                   child: CupertinoTextField(
-                      padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    style: TextStyles.Text,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
                 ),
-               
+                SizedBox(width: 10),
+                SizedBox(
+                  width: 185,
+                    height: 35,
+                  child: CupertinoTextField(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEFF1F6),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+               SizedBox(
+                  width: 180,
+                    height: 35,
+                  child: CupertinoTextField(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEFF1F6),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -495,7 +454,7 @@ void AddPatient(BuildContext context) {
                     right: 30,
                   ),
                   child: Text(
-                    'Email (Optional)',
+                    'Address',
                     style: TextStyles.Text,
                   ),
                 ),
@@ -506,7 +465,7 @@ void AddPatient(BuildContext context) {
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 10,
-                    left: 48,
+                    left: 105,
                     right: 20,
                   ),
                   child: Text(
@@ -520,7 +479,7 @@ void AddPatient(BuildContext context) {
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 10,
-                    left: 5,
+                    left: 0,
                     right: 30,
                   ),
                   child: Text(
@@ -539,8 +498,8 @@ void AddPatient(BuildContext context) {
                   width: 185,
                     height: 35,
                   child: CupertinoTextField(
-                    padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    style: TextStyles.Text,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
                       borderRadius: BorderRadius.circular(10.0),
@@ -552,8 +511,8 @@ void AddPatient(BuildContext context) {
                   width: 185,
                     height: 35,
                   child: CupertinoTextField(
-                      padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    style: TextStyles.Text,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
                       borderRadius: BorderRadius.circular(10.0),
@@ -565,8 +524,8 @@ void AddPatient(BuildContext context) {
                   width: 180,
                     height: 35,
                   child: CupertinoTextField(
-                    padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    style: TextStyles.Text,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
                       borderRadius: BorderRadius.circular(10.0),
@@ -598,7 +557,7 @@ void AddPatient(BuildContext context) {
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 10,
-                    left: 83,
+                    left: 80,
                     right: 30,
                   ),
                   child: Text(
@@ -627,49 +586,25 @@ void AddPatient(BuildContext context) {
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               children: [
-                 SizedBox(
-  width: 185,
+                SizedBox(
+                  width: 185,
                     height: 35,
-   child: Container(
-          
-          decoration: BoxDecoration(
-            color: Color(0xFFEFF1F6),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Obx(() {
-            return DropdownButtonHideUnderline(
-              child: DropdownButton2(
-                items: controller.bloodtype.map((String bloodtype) {
-                  return DropdownMenuItem<String>(
-                    value: bloodtype,
-                    child: Text(
-                      bloodtype,
-                      style: TextStyles.Text,
+                  child: CupertinoTextField(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEFF1F6),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  );
-                }).toList(),
-                value: controller.selectedbloodtype.value,
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    controller.selectedbloodtype.value = newValue;
-                  }
-                },
-                hint: Text(
-                  'Select Gender',
-                  style: TextStyles.Text,
+                  ),
                 ),
-              ),
-            );
-          }),
-        ),
- ),
                 SizedBox(width: 10),
                 SizedBox(
                   width: 185,
                     height: 35,
                   child: CupertinoTextField(
-                     padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    style: TextStyles.Text,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
                       borderRadius: BorderRadius.circular(10.0),
@@ -681,8 +616,8 @@ void AddPatient(BuildContext context) {
                   width: 180,
                     height: 35,
                   child: CupertinoTextField(
-                     padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    style: TextStyles.Text,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    style: TextStyles.Text1,
                     decoration: BoxDecoration(
                       color: Color(0xFFEFF1F6),
                       borderRadius: BorderRadius.circular(10.0),
@@ -706,7 +641,7 @@ void AddPatient(BuildContext context) {
                 controller.selectedOption.value = value!;
               },
             )),
-        Text("EPI FORM"),
+        Text("Form 1"),
       ],
     ),
     // Radio 2
@@ -719,7 +654,7 @@ void AddPatient(BuildContext context) {
                 controller.selectedOption.value = value!;
               },
             )),
-        Text("DB-TB TREATEMENT CARD"),
+        Text("Form 2"),
       ],
     ),
     // Radio 3
@@ -732,7 +667,7 @@ void AddPatient(BuildContext context) {
                 controller.selectedOption.value = value!;
               },
             )),
-        Text("PRENATAL FORM"),
+        Text("Form 3"),
       ],
     ),
     // Radio 4
@@ -745,7 +680,7 @@ void AddPatient(BuildContext context) {
                 controller.selectedOption.value = value!;
               },
             )),
-        Text("PHC FORM"),
+        Text("Form 4"),
       ],
     ),
     // Radio 5
@@ -758,13 +693,13 @@ void AddPatient(BuildContext context) {
                 controller.selectedOption.value = value!;
               },
             )),
-        Text("SERVICE FORM"),
+        Text("Form 5"),
       ],
     ),
   ],
 ),
+
              Divider(),
-              Padding(padding: EdgeInsets.only(right: 10),child: 
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
@@ -778,14 +713,11 @@ void AddPatient(BuildContext context) {
                     child: Text("Save"),
                     onPressed: () {
                        showSuccessToast(context);
-                       Navigator.of(context).pop();
-                        //loadingform(context);
-                        EPIFORM(context);
+                      // Navigator.of(context).pop();
                     },
                   ),
                 ],
               ),
-               ),
             ],
           ),
         ),

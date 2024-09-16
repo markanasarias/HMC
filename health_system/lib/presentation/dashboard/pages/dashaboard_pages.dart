@@ -45,7 +45,7 @@ class DashboardPages extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Container(
-                            height: 120,
+                            height: 100,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Colors.white,
@@ -71,7 +71,7 @@ class DashboardPages extends StatelessWidget {
                                     children: [
                                       Text(
                                         'Patient',
-                                        style: TextStyles.Header,
+                                        style: TextStyles.AppBarHeader,
                                       ),
                                       SizedBox(height: 4),
                                       Text(
@@ -82,7 +82,7 @@ class DashboardPages extends StatelessWidget {
                                   ),
                                   Icon(
                                     Icons.supervisor_account,
-                                    size: 80,
+                                    size: 60,
                                     color: Colors.blue,
                                   ),
                                 ],
@@ -93,7 +93,7 @@ class DashboardPages extends StatelessWidget {
                         const SizedBox(width: 30),
                         Expanded(
                           child: Container(
-                            height: 120,
+                            height: 100,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Colors.white,
@@ -119,7 +119,7 @@ class DashboardPages extends StatelessWidget {
                                     children: [
                                       Text(
                                         'Staff',
-                                        style: TextStyles.Header,
+                                        style: TextStyles.AppBarHeader,
                                       ),
                                       SizedBox(height: 4),
                                       Text(
@@ -130,7 +130,7 @@ class DashboardPages extends StatelessWidget {
                                   ),
                                   Icon(
                                     Icons.supervisor_account,
-                                    size: 80,
+                                    size: 60,
                                     color: Colors.blue,
                                   ),
                                 ],
@@ -141,7 +141,7 @@ class DashboardPages extends StatelessWidget {
                         const SizedBox(width: 30),
                         Expanded(
                           child: Container(
-                            height: 120,
+                            height: 100,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Colors.white,
@@ -167,7 +167,7 @@ class DashboardPages extends StatelessWidget {
                                     children: [
                                       Text(
                                         'Doctor',
-                                        style: TextStyles.Header,
+                                        style: TextStyles.AppBarHeader,
                                       ),
                                       SizedBox(height: 4),
                                       Text(
@@ -178,7 +178,7 @@ class DashboardPages extends StatelessWidget {
                                   ),
                                   Icon(
                                     Icons.supervisor_account,
-                                    size: 80,
+                                    size: 60,
                                     color: Colors.blue,
                                   ),
                                 ],
@@ -189,7 +189,7 @@ class DashboardPages extends StatelessWidget {
                         const SizedBox(width: 30),
                         Expanded(
                           child: Container(
-                            height: 120,
+                            height: 100,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Colors.white,
@@ -215,7 +215,7 @@ class DashboardPages extends StatelessWidget {
                                     children: [
                                       Text(
                                         'Appointment',
-                                        style: TextStyles.Header,
+                                        style: TextStyles.AppBarHeader,
                                       ),
                                       SizedBox(height: 4),
                                       Text(
@@ -226,7 +226,7 @@ class DashboardPages extends StatelessWidget {
                                   ),
                                   Icon(
                                     Icons.supervisor_account,
-                                    size: 80,
+                                    size: 60,
                                     color: Colors.blue,
                                   ),
                                 ],
@@ -242,7 +242,7 @@ class DashboardPages extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Container(
-                            height: 390,
+                            height: 370,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Colors.white,
@@ -264,7 +264,7 @@ class DashboardPages extends StatelessWidget {
                                     );
                                   }
                                   return Container(
-                                    height: 500,
+                                    height: 300,
                                     decoration: BoxDecoration(
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(20)),
@@ -294,7 +294,7 @@ class DashboardPages extends StatelessWidget {
                         const SizedBox(width: 30),
                         Expanded(
                           child: Container(
-                            height: 390,
+                            height: 370,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Colors.white,
