@@ -22,7 +22,7 @@ dependencies:
   pluto_grid_plus: ^8.4.2
   scrollable_table_view: ^2.0.3
   syncfusion_flutter_calendar: ^26.2.13
-  syncfusion_flutter_charts: ^26.2.11
+  syncfusion_flutter_charts: ^26.2.14
   syncfusion_flutter_datagrid: ^26.2.11
   toastification: ^2.2.0
 

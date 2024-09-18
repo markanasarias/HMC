@@ -3,7 +3,7 @@ import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:health_system/presentation/doctor/controllers/doctor_controllers.dart';
 import 'package:health_system/presentation/patient/controllers/patient_controllers.dart';
-import 'package:health_system/presentation/patient/forms/epi_form.dart';
+import 'package:health_system/presentation/patient/forms/epi_form/epi_form.dart';
 import 'package:health_system/widget/loading_form.dart';
 import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
