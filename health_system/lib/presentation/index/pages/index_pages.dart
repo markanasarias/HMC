@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:health_system/presentation/appointment/pages/appointment_list_pages.dart';
+import 'package:health_system/presentation/branch/pages/branch_list_pages.dart';
 import 'package:health_system/presentation/calendar/pages/calendar_list_pages.dart';
 import 'package:health_system/presentation/dashboard/pages/dashaboard_pages.dart';
 import 'package:health_system/presentation/doctor/pages/doctor_list_pages.dart';
 import 'package:health_system/presentation/index/controllers/index_controller.dart';
-import 'package:health_system/presentation/inventory/pages/invertory_list_pages.dart';
+import 'package:health_system/presentation/inventory/pages/request/request_list_pages.dart';
+import 'package:health_system/presentation/inventory/pages/stocks/invertory_list_pages.dart';
 import 'package:health_system/presentation/logs/pages/logs_list_pages.dart';
 import 'package:health_system/presentation/patient/pages/patient_list_pages.dart';
 import 'package:health_system/presentation/services/pages/services_list_pages.dart';
@@ -93,6 +95,13 @@ class Index extends StatelessWidget {
                     icon: const Icon(Icons.person_outline_outlined),
                   ),
                   SideMenuItem(
+                    title: 'Branches',
+                    onTap: (index, _) {
+                      controller.changePage(index);
+                    },
+                    icon: const Icon(Icons.health_and_safety_outlined),
+                  ),
+                  SideMenuItem(
                     title: 'Appointment',
                     onTap: (index, _) {
                       controller.changePage(index);
@@ -106,13 +115,26 @@ class Index extends StatelessWidget {
                     },
                     icon: const Icon(Icons.calendar_today_outlined),
                   ),
-                  SideMenuItem(
-                    title: 'Inventory',
-                    onTap: (index, _) {
-                      controller.changePage(index);
-                    },
-                    icon: const Icon(Icons.inventory_2_outlined),
-                  ),
+                    SideMenuExpansionItem(
+    title: "Inventory",
+    icon: const Icon(Icons.inventory_2_outlined),
+    children: [
+      SideMenuItem(
+        title: 'Stocks',
+        onTap: (index, _) {
+             controller.changePage(index);
+        },
+        icon: const Icon(Icons.medication_outlined),
+      ),
+      SideMenuItem(
+        title: 'Request',
+        onTap: (index, _) {
+          controller.changePage(index);
+        },
+        icon: const Icon(Icons.medication_outlined),
+      )
+    ],
+  ),
                   SideMenuItem(
                     title: 'Services',
                     onTap: (index, _) {
@@ -140,9 +162,11 @@ class Index extends StatelessWidget {
                     PatientListPages(),
                     DoctorListPages(),
                     StaffListPages(),
+                    BranchListPages(),
                     AppointmentListPages(),
                     CalendarListPages(),
                     InvertoryListPages(),
+                    RequestListPages(),
                     ServicesListPages(),
                     LogsListPages()
                   ],

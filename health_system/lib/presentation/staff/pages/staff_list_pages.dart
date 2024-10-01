@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/presentation/staff/controllers/staff_controller.dart';
 import 'package:health_system/presentation/staff/pages/staff_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:health_system/widget/nodata.dart';
 
 class StaffListPages extends StatelessWidget {
-  const StaffListPages({super.key});
-
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> patients = List.generate(
-      10,
-      (index) => {
-        'id': '24090${index + 1}',
-        'name': 'Mark Anasarias ${index + 1}',
-        'age': '${20 + index}',
-        'dob': '11/14/19${99 + index}',
-        'gender': index % 2 == 0 ? 'Male' : 'Female',
-        'contact': '09205447${10 + index}',
-      },
-    );
+final StaffController controller = Get.put(StaffController());
     return Scaffold(
       body: Container(
         color: Colors.grey.withOpacity(0.1),
@@ -137,6 +128,10 @@ class StaffListPages extends StatelessWidget {
                                     color: Color(0xFF9E9E9E),
                                   ),
                                 ),
+                                 onChanged: (value) {
+                                  controller.searchQuery.value = value;
+                                  controller.filterStaff();
+                                },
                               ),
                             ),
                           ),
@@ -147,7 +142,7 @@ class StaffListPages extends StatelessWidget {
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 350,
+                        height: 400,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.white,
@@ -176,62 +171,44 @@ class StaffListPages extends StatelessWidget {
                                   color: Colors.grey.withOpacity(0.1),
                                 ),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Patient ID',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Text(
-                                      'Full Name',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 80,
-                                    ),
-                                    Text(
-                                      'Age',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 50,
-                                    ),
-                                    Text(
-                                      'Date of Birth',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 40,
-                                    ),
-                                    Text(
-                                      'Gender',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 65,
-                                    ),
-                                    Text(
-                                      'Contact',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 65,
-                                    ),
-                                    Text(
-                                      'Action',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 30,
-                                    ),
+                                  Container(
+                                    width: 100,
+                                    height: 80,
+                                   color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text('Staff ID', style: TextStyles.AppBartext,),),
+                                  ),
+                                  Container(
+                                    width: 250,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                   child: Center(child: Text('Full Name', style: TextStyles.AppBartext,),),
+                                    
+                                  ),
+                                    Container(
+                                    width: 180,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text('Role', style: TextStyles.AppBartext,),),
+                                  ),
+                                    Container(
+                                    width: 180,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text('Position', style: TextStyles.AppBartext,),),
+                                  ),
+                                    Container(
+                                    width: 150,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                   child: Center(child: Text('Contact', style: TextStyles.AppBartext,),),
+                                  ), 
+                                  Container(
+                                    width: 118,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                  child: Center(child: Text('Action', style: TextStyles.AppBartext,),),
+                                  ),
                                   ],
                                 ),
                               ),
@@ -240,10 +217,14 @@ class StaffListPages extends StatelessWidget {
                               height: 5,
                             ),
                             Expanded(
-                              child: ListView.builder(
-                                itemCount: patients.length,
+                              child: Obx (() {
+                                if (controller.filteredStaff.isEmpty) {
+                                  return Center(child: NoDataFound(),);
+                                }
+                                return ListView.builder(
+                                itemCount: controller.filteredStaff.length,
                                 itemBuilder: (context, index) {
-                                  final patient = patients[index];
+                                   final staff = controller.filteredStaff[index];
                                   return Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 50,
@@ -257,58 +238,45 @@ class StaffListPages extends StatelessWidget {
                                       ),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
                                       children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          patient['id']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Text(
-                                          patient['name']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 70,
-                                        ),
-                                        Text(
-                                          patient['age']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 60,
-                                        ),
-                                        Text(
-                                          patient['dob']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 60,
-                                        ),
-                                        Text(
-                                          patient['gender']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 65,
-                                        ),
-                                        Text(
-                                          patient['contact']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 30,
-                                        ),
-                                        Row(
+                                  Container(
+                                    width: 100,
+                                    height: 80,
+                                   color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text('${staff.staff_id}', style: TextStyles.AppBartext,),),
+                                  ),
+                                  Container(
+                                    width: 250,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                   child: Center(child: Text('${staff.fullname}', style: TextStyles.AppBartext,),),
+                                    
+                                  ),
+                                    Container(
+                                    width: 180,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child:  Text('${staff.role}', style: TextStyles.AppBartext,),),
+                                  ),
+                                    Container(
+                                    width: 180,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child:  Text('${staff.position}', style: TextStyles.AppBartext,),),
+                                  ),
+                                    Container(
+                                    width: 150,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                   child: Center(child:  Text('${staff.phone_number}',style: TextStyles.AppBartext,),),
+                                  ), 
+                                   Container(
+                                    width: 118,
+                                    height: 80,
+                                    color: Colors.grey.withOpacity(0.01),
+                                  child: Center(child: Row(
                                           children: [
+                                            SizedBox(width: 20,),
                                             IconButton(
                                               icon: Icon(Icons.visibility,
                                                   color: Colors.blue),
@@ -320,82 +288,18 @@ class StaffListPages extends StatelessWidget {
                                               onPressed: () {},
                                             ),
                                           ],
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                      ],
+                                        ),),
+                                  ),
+                                  ],
                                     ),
                                   );
                                 },
-                              ),
+                              );
+                              },
+                              )
                             ),
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                       
-                           Container(
-                            width: 50,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Text('<', style: TextStyles.AppBarHeader),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                            ),
-                            child: Center(
-                              child: Text('1', style: TextStyles.AppBartext),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            width: 50,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Text('>', style: TextStyles.AppBarHeader),
-                            ),
-                          ),
-                        ],
                       ),
                     ],
                   ),

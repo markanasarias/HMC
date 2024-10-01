@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:health_system/presentation/inventory/pages/inventory_add_pages.dart';
+import 'package:health_system/presentation/inventory/pages/stocks/inventory_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 
-class InvertoryListPages extends StatelessWidget {
-  const InvertoryListPages({super.key});
+class RequestListPages extends StatelessWidget {
+  const RequestListPages({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class InvertoryListPages extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        'Inventory List',
+                        'Request Stock List',
                         style: TextStyles.Tableloc,
                       ),
                     ],
@@ -147,7 +147,7 @@ class InvertoryListPages extends StatelessWidget {
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 350,
+                        height: 400,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.white,
@@ -176,62 +176,50 @@ class InvertoryListPages extends StatelessWidget {
                                   color: Colors.grey.withOpacity(0.1),
                                 ),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Patient ID',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Text(
-                                      'Full Name',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 80,
-                                    ),
-                                    Text(
-                                      'Age',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 50,
-                                    ),
-                                    Text(
-                                      'Date of Birth',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 40,
-                                    ),
-                                    Text(
-                                      'Gender',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 65,
-                                    ),
-                                    Text(
-                                      'Contact',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 65,
-                                    ),
-                                    Text(
-                                      'Action',
-                                      style: TextStyles.AppBartext,
-                                    ),
-                                    SizedBox(
-                                      width: 30,
-                                    ),
+                                  Container(
+                                    width: 100,
+                                    height: 80,
+                                   color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text('ID', style: TextStyles.AppBartext,),),
+                                  ),
+                                  Container(
+                                    width: 250,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                   child: Center(child: Text('Name', style: TextStyles.AppBartext,),),
+                                    
+                                  ),
+                                    Container(
+                                    width: 80,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text('Category', style: TextStyles.AppBartext,),),
+                                  ),
+                                    Container(
+                                    width: 160,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                   child: Center(child: Text('Quantity', style: TextStyles.AppBartext,),),
+                                  ),  Container(
+                                    width: 100,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text('Date', style: TextStyles.AppBartext,),),
+                                  ),
+                                  Container(
+                                    width: 170,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text('Expiration Date', style: TextStyles.AppBartext,),),
+                                  ),
+                                  Container(
+                                    width: 118,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                  child: Center(child: Text('Action', style: TextStyles.AppBartext,),),
+                                  ),
+
                                   ],
                                 ),
                               ),
@@ -257,58 +245,56 @@ class InvertoryListPages extends StatelessWidget {
                                       ),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
                                       children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          patient['id']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Text(
-                                          patient['name']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 70,
-                                        ),
-                                        Text(
-                                          patient['age']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 60,
-                                        ),
-                                        Text(
-                                          patient['dob']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 60,
-                                        ),
-                                        Text(
-                                          patient['gender']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 65,
-                                        ),
-                                        Text(
-                                          patient['contact']!,
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                        SizedBox(
-                                          width: 30,
-                                        ),
-                                        Row(
+                                        Container(
+                                    width: 100,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text(  patient['id']!,
+                                          style: TextStyles.AppBartext,),),
+                                  ),
+                                  Container(
+                                    width: 250,
+                                    height: 80,
+                                     color: Colors.grey.withOpacity(0.01),
+                                   child: Center(child: Text(  patient['name']!,
+                                          style: TextStyles.AppBartext,),),
+                                    
+                                  ),
+                                    Container(
+                                    width: 80,
+                                    height: 80,
+                                     color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text(  patient['age']!,
+                                          style: TextStyles.AppBartext,),),
+                                  ),
+                                    Container(
+                                    width: 160,
+                                    height: 80,
+                                     color: Colors.grey.withOpacity(0.01),
+                                   child: Center(child: Text(  patient['dob']!,
+                                          style: TextStyles.AppBartext,),),
+                                  ),  Container(
+                                    width: 100,
+                                    height: 80,
+                                    color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text(  patient['gender']!,
+                                          style: TextStyles.AppBartext,),),
+                                  ),
+                                  Container(
+                                    width: 170,
+                                    height: 80,
+                                  color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text(  patient['contact']!,
+                                          style: TextStyles.AppBartext,),),
+                                  ),
+                                  Container(
+                                    width: 118,
+                                    height: 80,
+                                   color: Colors.grey.withOpacity(0.01),
+                                  child: Center(child: Row(
                                           children: [
+                                             SizedBox(width: 20,),
                                             IconButton(
                                               icon: Icon(Icons.visibility,
                                                   color: Colors.blue),
@@ -320,10 +306,9 @@ class InvertoryListPages extends StatelessWidget {
                                               onPressed: () {},
                                             ),
                                           ],
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
+                                        ),),
+                                  ),
+
                                       ],
                                     ),
                                   );
@@ -332,70 +317,6 @@ class InvertoryListPages extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                       
-                           Container(
-                            width: 50,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Text('<', style: TextStyles.AppBarHeader),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                            ),
-                            child: Center(
-                              child: Text('1', style: TextStyles.AppBartext),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            width: 50,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Text('>', style: TextStyles.AppBarHeader),
-                            ),
-                          ),
-                        ],
                       ),
                     ],
                   ),

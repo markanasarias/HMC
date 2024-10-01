@@ -132,7 +132,9 @@ class Login extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                           Get.offNamed('/patient');
+                        },
                         child: const Text(
                           'Forgot Password?',
                           style: TextStyle(color: Colors.red, fontSize: 15),

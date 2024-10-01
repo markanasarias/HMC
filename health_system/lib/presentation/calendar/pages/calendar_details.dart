@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:health_system/presentation/patient/controllers/patient_controllers.dart';
-import 'package:health_system/presentation/patient/forms/phc_form/page_1.dart';
-import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
 
-void PHCPage4(BuildContext context) {
+void Calendar_details(BuildContext context) {
   final PatientControllers controller = Get.put(PatientControllers());
   showDialog(
     context: context,
@@ -17,7 +15,7 @@ void PHCPage4(BuildContext context) {
         ),
         child: Container(
           width: 600,
-          height: 400,
+          height: 460,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -34,38 +32,12 @@ void PHCPage4(BuildContext context) {
                 child: Padding(
                   padding: EdgeInsets.only(left: 20, top: 12),
                   child: Text(
-                    'PHC FORM',
+                    'Calendar Details',
                     style: TextStyles.Text4,
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: 10,
-                    left: 20,
-                    right: 30,
-                  ),
-                  child: Text(
-                    'P',
-                    style: TextStyles.Text,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 570,
-                height: 260,
-                child: CupertinoTextField(
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  style: TextStyles.Text,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFEFF1F6),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  maxLines: 16,
-                ),
-              ),
+
               SizedBox(
                 height: 10,
               ),
@@ -74,14 +46,17 @@ void PHCPage4(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   TextButton(
-                    child: Text("Back"),
+                    child: Text("Close"),
                     onPressed: () {
                       Get.back();
                     },
                   ),
                   TextButton(
-                    child: Text("Submit"),
-                    onPressed: () {},
+                    child: Text("Add Event"),
+                    onPressed: () {
+                
+                      Get.back();
+                    },
                   ),
                 ],
               ),

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/presentation/calendar/controller/calendar_controller.dart';
+import 'package:health_system/presentation/calendar/pages/calendar_details.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:calendar_view/calendar_view.dart';
-import 'package:cell_calendar/cell_calendar.dart';
+import 'package:get/get.dart';
 
 class CalendarListPages extends StatelessWidget {
   const CalendarListPages({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final CalendarController controller = Get.put(CalendarController());
+
     return Scaffold(
       body: Container(
         color: Colors.grey.withOpacity(0.1),
@@ -34,38 +38,41 @@ class CalendarListPages extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 10),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 500,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Padding(
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 525,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
                     padding: EdgeInsetsDirectional.symmetric(
                         horizontal: 20, vertical: 10),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.symmetric(
-                          horizontal: 20, vertical: 10),
-                      child: MonthView(
-                        controller: EventController(),
-                        minMonth: DateTime(2020),
-                        maxMonth: DateTime(2030),
-                        initialMonth: DateTime.now(),
-                        cellAspectRatio: 1.5,
-                        onPageChange: (DateTime date, int pageIndex) {
-                          // Handle page change
-                        },
-                      ),
-                    )),
+                    child: MonthView(
+                      controller: controller.eventController,
+                      minMonth: DateTime(2020),
+                      maxMonth: DateTime(2030),
+                      initialMonth: DateTime.now(),
+                      cellAspectRatio: 2.5,
+                      onPageChange: (DateTime date, int pageIndex) {},
+                      onCellTap: (events, date) {
+                        if (events.isNotEmpty) {
+                          print("Selected date: $date");
+                          Calendar_details(context);
+                        }
+                      },
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

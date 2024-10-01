@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:health_system/presentation/patient/forms/epi_form/epi_form.dart';
 import 'package:health_system/presentation/staff/controllers/staff_controller.dart';
 import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
@@ -231,8 +230,7 @@ SizedBox(height: 10),
                     onPressed: () {
                        showSuccessToast(context);
                        Navigator.of(context).pop();
-                        //loadingform(context);
-                        EPIFORM(context);
+                  
                     },
                   ),
                 ],

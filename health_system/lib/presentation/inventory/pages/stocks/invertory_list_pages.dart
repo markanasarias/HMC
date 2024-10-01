@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/presentation/inventory/pages/stocks/inventory_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 
-class LogsListPages extends StatelessWidget {
-  const LogsListPages({super.key});
+class InvertoryListPages extends StatelessWidget {
+  const InvertoryListPages({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class LogsListPages extends StatelessWidget {
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              AdminAppbar(title: 'Logs'),
+              AdminAppbar(title: 'Inventory'),
               SizedBox(
                 height: 20,
               ),
@@ -53,7 +54,7 @@ class LogsListPages extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        'Logs List',
+                        'Inventory List',
                         style: TextStyles.Tableloc,
                       ),
                     ],
@@ -63,7 +64,7 @@ class LogsListPages extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-   Container(
+                Container(
                 width: MediaQuery.of(context).size.width,
                 height: 475,
                 decoration: BoxDecoration(
@@ -85,9 +86,37 @@ class LogsListPages extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                         
+                          GestureDetector(
+                            onTap: () {
+                              print('add');
+                              AddInventory(context);
+                      
+                            },
+                            child: Container(
+                              width: 100,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.blue,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Add Inventory',
+                                  style: TextStyles.Textwhite,
+                                ),
+                              ),
+                            ),
+                          ),
                           Padding(
                             padding: EdgeInsets.only(top: 0),
                             child: SizedBox(
@@ -146,33 +175,51 @@ class LogsListPages extends StatelessWidget {
                                   ),
                                   color: Colors.grey.withOpacity(0.1),
                                 ),
-                                child:Row(
+                                child: Row(
                                   children: [
                                   Container(
-                                    width: 150,
+                                    width: 100,
                                     height: 80,
                                    color: Colors.grey.withOpacity(0.01),
                                     child: Center(child: Text('ID', style: TextStyles.AppBartext,),),
                                   ),
                                   Container(
-                                    width: 310,
+                                    width: 250,
                                     height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Action', style: TextStyles.AppBartext,),),
+                                   child: Center(child: Text('Name', style: TextStyles.AppBartext,),),
                                     
                                   ),
                                     Container(
-                                    width: 310,
+                                    width: 80,
                                     height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Name', style: TextStyles.AppBartext,),),
+                                    child: Center(child: Text('Category', style: TextStyles.AppBartext,),),
                                   ),
                                     Container(
-                                    width: 200,
+                                    width: 160,
                                     height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Date', style: TextStyles.AppBartext,),),
+                                   child: Center(child: Text('Quantity', style: TextStyles.AppBartext,),),
+                                  ),  Container(
+                                    width: 100,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text('Date', style: TextStyles.AppBartext,),),
                                   ),
+                                  Container(
+                                    width: 170,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text('Expiration Date', style: TextStyles.AppBartext,),),
+                                  ),
+                                  Container(
+                                    width: 118,
+                                    height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                  child: Center(child: Text('Action', style: TextStyles.AppBartext,),),
+                                  ),
+
                                   ],
                                 ),
                               ),
@@ -199,32 +246,70 @@ class LogsListPages extends StatelessWidget {
                                     ),
                                     child: Row(
                                       children: [
-                                  Container(
-                                    width: 150,
-                                    height: 80,
-                                   color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('ID', style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 310,
+                                        Container(
+                                    width: 100,
                                     height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Action', style: TextStyles.AppBartext,),),
+                                    child: Center(child: Text(  patient['id']!,
+                                          style: TextStyles.AppBartext,),),
+                                  ),
+                                  Container(
+                                    width: 250,
+                                    height: 80,
+                                     color: Colors.grey.withOpacity(0.01),
+                                   child: Center(child: Text(  patient['name']!,
+                                          style: TextStyles.AppBartext,),),
                                     
                                   ),
                                     Container(
-                                    width: 310,
+                                    width: 80,
                                     height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Name', style: TextStyles.AppBartext,),),
+                                     color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text(  patient['age']!,
+                                          style: TextStyles.AppBartext,),),
                                   ),
                                     Container(
-                                    width: 200,
+                                    width: 160,
                                     height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Date', style: TextStyles.AppBartext,),),
+                                     color: Colors.grey.withOpacity(0.01),
+                                   child: Center(child: Text(  patient['dob']!,
+                                          style: TextStyles.AppBartext,),),
+                                  ),  Container(
+                                    width: 100,
+                                    height: 80,
+                                    color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text(  patient['gender']!,
+                                          style: TextStyles.AppBartext,),),
                                   ),
-                                  ],
+                                  Container(
+                                    width: 170,
+                                    height: 80,
+                                  color: Colors.grey.withOpacity(0.01),
+                                    child: Center(child: Text(  patient['contact']!,
+                                          style: TextStyles.AppBartext,),),
+                                  ),
+                                  Container(
+                                    width: 118,
+                                    height: 80,
+                                   color: Colors.grey.withOpacity(0.01),
+                                  child: Center(child: Row(
+                                          children: [
+                                             SizedBox(width: 20,),
+                                            IconButton(
+                                              icon: Icon(Icons.visibility,
+                                                  color: Colors.blue),
+                                              onPressed: () {},
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.edit,
+                                                  color: Colors.blue),
+                                              onPressed: () {},
+                                            ),
+                                          ],
+                                        ),),
+                                  ),
+
+                                      ],
                                     ),
                                   );
                                 },

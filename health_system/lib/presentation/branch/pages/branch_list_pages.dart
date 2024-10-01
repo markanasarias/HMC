@@ -3,8 +3,8 @@ import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 
-class LogsListPages extends StatelessWidget {
-  const LogsListPages({super.key});
+class BranchListPages extends StatelessWidget {
+  const BranchListPages({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class LogsListPages extends StatelessWidget {
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              AdminAppbar(title: 'Logs'),
+              AdminAppbar(title: 'Branch'),
               SizedBox(
                 height: 20,
               ),
@@ -53,7 +53,7 @@ class LogsListPages extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        'Logs List',
+                        'Branch List',
                         style: TextStyles.Tableloc,
                       ),
                     ],
@@ -85,9 +85,37 @@ class LogsListPages extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                         
+                          GestureDetector(
+                            onTap: () {
+                              print('add');
+                            
+                     
+                            },
+                            child: Container(
+                              width: 100,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.blue,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Add Branch',
+                                  style: TextStyles.Textwhite,
+                                ),
+                              ),
+                            ),
+                          ),
                           Padding(
                             padding: EdgeInsets.only(top: 0),
                             child: SizedBox(
