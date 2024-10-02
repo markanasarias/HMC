@@ -15,7 +15,7 @@ void PHCFORM(BuildContext context) {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Container(
-          width: 700,
+          width: 650,
           height: 1000,
           child: Column(
             children: <Widget>[
@@ -121,7 +121,7 @@ Row(
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 10,
-                    left: 20,
+                    left: 23,
                     right: 30,
                   ),
                   child: Text(
@@ -131,9 +131,10 @@ Row(
                 ),
               ),
               SizedBox(
-                width: 570,
+                width: 585,
                 height: 65,
-                child: CupertinoTextField(
+                child: Padding(padding: EdgeInsets.only(left: 18), child: 
+                CupertinoTextField(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   style: TextStyles.Text,
                   decoration: BoxDecoration(
@@ -143,6 +144,7 @@ Row(
                   maxLines: 3,
                 ),
               ),
+               ),
               Row(
                 children: [
                   Align(
@@ -1364,7 +1366,7 @@ Row(
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 10,
-                    left: 20,
+                    left: 25,
                     right: 30,
                   ),
                   child: Text(
@@ -1374,9 +1376,10 @@ Row(
                 ),
               ),
               SizedBox(
-                width: 570,
+                width: 585,
                 height: 65,
-                child: CupertinoTextField(
+                child: Padding(padding: EdgeInsets.only(left: 18), child: 
+                CupertinoTextField(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   style: TextStyles.Text,
                   decoration: BoxDecoration(
@@ -1386,12 +1389,13 @@ Row(
                   maxLines: 3,
                 ),
               ),
+               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 10,
-                    left: 20,
+                    left: 25,
                     right: 30,
                   ),
                   child: Text(
@@ -1401,9 +1405,10 @@ Row(
                 ),
               ),
               SizedBox(
-                width: 570,
+                width: 585,
                 height: 260,
-                child: CupertinoTextField(
+                child: Padding(padding: EdgeInsets.only(left: 18), child: 
+                CupertinoTextField(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   style: TextStyles.Text,
                   decoration: BoxDecoration(
@@ -1413,6 +1418,7 @@ Row(
                   maxLines: 16,
                 ),
               ),
+               ),
                         //content
                         SizedBox(height: 10),
                         

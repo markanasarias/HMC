@@ -3,24 +3,6 @@ import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:health_system/presentation/patient/controllers/patient_controllers.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:health_system/app/Textstyles.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:health_system/presentation/patient/controllers/patient_controllers.dart';
-import 'package:health_system/presentation/patient/forms/epi_form/page_2.dart';
-import 'package:health_system/widget/success.dart';
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:health_system/app/Textstyles.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:health_system/presentation/patient/controllers/patient_controllers.dart';
-import 'package:health_system/presentation/patient/forms/epi_form/page_1.dart';
-import 'package:health_system/presentation/patient/forms/phc_form/page_1_old.dart';
-
-import 'package:health_system/widget/loading_form.dart';
-import 'package:health_system/widget/success.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 void EPIFORM(BuildContext context) {
@@ -34,8 +16,8 @@ void EPIFORM(BuildContext context) {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Container(
-          width: 1000,
-          height: 400,
+          width: 800,
+          height: 1000,
           child: Column(
             children: <Widget>[
               // Fixed header
@@ -113,6 +95,7 @@ void EPIFORM(BuildContext context) {
                                 ),
                               ),
                             ),
+                          
                           ],
                         ),
                         Container(
@@ -160,6 +143,7 @@ void EPIFORM(BuildContext context) {
                                   ),
                                 ),
                               ),
+                             
                             ],
                           ),
                         ),
@@ -2124,7 +2108,7 @@ void EPIFORM(BuildContext context) {
                               child: Padding(
                                 padding: EdgeInsets.only(
                                   top: 10,
-                                  left: 175,
+                                  left: 320,
                                   right: 30,
                                 ),
                                 child: Text(
@@ -2142,8 +2126,8 @@ void EPIFORM(BuildContext context) {
                               child: Column(
                                 children: [
                                   Container(
-                                    width: 90,
-                                    height: 30,
+                                    width: 130,
+                                        height: 30,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black,
@@ -2158,8 +2142,8 @@ void EPIFORM(BuildContext context) {
                                     ),
                                   ),
                                   Container(
-                                    width: 90,
-                                    height: 30,
+                                   width: 130,
+                                        height: 30,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black,
@@ -2174,8 +2158,8 @@ void EPIFORM(BuildContext context) {
                                     ),
                                   ),
                                   Container(
-                                    width: 90,
-                                    height: 30,
+                                   width: 130,
+                                        height: 30,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black,
@@ -2190,8 +2174,8 @@ void EPIFORM(BuildContext context) {
                                     ),
                                   ),
                                   Container(
-                                    width: 90,
-                                    height: 30,
+                                   width: 130,
+                                        height: 30,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black,
@@ -2215,7 +2199,7 @@ void EPIFORM(BuildContext context) {
                                   child: Column(
                                     children: [
                                       Container(
-                                        width: 90,
+                                         width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2231,7 +2215,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                        width: 90,
+                                         width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2247,7 +2231,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                        width: 90,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2263,7 +2247,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                        width: 90,
+                                         width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2290,7 +2274,7 @@ void EPIFORM(BuildContext context) {
                                   child: Column(
                                     children: [
                                       Container(
-                                        width: 90,
+                                         width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2306,7 +2290,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                        width: 90,
+                                         width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2322,7 +2306,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                        width: 90,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2338,7 +2322,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                        width: 90,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2365,7 +2349,7 @@ void EPIFORM(BuildContext context) {
                                   child: Column(
                                     children: [
                                       Container(
-                                        width: 90,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2381,7 +2365,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                        width: 90,
+                                       width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2397,7 +2381,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                        width: 90,
+                                         width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2413,7 +2397,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                        width: 90,
+                                         width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2433,8 +2417,389 @@ void EPIFORM(BuildContext context) {
                                 ),
                               ],
                             ),
+                            SizedBox(width: 20, height: 20,),
+                            SizedBox(
+                                width: 220,
+                                height: 120,
+                                child: CupertinoTextField(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  style: TextStyles.Text,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFEFF1F6),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  maxLines: 6,
+                                ),
+                              ),
                           ],
                         ),
+Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                  left: 20,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  'Date',
+                                  style: TextStyles.Text,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                  left: 115,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  'Age in Months',
+                                  style: TextStyles.Text,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                  left: 65,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  'Initial Vitral Signs',
+                                  style: TextStyles.Text,
+                                ),
+                              ),
+                            ),
+                             Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                  left: 45,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  'Temp',
+                                  style: TextStyles.Text,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 175,
+                                height: 35,
+                                child: CupertinoTextField(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  style: TextStyles.Text,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFEFF1F6),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              SizedBox(
+                                width: 175,
+                                height: 35,
+                                child: CupertinoTextField(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  style: TextStyles.Text,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFEFF1F6),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              SizedBox(
+                                width: 175,
+                                height: 35,
+                                child: CupertinoTextField(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  style: TextStyles.Text,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFEFF1F6),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              SizedBox(
+                                width: 175,
+                                height: 35,
+                                child: CupertinoTextField(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  style: TextStyles.Text,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFEFF1F6),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                  left: 20,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  'Waist',
+                                  style: TextStyles.Text,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                  left: 110,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  'Height in cm',
+                                  style: TextStyles.Text,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                  left: 75,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  'Weight in kg',
+                                  style: TextStyles.Text,
+                                ),
+                              ),
+                            ),
+                             Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                  left: 75,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  'RR',
+                                  style: TextStyles.Text,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 175,
+                                height: 35,
+                                child: CupertinoTextField(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  style: TextStyles.Text,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFEFF1F6),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              SizedBox(
+                                width: 175,
+                                height: 35,
+                                child: CupertinoTextField(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  style: TextStyles.Text,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFEFF1F6),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              SizedBox(
+                                width: 175,
+                                height: 35,
+                                child: CupertinoTextField(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  style: TextStyles.Text,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFEFF1F6),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              SizedBox(
+                                width: 175,
+                                height: 35,
+                                child: CupertinoTextField(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  style: TextStyles.Text,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFEFF1F6),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                         Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                  left: 20,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  'Nutritional Status',
+                                  style: TextStyles.Text,
+                                ),
+                              ),
+                            ),
+ Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  // Radio 1
+                  Column(
+                    children: [
+                      Obx(() => Radio<int>(
+                            value: 1,
+                            groupValue: controller.selectedOption.value,
+                            onChanged: (int? value) {
+                              controller.selectedOption.value = value!;
+                            },
+                          )),
+                      Text("Normal"),
+                    ],
+                  ),
+                  // Radio 2
+                  Column(
+                    children: [
+                      Obx(() => Radio<int>(
+                            value: 2,
+                            groupValue: controller.selectedOption.value,
+                            onChanged: (int? value) {
+                              controller.selectedOption.value = value!;
+                            },
+                          )),
+                      Text("Underweight"),
+                    ],
+                  ),
+                  // Radio 3
+                  Column(
+                    children: [
+                      Obx(() => Radio<int>(
+                            value: 3,
+                            groupValue: controller.selectedOption.value,
+                            onChanged: (int? value) {
+                              controller.selectedOption.value = value!;
+                            },
+                          )),
+                      Text("Severely Underweight"),
+                    ],
+                  ),
+                  // Radio 4
+                  Column(
+                    children: [
+                      Obx(() => Radio<int>(
+                            value: 4,
+                            groupValue: controller.selectedOption.value,
+                            onChanged: (int? value) {
+                              controller.selectedOption.value = value!;
+                            },
+                          )),
+                      Text("Overweight"),
+                    ],
+                  ),
+                  // Radio 5
+                  Column(
+                    children: [
+                      Obx(() => Radio<int>(
+                            value: 5,
+                            groupValue: controller.selectedOption.value,
+                            onChanged: (int? value) {
+                              controller.selectedOption.value = value!;
+                            },
+                          )),
+                      Text("Wasted"),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Obx(() => Radio<int>(
+                            value: 5,
+                            groupValue: controller.selectedOption.value,
+                            onChanged: (int? value) {
+                              controller.selectedOption.value = value!;
+                            },
+                          )),
+                      Text("Severely Wasted"),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Obx(() => Radio<int>(
+                            value: 5,
+                            groupValue: controller.selectedOption.value,
+                            onChanged: (int? value) {
+                              controller.selectedOption.value = value!;
+                            },
+                          )),
+                      Text("Stunded"),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Obx(() => Radio<int>(
+                            value: 5,
+                            groupValue: controller.selectedOption.value,
+                            onChanged: (int? value) {
+                              controller.selectedOption.value = value!;
+                            },
+                          )),
+                      Text("Severely Stunded"),
+                    ],
+                  ),
+                ],
+              ),
                         //content
                         SizedBox(height: 10),
                       ],

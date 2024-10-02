@@ -119,6 +119,13 @@ class Index extends StatelessWidget {
     title: "Inventory",
     icon: const Icon(Icons.inventory_2_outlined),
     children: [
+       SideMenuItem(
+        title: 'Medicine & Equipment',
+        onTap: (index, _) {
+             controller.changePage(index);
+        },
+        icon: const Icon(Icons.medication_outlined),
+      ),
       SideMenuItem(
         title: 'Stocks',
         onTap: (index, _) {
