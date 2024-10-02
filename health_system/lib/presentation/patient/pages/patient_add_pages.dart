@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:health_system/presentation/patient/controllers/patient_controllers.dart';
+import 'package:health_system/presentation/patient/forms/epi_form.dart';
 import 'package:health_system/presentation/patient/forms/phc_form.dart';
 import 'package:health_system/widget/loading_form.dart';
 import 'package:health_system/widget/success.dart';
@@ -806,19 +807,19 @@ void AddPatient(BuildContext context) {
                         //loadingform(context);
                         switch (controller.selectedOption.value) {
                           case 1:
-                           // EPIFORM(context);
+                            EPIFORM(context);
                             break;
                           case 2:
-                           // TBFORM(context);
+                            // TBFORM(context);
                             break;
                           case 3:
-                           // PRENATALFORM(context);
+                            // PRENATALFORM(context);
                             break;
                           case 4:
                             PHCFORM(context);
                             break;
                           case 5:
-                           // SERVICEFORM(context);
+                            // SERVICEFORM(context);
                             break;
                           default:
                             break;
