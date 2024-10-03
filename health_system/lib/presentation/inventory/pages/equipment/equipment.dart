@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/presentation/inventory/pages/stocks/inventory_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 
-class AppointmentListPages extends StatelessWidget {
-  const AppointmentListPages({super.key});
+class EquipmentListPages extends StatelessWidget {
+  const EquipmentListPages({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class AppointmentListPages extends StatelessWidget {
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              AdminAppbar(title: 'Appointment'),
+              AdminAppbar(title: 'Medical & Equipment'),
               SizedBox(
                 height: 20,
               ),
@@ -53,7 +54,7 @@ class AppointmentListPages extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        'Appointment List',
+                        'Medical & Equipment List',
                         style: TextStyles.Tableloc,
                       ),
                     ],
@@ -90,9 +91,10 @@ class AppointmentListPages extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               print('add');
+                              AddInventory(context);
                             },
                             child: Container(
-                              width: 130,
+                              width: 100,
                               height: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -108,7 +110,7 @@ class AppointmentListPages extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Add Appointment',
+                                  'Add Inventory',
                                   style: TextStyles.Textwhite,
                                 ),
                               ),
@@ -191,35 +193,46 @@ class AppointmentListPages extends StatelessWidget {
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
                                         child: Text(
-                                          'Requested By',
+                                          'Name',
                                           style: TextStyles.AppBartext,
                                         ),
                                       ),
                                     ),
                                     Container(
-                                      width: 350,
+                                      width: 250,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
                                         child: Text(
-                                          'Purpose',
+                                          'Category',
                                           style: TextStyles.AppBartext,
                                         ),
                                       ),
                                     ),
                                     Container(
-                                      width: 160,
+                                      width: 130,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
                                         child: Text(
-                                          'Date',
+                                          'Created Date',
                                           style: TextStyles.AppBartext,
                                         ),
                                       ),
                                     ),
                                     Container(
-                                      width: 118,
+                                      width: 130,
+                                      height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                      child: Center(
+                                        child: Text(
+                                          'Created By',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 115,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
@@ -278,7 +291,7 @@ class AppointmentListPages extends StatelessWidget {
                                           ),
                                         ),
                                         Container(
-                                          width: 350,
+                                          width: 250,
                                           height: 80,
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
@@ -289,7 +302,7 @@ class AppointmentListPages extends StatelessWidget {
                                           ),
                                         ),
                                         Container(
-                                          width: 160,
+                                          width: 130,
                                           height: 80,
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
@@ -300,7 +313,18 @@ class AppointmentListPages extends StatelessWidget {
                                           ),
                                         ),
                                         Container(
-                                          width: 118,
+                                          width: 130,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Text(
+                                              patient['gender']!,
+                                              style: TextStyles.AppBartext,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 115,
                                           height: 80,
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(

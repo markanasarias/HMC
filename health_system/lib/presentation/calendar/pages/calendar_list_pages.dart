@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/presentation/calendar/controller/calendar_controller.dart';
+import 'package:health_system/presentation/calendar/pages/calendar_add.dart';
 import 'package:health_system/presentation/calendar/pages/calendar_details.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
@@ -33,6 +34,35 @@ class CalendarListPages extends StatelessWidget {
                       Text('>', style: TextStyles.Text1),
                       SizedBox(width: 5),
                       Text('Calendar', style: TextStyles.Tableloc),
+                      SizedBox(width: 780),
+                      GestureDetector(
+                        onTap: () {
+                          print('add');
+                          AddCalendar(context);
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.blue,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Add',
+                              style: TextStyles.Textwhite,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],

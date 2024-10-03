@@ -282,52 +282,77 @@ class DashboardPages extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 30),
-                       Expanded(
-  child: Container(
-    height: 370,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(15),
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.2),
-          spreadRadius: 1,
-          blurRadius: 5,
-          offset: Offset(0, 3),
-        ),
-      ],
-    ),
-    child: Obx(
-      () {
-        if (controller.patientData.isEmpty) {
-          return Center(
-            child: Text('No Data Available'),
-          );
-        }
-        return Container(
-          height: 300,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            color: Colors.white,
-          ),
-          child: SfCartesianChart(
-            primaryXAxis: CategoryAxis(),
-            primaryYAxis: NumericAxis(),
-            series: <LineSeries<dynamic, String>>[
-              LineSeries<PatientData, String>(
-                dataSource: controller.patientData,
-                xValueMapper: (PatientData data, _) => data.name,
-                yValueMapper: (PatientData data, _) =>
-                    data.patiendid.length.toDouble(),
-                dataLabelSettings: const DataLabelSettings(isVisible: true),
-              ),
-            ],
-          ),
-        );
-      },
-    ),
-  ),
-)                      
+                        Expanded(
+                          child: Container(
+                            height: 370,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Obx(
+                              () {
+                                final currentDate = DateTime.now();
+                                List<MonthData> last5MonthsData =
+                                    List.generate(5, (index) {
+                                  final month = DateTime(currentDate.year,
+                                      currentDate.month - index);
+                                  final count = controller.patientData
+                                      .where((data) =>
+                                          data.date.month == month.month &&
+                                          data.date.year == month.year)
+                                      .length;
+
+                                  return MonthData(
+                                    "${month.month}/${month.year}",
+                                    count,
+                                  );
+                                });
+
+                                if (last5MonthsData.isEmpty) {
+                                  return Center(
+                                    child: Text('No Data Available'),
+                                  );
+                                }
+                                return Container(
+                                  height: 300,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(20)),
+                                    color: Colors.white,
+                                  ),
+                                  child: SfCartesianChart(
+                                    primaryXAxis: CategoryAxis(),
+                                    primaryYAxis: NumericAxis(),
+                                    series: <SplineAreaSeries<MonthData,
+                                        String>>[
+                                      SplineAreaSeries<MonthData, String>(
+                                        dataSource: last5MonthsData,
+                                        xValueMapper: (MonthData data, _) =>
+                                            data.name,
+                                        yValueMapper: (MonthData data, _) =>
+                                            data.count.toDouble(),
+                                        color: Colors.blue.withOpacity(0.3),
+                                        borderColor: Colors.blue,
+                                        borderWidth: 2,
+                                        dataLabelSettings:
+                                            const DataLabelSettings(
+                                                isVisible: true),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/presentation/inventory/pages/request/request_pages.dart';
 import 'package:health_system/presentation/inventory/pages/stocks/inventory_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
@@ -64,7 +65,7 @@ class RequestListPages extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-                Container(
+              Container(
                 width: MediaQuery.of(context).size.width,
                 height: 475,
                 decoration: BoxDecoration(
@@ -91,8 +92,7 @@ class RequestListPages extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               print('add');
-                              AddInventory(context);
-                      
+                              RequestInventory(context);
                             },
                             child: Container(
                               width: 100,
@@ -111,7 +111,7 @@ class RequestListPages extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Add Inventory',
+                                  'Request',
                                   style: TextStyles.Textwhite,
                                 ),
                               ),
@@ -177,49 +177,83 @@ class RequestListPages extends StatelessWidget {
                                 ),
                                 child: Row(
                                   children: [
-                                  Container(
-                                    width: 100,
-                                    height: 80,
-                                   color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('ID', style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 250,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Name', style: TextStyles.AppBartext,),),
-                                    
-                                  ),
                                     Container(
-                                    width: 80,
-                                    height: 80,
+                                      width: 100,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Category', style: TextStyles.AppBartext,),),
-                                  ),
+                                      child: Center(
+                                        child: Text(
+                                          'ID',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
                                     Container(
-                                    width: 160,
-                                    height: 80,
+                                      width: 250,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Quantity', style: TextStyles.AppBartext,),),
-                                  ),  Container(
-                                    width: 100,
-                                    height: 80,
+                                      child: Center(
+                                        child: Text(
+                                          'Name',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 80,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Date', style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 170,
-                                    height: 80,
+                                      child: Center(
+                                        child: Text(
+                                          'Category',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 160,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Expiration Date', style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 118,
-                                    height: 80,
+                                      child: Center(
+                                        child: Text(
+                                          'Quantity',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 100,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                  child: Center(child: Text('Action', style: TextStyles.AppBartext,),),
-                                  ),
-
+                                      child: Center(
+                                        child: Text(
+                                          'Date',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 170,
+                                      height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                      child: Center(
+                                        child: Text(
+                                          'Expiration Date',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 118,
+                                      height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                      child: Center(
+                                        child: Text(
+                                          'Action',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -247,68 +281,95 @@ class RequestListPages extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Container(
-                                    width: 100,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text(  patient['id']!,
-                                          style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 250,
-                                    height: 80,
-                                     color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text(  patient['name']!,
-                                          style: TextStyles.AppBartext,),),
-                                    
-                                  ),
-                                    Container(
-                                    width: 80,
-                                    height: 80,
-                                     color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text(  patient['age']!,
-                                          style: TextStyles.AppBartext,),),
-                                  ),
-                                    Container(
-                                    width: 160,
-                                    height: 80,
-                                     color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text(  patient['dob']!,
-                                          style: TextStyles.AppBartext,),),
-                                  ),  Container(
-                                    width: 100,
-                                    height: 80,
-                                    color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text(  patient['gender']!,
-                                          style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 170,
-                                    height: 80,
-                                  color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text(  patient['contact']!,
-                                          style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 118,
-                                    height: 80,
-                                   color: Colors.grey.withOpacity(0.01),
-                                  child: Center(child: Row(
-                                          children: [
-                                             SizedBox(width: 20,),
-                                            IconButton(
-                                              icon: Icon(Icons.visibility,
-                                                  color: Colors.blue),
-                                              onPressed: () {},
+                                          width: 100,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Text(
+                                              patient['id']!,
+                                              style: TextStyles.AppBartext,
                                             ),
-                                            IconButton(
-                                              icon: Icon(Icons.edit,
-                                                  color: Colors.blue),
-                                              onPressed: () {},
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 250,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Text(
+                                              patient['name']!,
+                                              style: TextStyles.AppBartext,
                                             ),
-                                          ],
-                                        ),),
-                                  ),
-
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 80,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Text(
+                                              patient['age']!,
+                                              style: TextStyles.AppBartext,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 160,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Text(
+                                              patient['dob']!,
+                                              style: TextStyles.AppBartext,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 100,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Text(
+                                              patient['gender']!,
+                                              style: TextStyles.AppBartext,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 170,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Text(
+                                              patient['contact']!,
+                                              style: TextStyles.AppBartext,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 118,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                IconButton(
+                                                  icon: Icon(Icons.visibility,
+                                                      color: Colors.blue),
+                                                  onPressed: () {},
+                                                ),
+                                                IconButton(
+                                                  icon: Icon(Icons.edit,
+                                                      color: Colors.blue),
+                                                  onPressed: () {},
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   );

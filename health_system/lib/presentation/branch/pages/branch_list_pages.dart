@@ -53,7 +53,7 @@ class BranchListPages extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        'Branch List',
+                        'Center List',
                         style: TextStyles.Tableloc,
                       ),
                     ],
@@ -63,7 +63,7 @@ class BranchListPages extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-   Container(
+              Container(
                 width: MediaQuery.of(context).size.width,
                 height: 475,
                 decoration: BoxDecoration(
@@ -90,8 +90,6 @@ class BranchListPages extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               print('add');
-                            
-                     
                             },
                             child: Container(
                               width: 100,
@@ -110,7 +108,7 @@ class BranchListPages extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Add Branch',
+                                  'Add Center',
                                   style: TextStyles.Textwhite,
                                 ),
                               ),
@@ -174,33 +172,52 @@ class BranchListPages extends StatelessWidget {
                                   ),
                                   color: Colors.grey.withOpacity(0.1),
                                 ),
-                                child:Row(
+                                child: Row(
                                   children: [
-                                  Container(
-                                    width: 150,
-                                    height: 80,
-                                   color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('ID', style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 310,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Action', style: TextStyles.AppBartext,),),
-                                    
-                                  ),
                                     Container(
-                                    width: 310,
-                                    height: 80,
+                                      width: 150,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Name', style: TextStyles.AppBartext,),),
-                                  ),
+                                      child: Center(
+                                        child: Text(
+                                          'ID',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
                                     Container(
-                                    width: 200,
-                                    height: 80,
+                                      width: 250,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Date', style: TextStyles.AppBartext,),),
-                                  ),
+                                      child: Center(
+                                        child: Text(
+                                          'Name',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 470,
+                                      height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                      child: Center(
+                                        child: Text(
+                                          'Location',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 100,
+                                      height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                      child: Center(
+                                        child: Text(
+                                          'Action',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -227,32 +244,62 @@ class BranchListPages extends StatelessWidget {
                                     ),
                                     child: Row(
                                       children: [
-                                  Container(
-                                    width: 150,
-                                    height: 80,
-                                   color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('ID', style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 310,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Action', style: TextStyles.AppBartext,),),
-                                    
-                                  ),
-                                    Container(
-                                    width: 310,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Name', style: TextStyles.AppBartext,),),
-                                  ),
-                                    Container(
-                                    width: 200,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Date', style: TextStyles.AppBartext,),),
-                                  ),
-                                  ],
+                                        Container(
+                                          width: 150,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Text(
+                                              'ID',
+                                              style: TextStyles.AppBartext,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 250,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Text(
+                                              'Name',
+                                              style: TextStyles.AppBartext,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 470,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Text(
+                                              'Location',
+                                              style: TextStyles.AppBartext,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 100,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(
+                                            child: Row(
+                                              children: [
+                                                SizedBox(width: 20),
+                                                IconButton(
+                                                  icon: Icon(Icons.visibility,
+                                                      color: Colors.blue),
+                                                  onPressed: () {},
+                                                ),
+                                                IconButton(
+                                                  icon: Icon(Icons.edit,
+                                                      color: Colors.blue),
+                                                  onPressed: () {},
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   );
                                 },

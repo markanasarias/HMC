@@ -95,7 +95,6 @@ void EPIFORM(BuildContext context) {
                                 ),
                               ),
                             ),
-                          
                           ],
                         ),
                         Container(
@@ -143,7 +142,6 @@ void EPIFORM(BuildContext context) {
                                   ),
                                 ),
                               ),
-                             
                             ],
                           ),
                         ),
@@ -2127,7 +2125,7 @@ void EPIFORM(BuildContext context) {
                                 children: [
                                   Container(
                                     width: 130,
-                                        height: 30,
+                                    height: 30,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black,
@@ -2142,8 +2140,8 @@ void EPIFORM(BuildContext context) {
                                     ),
                                   ),
                                   Container(
-                                   width: 130,
-                                        height: 30,
+                                    width: 130,
+                                    height: 30,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black,
@@ -2158,8 +2156,8 @@ void EPIFORM(BuildContext context) {
                                     ),
                                   ),
                                   Container(
-                                   width: 130,
-                                        height: 30,
+                                    width: 130,
+                                    height: 30,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black,
@@ -2174,8 +2172,8 @@ void EPIFORM(BuildContext context) {
                                     ),
                                   ),
                                   Container(
-                                   width: 130,
-                                        height: 30,
+                                    width: 130,
+                                    height: 30,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: Colors.black,
@@ -2199,7 +2197,7 @@ void EPIFORM(BuildContext context) {
                                   child: Column(
                                     children: [
                                       Container(
-                                         width: 120,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2215,7 +2213,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                         width: 120,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2247,7 +2245,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                         width: 120,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2274,7 +2272,7 @@ void EPIFORM(BuildContext context) {
                                   child: Column(
                                     children: [
                                       Container(
-                                         width: 120,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2290,7 +2288,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                         width: 120,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2365,7 +2363,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                       width: 120,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2381,7 +2379,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                         width: 120,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2397,7 +2395,7 @@ void EPIFORM(BuildContext context) {
                                         ),
                                       ),
                                       Container(
-                                         width: 120,
+                                        width: 120,
                                         height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -2417,24 +2415,27 @@ void EPIFORM(BuildContext context) {
                                 ),
                               ],
                             ),
-                            SizedBox(width: 20, height: 20,),
                             SizedBox(
-                                width: 220,
-                                height: 120,
-                                child: CupertinoTextField(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10),
-                                  style: TextStyles.Text,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFEFF1F6),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  maxLines: 6,
+                              width: 20,
+                              height: 20,
+                            ),
+                            SizedBox(
+                              width: 220,
+                              height: 120,
+                              child: CupertinoTextField(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                                style: TextStyles.Text,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFEFF1F6),
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
+                                maxLines: 6,
                               ),
+                            ),
                           ],
                         ),
-Row(
+                        Row(
                           children: [
                             Align(
                               alignment: Alignment.centerLeft,
@@ -2479,7 +2480,7 @@ Row(
                                 ),
                               ),
                             ),
-                             Align(
+                            Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(
                                 padding: EdgeInsets.only(
@@ -2602,7 +2603,7 @@ Row(
                                 ),
                               ),
                             ),
-                             Align(
+                            Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(
                                 padding: EdgeInsets.only(
@@ -2680,126 +2681,142 @@ Row(
                             ],
                           ),
                         ),
-                         Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  top: 10,
-                                  left: 20,
-                                  right: 30,
-                                ),
-                                child: Text(
-                                  'Nutritional Status',
-                                  style: TextStyles.Text,
-                                ),
-                              ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: 10,
+                              left: 20,
+                              right: 30,
                             ),
- Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  // Radio 1
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 1,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("Normal"),
-                    ],
-                  ),
-                  // Radio 2
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 2,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("Underweight"),
-                    ],
-                  ),
-                  // Radio 3
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 3,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("Severely Underweight"),
-                    ],
-                  ),
-                  // Radio 4
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 4,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("Overweight"),
-                    ],
-                  ),
-                  // Radio 5
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 5,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("Wasted"),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 5,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("Severely Wasted"),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 5,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("Stunded"),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 5,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("Severely Stunded"),
-                    ],
-                  ),
-                ],
-              ),
+                            child: Text(
+                              'Nutritional Status',
+                              style: TextStyles.Text,
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            // Radio 1
+                            Column(
+                              children: [
+                                Obx(() => Radio<int>(
+                                      value: 1,
+                                      groupValue:
+                                          controller.selectedOption.value,
+                                      onChanged: (int? value) {
+                                        controller.selectedOption.value =
+                                            value!;
+                                      },
+                                    )),
+                                Text("Normal"),
+                              ],
+                            ),
+                            // Radio 2
+                            Column(
+                              children: [
+                                Obx(() => Radio<int>(
+                                      value: 2,
+                                      groupValue:
+                                          controller.selectedOption.value,
+                                      onChanged: (int? value) {
+                                        controller.selectedOption.value =
+                                            value!;
+                                      },
+                                    )),
+                                Text("Underweight"),
+                              ],
+                            ),
+                            // Radio 3
+                            Column(
+                              children: [
+                                Obx(() => Radio<int>(
+                                      value: 3,
+                                      groupValue:
+                                          controller.selectedOption.value,
+                                      onChanged: (int? value) {
+                                        controller.selectedOption.value =
+                                            value!;
+                                      },
+                                    )),
+                                Text("Severely Underweight"),
+                              ],
+                            ),
+                            // Radio 4
+                            Column(
+                              children: [
+                                Obx(() => Radio<int>(
+                                      value: 4,
+                                      groupValue:
+                                          controller.selectedOption.value,
+                                      onChanged: (int? value) {
+                                        controller.selectedOption.value =
+                                            value!;
+                                      },
+                                    )),
+                                Text("Overweight"),
+                              ],
+                            ),
+                            // Radio 5
+                            Column(
+                              children: [
+                                Obx(() => Radio<int>(
+                                      value: 5,
+                                      groupValue:
+                                          controller.selectedOption.value,
+                                      onChanged: (int? value) {
+                                        controller.selectedOption.value =
+                                            value!;
+                                      },
+                                    )),
+                                Text("Wasted"),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Obx(() => Radio<int>(
+                                      value: 5,
+                                      groupValue:
+                                          controller.selectedOption.value,
+                                      onChanged: (int? value) {
+                                        controller.selectedOption.value =
+                                            value!;
+                                      },
+                                    )),
+                                Text("Severely Wasted"),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Obx(() => Radio<int>(
+                                      value: 5,
+                                      groupValue:
+                                          controller.selectedOption.value,
+                                      onChanged: (int? value) {
+                                        controller.selectedOption.value =
+                                            value!;
+                                      },
+                                    )),
+                                Text("Stunded"),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Obx(() => Radio<int>(
+                                      value: 5,
+                                      groupValue:
+                                          controller.selectedOption.value,
+                                      onChanged: (int? value) {
+                                        controller.selectedOption.value =
+                                            value!;
+                                      },
+                                    )),
+                                Text("Severely Stunded"),
+                              ],
+                            ),
+                          ],
+                        ),
                         //content
                         SizedBox(height: 10),
                       ],

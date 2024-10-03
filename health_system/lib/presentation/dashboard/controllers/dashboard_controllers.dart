@@ -2,10 +2,9 @@ import 'package:get/get.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 
 class DashboardController extends GetxController {
-  var loading = true.obs;
-  // Observable list of PatientData
-
-  RxList<PatientData> patientData = <PatientData>[].obs;
+  var loading = true.obs; // Observable loading state
+  RxList<PatientData> patientData =
+      <PatientData>[].obs; // Observable list of PatientData
 
   // Columns for PlutoGrid
   List<PlutoColumn> get columns => [
@@ -50,35 +49,44 @@ class DashboardController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Initialize patient data
     fetchPatientData();
-
-    Future.delayed(Duration(seconds: 1), () {
-      loadings();
-    });
   }
 
-  Future<void> loadings() async {
-    print('false');
-    loading.value = false;
-    print(loading.value);
-  }
-
-  void fetchPatientData() {
-    // Example data
-    patientData.value = [
-      PatientData('001', 'John Doe', '123-456-7890', 'Consultation'),
-      PatientData('002', 'Jane Smith', '987-654-3210', 'Routine Checkup'),
-      PatientData('003', 'Alice Johnson', '555-123-4567', 'Emergency'),
-      PatientData('004', 'Bob Brown', '555-987-6543', 'Follow-up'),
-    ];
+  Future<void> fetchPatientData() async {
+    loading.value = true;
+    await Future.delayed(Duration(seconds: 1));
+    try {
+      patientData.value = [
+        PatientData(
+            '001', 'John Doe', '123-456-7890', 'Consultation', DateTime.now()),
+        PatientData('002', 'Jane Smith', '987-654-3210', 'Routine Checkup',
+            DateTime.now()),
+        PatientData('003', 'Alice Johnson', '555-123-4567', 'Emergency',
+            DateTime.now()),
+        PatientData(
+            '004', 'Bob Brown', '555-987-6543', 'Follow-up', DateTime.now()),
+      ];
+    } catch (error) {
+      print('Error fetching patient data: $error');
+    } finally {
+      loading.value = false;
+    }
   }
 }
 
 class PatientData {
-  PatientData(this.patiendid, this.name, this.phonenumber, this.services);
+  PatientData(
+      this.patiendid, this.name, this.phonenumber, this.services, this.date);
+
   final String patiendid;
   final String name;
   final String phonenumber;
   final String services;
+  DateTime date;
+}
+
+class MonthData {
+  MonthData(this.name, this.count);
+  final String name;
+  final int count;
 }

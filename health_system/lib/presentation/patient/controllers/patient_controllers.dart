@@ -40,7 +40,7 @@ class PatientControllers extends GetxController {
       'EEEE, MMMM d, y',
       'dd MMM yyyy',
     ];
-    
+
     for (String format in formats) {
       try {
         DateTime dateTime = DateFormat(format).parse(date);
@@ -52,7 +52,7 @@ class PatientControllers extends GetxController {
 
   Future<void> getloadpatient() async {
     print('loadpatient');
-    
+
     try {
       final response = await Patient().getpatient();
 
@@ -93,16 +93,18 @@ class PatientControllers extends GetxController {
     }
   }
 
-  // Method to filter patients based on the search query
   void filterPatients() {
     if (searchQuery.value.isEmpty) {
-      filteredPatients.value = patient; // Show all patients if query is empty
+      filteredPatients.value = patient;
     } else {
       filteredPatients.value = patient.where((patient) {
-        return patient.firstName.toLowerCase().contains(searchQuery.value.toLowerCase()) ||
-               patient.lastName.toLowerCase().contains(searchQuery.value.toLowerCase());
+        return patient.firstName
+                .toLowerCase()
+                .contains(searchQuery.value.toLowerCase()) ||
+            patient.lastName
+                .toLowerCase()
+                .contains(searchQuery.value.toLowerCase());
       }).toList();
     }
   }
 }
-    

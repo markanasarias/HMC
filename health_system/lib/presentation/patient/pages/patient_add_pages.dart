@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:health_system/presentation/patient/controllers/patient_controllers.dart';
 import 'package:health_system/presentation/patient/forms/epi_form.dart';
 import 'package:health_system/presentation/patient/forms/phc_form.dart';
+import 'package:health_system/presentation/patient/forms/prenatal_form.dart';
+import 'package:health_system/presentation/patient/forms/service_form.dart';
 import 'package:health_system/widget/loading_form.dart';
 import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
@@ -813,13 +815,13 @@ void AddPatient(BuildContext context) {
                             // TBFORM(context);
                             break;
                           case 3:
-                            // PRENATALFORM(context);
+                            PRENATALFORM(context);
                             break;
                           case 4:
                             PHCFORM(context);
                             break;
                           case 5:
-                            // SERVICEFORM(context);
+                            SERVICEFORM(context);
                             break;
                           default:
                             break;

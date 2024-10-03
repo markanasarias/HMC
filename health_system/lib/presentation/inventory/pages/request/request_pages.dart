@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/services.dart';
 
-void AddInventory(BuildContext context) {
+void RequestInventory(BuildContext context) {
   final StaffController controller = Get.put(StaffController());
   showDialog(
     context: context,
@@ -22,7 +22,6 @@ void AddInventory(BuildContext context) {
           height: 600,
           child: Column(
             children: <Widget>[
-              // Fixed header
               Container(
                 width: double.infinity,
                 height: 50,
@@ -36,12 +35,11 @@ void AddInventory(BuildContext context) {
                 child: Padding(
                   padding: EdgeInsets.only(left: 20, top: 12),
                   child: Text(
-                    'Add Inventory',
+                    'Request Inventory',
                     style: TextStyles.Text4,
                   ),
                 ),
               ),
-
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -332,7 +330,6 @@ void AddInventory(BuildContext context) {
                   ),
                 ),
               ),
-
               Divider(),
               Padding(
                 padding: const EdgeInsets.only(right: 10.0),
