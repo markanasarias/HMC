@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/presentation/appointment/controllers/appointment_controllers.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
 class AppointmentListPages extends StatelessWidget {
   const AppointmentListPages({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> patients = List.generate(
-      10,
-      (index) => {
-        'id': '24090${index + 1}',
-        'name': 'Mark Anasarias ${index + 1}',
-        'age': '${20 + index}',
-        'dob': '11/14/19${99 + index}',
-        'gender': index % 2 == 0 ? 'Male' : 'Female',
-        'contact': '09205447${10 + index}',
-      },
-    );
+    final AppointmentControllers controller = Get.put(AppointmentControllers());
     return Scaffold(
       body: Container(
         color: Colors.grey.withOpacity(0.1),
@@ -27,42 +19,23 @@ class AppointmentListPages extends StatelessWidget {
           child: Column(
             children: [
               AdminAppbar(title: 'Appointment'),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        'Home',
-                        style: TextStyles.Tableloc,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '>',
-                        style: TextStyles.Text1,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        'Appointment List',
-                        style: TextStyles.Tableloc,
-                      ),
+                      SizedBox(width: 20),
+                      Text('Home', style: TextStyles.Tableloc),
+                      SizedBox(width: 5),
+                      Text('>', style: TextStyles.Text1),
+                      SizedBox(width: 5),
+                      Text('Appointment List', style: TextStyles.Tableloc),
                     ],
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10),
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 475,
@@ -79,8 +52,7 @@ class AppointmentListPages extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.symmetric(
-                      horizontal: 20, vertical: 10),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 20, vertical: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -129,19 +101,14 @@ class AppointmentListPages extends StatelessWidget {
                                 ),
                                 prefix: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Icon(
-                                    Icons.search,
-                                    color: Color(0xFF9E9E9E),
-                                  ),
+                                  child: Icon(Icons.search, color: Color(0xFF9E9E9E)),
                                 ),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 10),
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: 400,
@@ -175,36 +142,27 @@ class AppointmentListPages extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Container(
-                                      width: 100,
+                                      width: 200,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'ID',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Requested To', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
-                                      width: 250,
+                                      width: 200,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Requested By',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Requested By', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
-                                      width: 350,
+                                      width: 300,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Purpose',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Purpose', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -212,10 +170,7 @@ class AppointmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Date',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Date', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -223,110 +178,100 @@ class AppointmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Action',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Action', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
+                            SizedBox(height: 5),
                             Expanded(
-                              child: ListView.builder(
-                                itemCount: patients.length,
-                                itemBuilder: (context, index) {
-                                  final patient = patients[index];
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey,
-                                          width: 0.2,
+                              child: Obx(
+                                () => ListView.builder(
+                                  itemCount: controller.appointment.length,
+                                  itemBuilder: (context, index) {
+                                    final appointment = controller.appointment[index];
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.withOpacity(0.1),
+                                        border: Border(
+                                          bottom: BorderSide(color: Colors.grey, width: 0.2),
                                         ),
                                       ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: 100,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              patient['id']!,
-                                              style: TextStyles.AppBartext,
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 200,
+                                            height: 80,
+                                            color: Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                appointment.staff_fullname,
+                                                style: TextStyles.AppBartext,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 250,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              patient['name']!,
-                                              style: TextStyles.AppBartext,
+                                          Container(
+                                            width: 200,
+                                            height: 80,
+                                            color: Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                appointment.requestedby_fullname,
+                                                style: TextStyles.AppBartext,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 350,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              patient['age']!,
-                                              style: TextStyles.AppBartext,
+                                          Container(
+                                            width: 300,
+                                            height: 80,
+                                            color: Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                appointment.purpose,
+                                                style: TextStyles.AppBartext,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 160,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              patient['dob']!,
-                                              style: TextStyles.AppBartext,
+                                          Container(
+                                            width: 160,
+                                            height: 80,
+                                            color: Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                '${appointment.startdate} - ${appointment.enddate}',
+                                                style: TextStyles.AppBartext,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 118,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Row(
-                                              children: [
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(Icons.visibility,
-                                                      color: Colors.blue),
-                                                  onPressed: () {},
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(Icons.edit,
-                                                      color: Colors.blue),
-                                                  onPressed: () {},
-                                                ),
-                                              ],
+                                          Container(
+                                            width: 118,
+                                            height: 80,
+                                            color: Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(width: 20),
+                                                  IconButton(
+                                                    icon: Icon(Icons.visibility, color: Colors.blue),
+                                                    onPressed: () {},
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(Icons.edit, color: Colors.blue),
+                                                    onPressed: () {},
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ],

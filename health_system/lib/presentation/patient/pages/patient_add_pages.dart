@@ -105,6 +105,7 @@ void AddPatient(BuildContext context) {
                       width: 185,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.last_nameC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -120,6 +121,7 @@ void AddPatient(BuildContext context) {
                       width: 185,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.first_nameC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -135,6 +137,7 @@ void AddPatient(BuildContext context) {
                       width: 180,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.middle_nameC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -201,16 +204,20 @@ void AddPatient(BuildContext context) {
                     Obx(
                       () => GestureDetector(
                           onTap: () async {
-                            await showDatePicker(
-                                    context: context,
-                                    firstDate: DateTime(1940),
-                                    lastDate: DateTime(2015),
-                                    currentDate: DateTime(2008))
-                                .then((date) {
-                              controller.birthdayC.value =
-                                  DateFormat('MMMM dd, y').format(date!);
-                            });
-                          },
+      await showDatePicker(
+        context: context,
+        firstDate: DateTime(1940),
+        lastDate: DateTime(2015),
+        currentDate: DateTime(2008),
+      ).then((date) {
+        if (date != null) {
+          controller.birthdayC.value = DateFormat('yyyy-MM-dd').format(date);
+          controller.age.value = controller.calculateAge(date).toString(); 
+          print(controller.birthdayC.value);
+          print("Age: ${controller.age.value}");
+        }
+      });
+    },
                           child: Container(
                             width: 150,
                             height: 35,
@@ -229,6 +236,7 @@ void AddPatient(BuildContext context) {
                       width: 250,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.birth_placeC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -263,6 +271,7 @@ void AddPatient(BuildContext context) {
                               onChanged: (String? newValue) {
                                 if (newValue != null) {
                                   controller.selectedGender.value = newValue;
+                                  print(controller.selectedGender.value);
                                 }
                               },
                               hint: Text(
@@ -358,6 +367,7 @@ void AddPatient(BuildContext context) {
                       width: 120,
                       height: 35,
                       child: CupertinoTextField(
+                         controller: controller.nationalityC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -372,6 +382,7 @@ void AddPatient(BuildContext context) {
                       width: 120,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.religionC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -386,6 +397,7 @@ void AddPatient(BuildContext context) {
                       width: 150,
                       height: 35,
                       child: CupertinoTextField(
+                         controller: controller.occupationC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -400,6 +412,7 @@ void AddPatient(BuildContext context) {
                       width: 150,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.phone_numberC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -475,6 +488,7 @@ void AddPatient(BuildContext context) {
                                 if (newValue != null) {
                                   controller.selectedcivilstatus.value =
                                       newValue;
+                                      print( controller.selectedcivilstatus.value);
                                 }
                               },
                               hint: Text(
@@ -491,6 +505,7 @@ void AddPatient(BuildContext context) {
                       width: 412,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.addressC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -558,6 +573,7 @@ void AddPatient(BuildContext context) {
                       width: 185,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.emailC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -572,6 +588,7 @@ void AddPatient(BuildContext context) {
                       width: 185,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.emergency_contact_nameC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -586,6 +603,7 @@ void AddPatient(BuildContext context) {
                       width: 180,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.emergency_contact_phoneC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -674,6 +692,7 @@ void AddPatient(BuildContext context) {
                               onChanged: (String? newValue) {
                                 if (newValue != null) {
                                   controller.selectedbloodtype.value = newValue;
+                                  print(controller.selectedbloodtype.value);
                                 }
                               },
                               hint: Text(
@@ -690,6 +709,7 @@ void AddPatient(BuildContext context) {
                       width: 185,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.allergiesC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -704,6 +724,7 @@ void AddPatient(BuildContext context) {
                       width: 180,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.philhealth_numberC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -804,8 +825,9 @@ void AddPatient(BuildContext context) {
                     TextButton(
                       child: Text("Save"),
                       onPressed: () {
-                        showSuccessToast(context);
-                        Navigator.of(context).pop();
+                        controller.addpatient(context);
+                        //showSuccessToast(context);
+                       // Navigator.of(context).pop();
                         //loadingform(context);
                         switch (controller.selectedOption.value) {
                           case 1:

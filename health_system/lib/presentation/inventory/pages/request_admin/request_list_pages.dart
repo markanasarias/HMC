@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:health_system/presentation/inventory/pages/request/request_pages.dart';
+import 'package:get/get.dart';
+import 'package:health_system/presentation/inventory/controller/request_admin/request_admin.dart';
+import 'package:health_system/presentation/inventory/pages/request_admin/request_pages.dart';
+import 'package:health_system/presentation/inventory/pages/request_admin/request_view_pages.dart';
 import 'package:health_system/presentation/inventory/pages/stocks/inventory_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
@@ -10,17 +13,7 @@ class RequestListPages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> patients = List.generate(
-      10,
-      (index) => {
-        'id': '24090${index + 1}',
-        'name': 'Mark Anasarias ${index + 1}',
-        'age': '${20 + index}',
-        'dob': '11/14/19${99 + index}',
-        'gender': index % 2 == 0 ? 'Male' : 'Female',
-        'contact': '09205447${10 + index}',
-      },
-    );
+    final RequestAdmin controller = Get.put(RequestAdmin());
     return Scaffold(
       body: Container(
         color: Colors.grey.withOpacity(0.1),
@@ -205,7 +198,7 @@ class RequestListPages extends StatelessWidget {
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
                                         child: Text(
-                                          'Category',
+                                          'Total Item',
                                           style: TextStyles.AppBartext,
                                         ),
                                       ),
@@ -238,7 +231,7 @@ class RequestListPages extends StatelessWidget {
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
                                         child: Text(
-                                          'Expiration Date',
+                                          'Status',
                                           style: TextStyles.AppBartext,
                                         ),
                                       ),
@@ -262,10 +255,12 @@ class RequestListPages extends StatelessWidget {
                               height: 5,
                             ),
                             Expanded(
-                              child: ListView.builder(
-                                itemCount: patients.length,
+                              child:  Obx(
+                                () => 
+                              ListView.builder(
+                                itemCount: controller.requestsadmin.length,
                                 itemBuilder: (context, index) {
-                                  final patient = patients[index];
+                                  final requestsadmin = controller.requestsadmin[index];
                                   return Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 50,
@@ -286,7 +281,7 @@ class RequestListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['id']!,
+                                              requestsadmin.branch_id,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -297,7 +292,7 @@ class RequestListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['name']!,
+                                              requestsadmin.branch_name,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -308,7 +303,7 @@ class RequestListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['age']!,
+                                              requestsadmin.total_requests,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -319,7 +314,7 @@ class RequestListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['dob']!,
+                                             requestsadmin.total_requested_quantity,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -330,7 +325,7 @@ class RequestListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['gender']!,
+                                              requestsadmin.last_request_date,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -341,7 +336,7 @@ class RequestListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['contact']!,
+                                              requestsadmin.latest_status,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -359,7 +354,11 @@ class RequestListPages extends StatelessWidget {
                                                 IconButton(
                                                   icon: Icon(Icons.visibility,
                                                       color: Colors.blue),
-                                                  onPressed: () {},
+                                                  onPressed: () { ViewRequestInventory(context);
+                                                  print(requestsadmin.branch_id);
+                                                  controller.requestbranch_id.value = requestsadmin.branch_id;
+                                                  controller.getviewrequest();
+                                                  },
                                                 ),
                                                 IconButton(
                                                   icon: Icon(Icons.edit,
@@ -376,6 +375,7 @@ class RequestListPages extends StatelessWidget {
                                 },
                               ),
                             ),
+                             ),
                           ],
                         ),
                       ),

@@ -1,8 +1,31 @@
 import 'package:get/get.dart';
+import 'package:health_system/data/model/userinfo.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
+import 'package:health_system/repository/helper.dart';
 
 class DashboardController extends GetxController {
-  var loading = true.obs; // Observable loading state
+  var loading = true.obs; 
+  var id = ''.obs;
+  var type = ''.obs;
+  var fullname = ''.obs;
+  var role = ''.obs;
+  var position = ''.obs;
+  var specialization = ''.obs;
+  var phone_number = ''.obs;
+  var email = ''.obs;
+  var address = ''.obs;
+  var hire_date = ''.obs;
+  var years_of_experience = ''.obs;
+  var medical_license_number = ''.obs;
+  var image = ''.obs;
+  var createby = ''.obs;
+  var createddate = ''.obs;
+  var accesstypeid = ''.obs;
+  var status = ''.obs;
+  var usertype = ''.obs;
+
+
+  Helper helper = Helper();
   RxList<PatientData> patientData =
       <PatientData>[].obs; // Observable list of PatientData
 
@@ -50,6 +73,50 @@ class DashboardController extends GetxController {
   void onInit() {
     super.onInit();
     fetchPatientData();
+    _getUserInfo();
+  }
+
+    Future<void> _getUserInfo() async {
+    Map<String, dynamic> userinfo =
+      await Helper().readJsonToFile('metadata.json');
+    UserInfoModel user = UserInfoModel(
+      userinfo['id'].toString(),
+      userinfo['type'],
+      userinfo['fullname'],
+      userinfo['position'],
+      userinfo['specialization'],
+      userinfo['phone_number'],
+      userinfo['email'],
+      userinfo['address'],
+      userinfo['hire_date'],
+      userinfo['years_of_experience'].toString(),
+      userinfo['medical_license_number'],
+      userinfo['image'],
+      userinfo['createby'],
+      userinfo['createddate'],
+      userinfo['status'],
+      userinfo['center'],
+      userinfo['usertype'],
+    );
+
+  image.value = user.image;
+  id.value = user.id;
+  type.value = user.type.toString();
+   fullname.value = user.fullname.toString();
+   position.value = user.position.toString();
+   specialization.value = user.specialization.toString();
+   phone_number.value = user.phone_number.toString();
+   email.value = user.email.toString();
+   address.value = user.address.toString();
+   hire_date.value = user.hire_date.toString();
+   years_of_experience.value = user.years_of_experience.toString();
+   medical_license_number.value = user.medical_license_number.toString();
+createby.value = user.createby.toString();
+createddate.value = user.createddate.toString();
+status.value = user.status.toString();
+usertype.value = user.usertype.toString();
+print('name: $fullname');
+print('usertype: $usertype');
   }
 
   Future<void> fetchPatientData() async {

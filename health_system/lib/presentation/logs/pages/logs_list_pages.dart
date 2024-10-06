@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/data/api/logs.dart';
+import 'package:health_system/presentation/logs/controller/logs_controller.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
 class LogsListPages extends StatelessWidget {
   const LogsListPages({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> patients = List.generate(
-      10,
-      (index) => {
-        'id': '24090${index + 1}',
-        'name': 'Mark Anasarias ${index + 1}',
-        'age': '${20 + index}',
-        'dob': '11/14/19${99 + index}',
-        'gender': index % 2 == 0 ? 'Male' : 'Female',
-        'contact': '09205447${10 + index}',
-      },
-    );
+    final LogsController controller = Get.put(LogsController());
     return Scaffold(
       body: Container(
         color: Colors.grey.withOpacity(0.1),
@@ -27,43 +20,24 @@ class LogsListPages extends StatelessWidget {
           child: Column(
             children: [
               AdminAppbar(title: 'Logs'),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        'Home',
-                        style: TextStyles.Tableloc,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '>',
-                        style: TextStyles.Text1,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        'Logs List',
-                        style: TextStyles.Tableloc,
-                      ),
+                      SizedBox(width: 20),
+                      Text('Home', style: TextStyles.Tableloc),
+                      SizedBox(width: 5),
+                      Text('>', style: TextStyles.Text1),
+                      SizedBox(width: 5),
+                      Text('Logs List', style: TextStyles.Tableloc),
                     ],
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
-   Container(
+              SizedBox(height: 10),
+              Container(
                 width: MediaQuery.of(context).size.width,
                 height: 475,
                 decoration: BoxDecoration(
@@ -79,15 +53,13 @@ class LogsListPages extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.symmetric(
-                      horizontal: 20, vertical: 10),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 20, vertical: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                         
                           Padding(
                             padding: EdgeInsets.only(top: 0),
                             child: SizedBox(
@@ -113,9 +85,7 @@ class LogsListPages extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 10),
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: 400,
@@ -146,45 +116,42 @@ class LogsListPages extends StatelessWidget {
                                   ),
                                   color: Colors.grey.withOpacity(0.1),
                                 ),
-                                child:Row(
+                                child: Row(
                                   children: [
-                                  Container(
-                                    width: 150,
-                                    height: 80,
-                                   color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('ID', style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 310,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Action', style: TextStyles.AppBartext,),),
-                                    
-                                  ),
                                     Container(
-                                    width: 310,
-                                    height: 80,
+                                      width: 150,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Name', style: TextStyles.AppBartext,),),
-                                  ),
+                                      child: Center(child: Text('ID', style: TextStyles.AppBartext)),
+                                    ),
                                     Container(
-                                    width: 200,
-                                    height: 80,
+                                      width: 310,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Date', style: TextStyles.AppBartext,),),
-                                  ),
+                                      child: Center(child: Text('Action', style: TextStyles.AppBartext)),
+                                    ),
+                                    Container(
+                                      width: 310,
+                                      height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                      child: Center(child: Text('Name', style: TextStyles.AppBartext)),
+                                    ),
+                                    Container(
+                                      width: 200,
+                                      height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                      child: Center(child: Text('Date', style: TextStyles.AppBartext)),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
+                            SizedBox(height: 5),
                             Expanded(
-                              child: ListView.builder(
-                                itemCount: patients.length,
+                              child: Obx(() => ListView.builder(
+                                itemCount: controller.logs.length,
                                 itemBuilder: (context, index) {
-                                  final patient = patients[index];
+                                  final logs = controller.logs[index];
                                   return Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 50,
@@ -199,36 +166,35 @@ class LogsListPages extends StatelessWidget {
                                     ),
                                     child: Row(
                                       children: [
-                                  Container(
-                                    width: 150,
-                                    height: 80,
-                                   color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('ID', style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 310,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Action', style: TextStyles.AppBartext,),),
-                                    
-                                  ),
-                                    Container(
-                                    width: 310,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Name', style: TextStyles.AppBartext,),),
-                                  ),
-                                    Container(
-                                    width: 200,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Date', style: TextStyles.AppBartext,),),
-                                  ),
-                                  ],
+                                        Container(
+                                          width: 150,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(child: Text(logs.log_id, style: TextStyles.AppBartext)),
+                                        ),
+                                        Container(
+                                          width: 310,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(child: Text(logs.action, style: TextStyles.AppBartext)),
+                                        ),
+                                        Container(
+                                          width: 310,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(child: Text(logs.fullname, style: TextStyles.AppBartext)),
+                                        ),
+                                        Container(
+                                          width: 200,
+                                          height: 80,
+                                          color: Colors.grey.withOpacity(0.01),
+                                          child: Center(child: Text(logs.created_at, style: TextStyles.AppBartext)),
+                                        ),
+                                      ],
                                     ),
                                   );
                                 },
-                              ),
+                              )),
                             ),
                           ],
                         ),

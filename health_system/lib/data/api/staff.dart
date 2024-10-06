@@ -22,61 +22,37 @@ class Staff {
     return data;
   }
 
-  // Future<ResponceModel> request(
-  //     String employeeid, String amount, String purpose) async {
-  //   Map<String, dynamic> serverinfo = {};
+  Future<ResponceModel> addstaff(String type, String fullname, String position,
+  String specialization, String phone_number, String email,
+  String address, String hire_date, String years_of_experience,
+  String medical_license_number, String image, String createby,
+  String center) async {
+    final url = Uri.parse('${Config.apiUrl}${Config.addstaff}');
+    final response = await http.post(url, body: {
+      'type': type,
+      'fullname': fullname,
+      'position': position,
+      'specialization': specialization,
+      'phone_number': phone_number,
+      'email': email,
+      'address': address,
+      'hire_date': hire_date,
+      'years_of_experience': years_of_experience,
+      'medical_license_number': medical_license_number,
+      'image': image,
+      'createby': createby,
+      'center': center,
+    });
 
-  //   if (Platform.isWindows) {
-  //     serverinfo = await Helper().readJsonToFile('server.json');
-  //   }
-  //   if (Platform.isAndroid || Platform.isIOS) {
-  //     serverinfo = await Helper().JsonToFileRead('server.json');
-  //   }
+    final responseData = json.decode(response.body);
+    final status = response.statusCode;
+    final message = responseData['msg'];
+    final result = responseData['data'] ?? [];
+    final description = responseData['description'] ?? "";
 
-  //   String host = serverinfo['domain'];
-  //   final url = Uri.parse('$host${Config.requestashAPI}');
-  //   final response = await http.post(url, body: {
-  //     'employeeid': employeeid,
-  //     'amount': amount,
-  //     'purpose': purpose,
-  //   });
+    print(result);
 
-  //   final responseData = json.decode(response.body);
-  //   final status = response.statusCode;
-  //   final message = responseData['msg'];
-  //   final result = responseData['data'] ?? [];
-  //   final description = responseData['description'] ?? "";
-  //   print('result: $result');
-  //   ResponceModel data = ResponceModel(message, status, result, description);
-  //   return data;
-  // }
-
-  // Future<ResponceModel> cancelrequest(
-  //     String employeeid, String caCashadvanceid, String caStatus) async {
-  //   Map<String, dynamic> serverinfo = {};
-
-  //   if (Platform.isWindows) {
-  //     serverinfo = await Helper().readJsonToFile('server.json');
-  //   }
-  //   if (Platform.isAndroid || Platform.isIOS) {
-  //     serverinfo = await Helper().JsonToFileRead('server.json');
-  //   }
-
-  //   String host = serverinfo['domain'];
-  //   final url = Uri.parse('$host${Config.updatecashAPI}');
-  //   final response = await http.post(url, body: {
-  //     'employeeid': employeeid,
-  //     'cashadvanceid': caCashadvanceid,
-  //     'status': caStatus,
-  //   });
-
-  //   final responseData = json.decode(response.body);
-  //   final status = response.statusCode;
-  //   final message = responseData['msg'];
-  //   final result = responseData['data'] ?? [];
-  //   final description = responseData['description'] ?? "";
-  //   print('result: $result');
-  //   ResponceModel data = ResponceModel(message, status, result, description);
-  //   return data;
-  // }
+    ResponceModel data = ResponceModel(message, status, result, description);
+    return data;
+  }
 }

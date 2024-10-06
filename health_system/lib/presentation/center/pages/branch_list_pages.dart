@@ -1,68 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/presentation/center/controller/center_controller.dart';
+import 'package:health_system/presentation/center/pages/branch_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:health_system/widget/loading.dart';
+import 'package:health_system/widget/nodata.dart';
 
 class BranchListPages extends StatelessWidget {
   const BranchListPages({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> patients = List.generate(
-      10,
-      (index) => {
-        'id': '24090${index + 1}',
-        'name': 'Mark Anasarias ${index + 1}',
-        'age': '${20 + index}',
-        'dob': '11/14/19${99 + index}',
-        'gender': index % 2 == 0 ? 'Male' : 'Female',
-        'contact': '09205447${10 + index}',
-      },
-    );
+    final CenterController controller = Get.put(CenterController());
     return Scaffold(
-      body: Container(
+      body:  Obx(() {
+        return
+      Container(
         color: Colors.grey.withOpacity(0.1),
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
               AdminAppbar(title: 'Branch'),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        'Home',
-                        style: TextStyles.Tableloc,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '>',
-                        style: TextStyles.Text1,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        'Center List',
-                        style: TextStyles.Tableloc,
-                      ),
+                      SizedBox(width: 20),
+                      Text('Home', style: TextStyles.Tableloc),
+                      SizedBox(width: 5),
+                      Text('>', style: TextStyles.Text1),
+                      SizedBox(width: 5),
+                      Text('Center List', style: TextStyles.Tableloc),
                     ],
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10),
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 475,
@@ -79,8 +57,7 @@ class BranchListPages extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.symmetric(
-                      horizontal: 20, vertical: 10),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 20, vertical: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -89,7 +66,7 @@ class BranchListPages extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              print('add');
+                              AddBranches(context);
                             },
                             child: Container(
                               width: 100,
@@ -107,10 +84,7 @@ class BranchListPages extends StatelessWidget {
                                 ],
                               ),
                               child: Center(
-                                child: Text(
-                                  'Add Center',
-                                  style: TextStyles.Textwhite,
-                                ),
+                                child: Text('Add Center', style: TextStyles.Textwhite),
                               ),
                             ),
                           ),
@@ -129,19 +103,14 @@ class BranchListPages extends StatelessWidget {
                                 ),
                                 prefix: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Icon(
-                                    Icons.search,
-                                    color: Color(0xFF9E9E9E),
-                                  ),
+                                  child: Icon(Icons.search, color: Color(0xFF9E9E9E)),
                                 ),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 10),
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: 400,
@@ -179,10 +148,7 @@ class BranchListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'ID',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('ID', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -190,120 +156,108 @@ class BranchListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Name',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Name', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
-                                      width: 470,
+                                      width: 465,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Location',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Location', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
-                                      width: 100,
+                                      width: 110,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Action',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Action', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
+                            SizedBox(height: 5),
                             Expanded(
-                              child: ListView.builder(
-                                itemCount: patients.length,
-                                itemBuilder: (context, index) {
-                                  final patient = patients[index];
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey,
-                                          width: 0.2,
+                              child: controller.isloading.value ? Loading() 
+                              : controller.center.isEmpty 
+                              ? NoDataFound()
+                              : ListView.builder(
+                                  itemCount: controller.center.length,
+                                  itemBuilder: (context, index) {
+                                    final center = controller.center[index];
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.withOpacity(0.1),
+                                        border: Border(
+                                          bottom: BorderSide(color: Colors.grey, width: 0.2),
                                         ),
                                       ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: 150,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              'ID',
-                                              style: TextStyles.AppBartext,
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 150,
+                                            height: 80,
+                                            color: Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                center.branch_id,
+                                                style: TextStyles.AppBartext,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 250,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              'Name',
-                                              style: TextStyles.AppBartext,
+                                          Container(
+                                            width: 250,
+                                            height: 80,
+                                            color: Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                center.branch_name,
+                                                style: TextStyles.AppBartext,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 470,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              'Location',
-                                              style: TextStyles.AppBartext,
+                                          Container(
+                                            width: 460,
+                                            height: 80,
+                                            color: Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                center.address,
+                                                style: TextStyles.AppBartext,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 100,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Row(
-                                              children: [
-                                                SizedBox(width: 20),
-                                                IconButton(
-                                                  icon: Icon(Icons.visibility,
-                                                      color: Colors.blue),
-                                                  onPressed: () {},
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(Icons.edit,
-                                                      color: Colors.blue),
-                                                  onPressed: () {},
-                                                ),
-                                              ],
+                                          Container(
+                                            width: 110,
+                                            height: 80,
+                                            color: Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(width: 20),
+                                                  IconButton(
+                                                    icon: Icon(Icons.visibility, color: Colors.blue),
+                                                    onPressed: () {},
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(Icons.edit, color: Colors.blue),
+                                                    onPressed: () {},
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                )
+                                
                             ),
                           ],
                         ),
@@ -315,7 +269,9 @@ class BranchListPages extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      );
+      }
+      )
     );
   }
 }

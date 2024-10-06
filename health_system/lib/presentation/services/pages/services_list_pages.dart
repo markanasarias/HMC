@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/presentation/services/controller/service_controller.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
 class ServicesListPages extends StatelessWidget {
   const ServicesListPages({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> patients = List.generate(
-      10,
-      (index) => {
-        'id': '24090${index + 1}',
-        'name': 'Mark Anasarias ${index + 1}',
-        'age': '${20 + index}',
-        'dob': '11/14/19${99 + index}',
-        'gender': index % 2 == 0 ? 'Male' : 'Female',
-        'contact': '09205447${10 + index}',
-      },
-    );
+    final ServiceController controller = Get.put(ServiceController());
     return Scaffold(
       body: Container(
         color: Colors.grey.withOpacity(0.1),
@@ -176,18 +168,7 @@ class ServicesListPages extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Container(
-                                      width: 100,
-                                      height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                      child: Center(
-                                        child: Text(
-                                          'ID',
-                                          style: TextStyles.AppBartext,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 400,
+                                      width: 300,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
@@ -198,7 +179,7 @@ class ServicesListPages extends StatelessWidget {
                                       ),
                                     ),
                                     Container(
-                                      width: 180,
+                                      width: 380,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
@@ -237,11 +218,12 @@ class ServicesListPages extends StatelessWidget {
                             SizedBox(
                               height: 5,
                             ),
-                            Expanded(
+                            // Wrap the ListView.builder with Obx
+                            Obx(() => Expanded(
                               child: ListView.builder(
-                                itemCount: patients.length,
+                                itemCount: controller.service.length,
                                 itemBuilder: (context, index) {
-                                  final patient = patients[index];
+                                  final service = controller.service[index];
                                   return Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 50,
@@ -257,34 +239,23 @@ class ServicesListPages extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Container(
-                                          width: 100,
+                                          width: 300,
                                           height: 80,
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['id']!,
+                                              service.service_name,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
                                         ),
                                         Container(
-                                          width: 400,
+                                          width: 380,
                                           height: 80,
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['name']!,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 180,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              patient['age']!,
+                                              service.schedule_days,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -295,7 +266,7 @@ class ServicesListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['dob']!,
+                                              service.schedule_time,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -329,7 +300,7 @@ class ServicesListPages extends StatelessWidget {
                                   );
                                 },
                               ),
-                            ),
+                            )),
                           ],
                         ),
                       ),

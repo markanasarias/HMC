@@ -34,7 +34,7 @@ class CalendarListPages extends StatelessWidget {
                       Text('>', style: TextStyles.Text1),
                       SizedBox(width: 5),
                       Text('Calendar', style: TextStyles.Tableloc),
-                      SizedBox(width: 780),
+                      SizedBox(width: 772),
                       GestureDetector(
                         onTap: () {
                           print('add');

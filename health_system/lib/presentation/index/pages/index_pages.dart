@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:health_system/presentation/appointment/pages/appointment_list_pages.dart';
-import 'package:health_system/presentation/branch/pages/branch_list_pages.dart';
+import 'package:health_system/presentation/center/pages/branch_list_pages.dart';
 import 'package:health_system/presentation/calendar/pages/calendar_list_pages.dart';
+import 'package:health_system/presentation/dashboard/controllers/dashboard_controllers.dart';
 import 'package:health_system/presentation/dashboard/pages/dashaboard_pages.dart';
-import 'package:health_system/presentation/doctor/pages/doctor_list_pages.dart';
 import 'package:health_system/presentation/index/controllers/index_controller.dart';
-import 'package:health_system/presentation/inventory/pages/equipment/equipment.dart';
-import 'package:health_system/presentation/inventory/pages/request/request_list_pages.dart';
+import 'package:health_system/presentation/inventory/pages/items/items.dart';
+import 'package:health_system/presentation/inventory/pages/request_admin/request_list_pages.dart';
+import 'package:health_system/presentation/inventory/pages/request_staff/request_list_pages.dart';
 import 'package:health_system/presentation/inventory/pages/stocks/invertory_list_pages.dart';
 import 'package:health_system/presentation/logs/pages/logs_list_pages.dart';
 import 'package:health_system/presentation/patient/pages/patient_list_pages.dart';
@@ -19,7 +20,7 @@ class Index extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final IndexController controller = Get.put(IndexController());
-
+    final DashboardController controllers = Get.put(DashboardController());
     return Scaffold(
       body: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -81,13 +82,7 @@ class Index extends StatelessWidget {
                     },
                     icon: const Icon(Icons.supervisor_account),
                   ),
-                  // SideMenuItem(
-                  //   title: 'Doctor',
-                  //   onTap: (index, _) {
-                  //     controller.changePage(index);
-                  //   },
-                  //   icon: const Icon(Icons.person_2_outlined),
-                  // ),
+                   if (controllers.usertype.value == 'Admin') 
                   SideMenuItem(
                     title: 'Staff',
                     onTap: (index, _) {
@@ -95,6 +90,7 @@ class Index extends StatelessWidget {
                     },
                     icon: const Icon(Icons.person_outline_outlined),
                   ),
+                   if (controllers.usertype.value == 'Admin') 
                   SideMenuItem(
                     title: 'Center',
                     onTap: (index, _) {
@@ -106,8 +102,9 @@ class Index extends StatelessWidget {
                     title: "Inventory",
                     icon: const Icon(Icons.inventory_2_outlined),
                     children: [
+                       if (controllers.usertype.value == 'Admin') 
                       SideMenuItem(
-                        title: 'Medicine & Equipment',
+                        title: 'Items',
                         onTap: (index, _) {
                           controller.changePage(index);
                         },
@@ -120,13 +117,21 @@ class Index extends StatelessWidget {
                         },
                         icon: const Icon(Icons.medication_outlined),
                       ),
+                      if (controllers.usertype.value == 'Admin') 
                       SideMenuItem(
+                        title: 'Center Request',
+                        onTap: (index, _) {
+                          controller.changePage(index);
+                        },
+                        icon: const Icon(Icons.medication_outlined),
+                      ),
+                       SideMenuItem(
                         title: 'Request',
                         onTap: (index, _) {
                           controller.changePage(index);
                         },
                         icon: const Icon(Icons.medication_outlined),
-                      )
+                      ),
                     ],
                   ),
                   SideMenuItem(
@@ -136,6 +141,7 @@ class Index extends StatelessWidget {
                     },
                     icon: const Icon(Icons.person_outline_outlined),
                   ),
+                  if (controllers.usertype.value == 'Admin') 
                   SideMenuItem(
                     title: 'Calendar',
                     onTap: (index, _) {
@@ -143,14 +149,15 @@ class Index extends StatelessWidget {
                     },
                     icon: const Icon(Icons.calendar_today_outlined),
                   ),
-
-                  SideMenuItem(
-                    title: 'Services',
-                    onTap: (index, _) {
-                      controller.changePage(index);
-                    },
-                    icon: const Icon(Icons.design_services_outlined),
-                  ),
+                  if (controllers.usertype.value == 'Admin') 
+                    SideMenuItem(
+                      title: 'Services',
+                      onTap: (index, _) {
+                        controller.changePage(index);
+                      },
+                      icon: const Icon(Icons.design_services_outlined),
+                    ),
+                  if (controllers.usertype.value == 'Admin') 
                   SideMenuItem(
                     title: 'Logs',
                     onTap: (index, _) {
@@ -169,16 +176,17 @@ class Index extends StatelessWidget {
                   children: [
                     DashboardPages(),
                     PatientListPages(),
-                    //DoctorListPages(),
+                    // DoctorListPages(),
                     StaffListPages(),
                     BranchListPages(),
-                    EquipmentListPages(),
+                    ItemsListPages(),
                     InvertoryListPages(),
                     RequestListPages(),
+                    RequestStaffListPages(),
                     AppointmentListPages(),
                     CalendarListPages(),
                     ServicesListPages(),
-                    LogsListPages()
+                    LogsListPages(),
                   ],
                 )),
           ),

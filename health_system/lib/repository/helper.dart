@@ -8,6 +8,20 @@ enum APIStatus { success, error }
 enum Logtype { clockin, clockout }
 
 class Helper {
+   Future<String> getstaffid() async {
+  Map<String, dynamic> userinfo = await readJsonToFile('metadata.json');
+  return userinfo['id'].toString();
+}
+
+  Future<String> getfullname() async {
+    Map<String, dynamic> userinfo = await readJsonToFile('metadata.json');
+    return userinfo['fullname'] as String;
+  }
+
+   Future<String> getbranchid() async {
+    Map<String, dynamic> userinfo = await readJsonToFile('metadata.json');
+    return userinfo['center'] as String;
+  }
   Future<bool> serverFileExists() async {
     final file = File('server.json');
     return await file.exists();

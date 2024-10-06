@@ -1,10 +1,16 @@
 // main_app_controller.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:health_system/data/api/login.dart';
+import 'package:health_system/repository/helper.dart';
+import 'dart:convert';
+
+import 'package:health_system/widget/alert.dart';
 
 class LoginControllers extends GetxController {
   var isLoading = false.obs;
   var isPasswordObscured = true.obs;
+   Helper helper = Helper();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -12,12 +18,38 @@ class LoginControllers extends GetxController {
     isPasswordObscured.value = !isPasswordObscured.value;
   }
 
-  void login() {
+
+
+  void logins() {
     isLoading.value = true;
     Future.delayed(const Duration(seconds: 2), () {
       isLoading.value = false;
       Get.offNamed('/index');
     });
+  }
+
+   Future<void> login() async {
+    print('login');
+    isLoading.value = true;
+    try {
+      final response =
+          await Login().login(usernameController.text, passwordController.text);
+      if (helper.getStatusString(APIStatus.success) == response.message) {
+        final jsonData = json.encode(response.result);
+        for (var userinfo in json.decode(jsonData)) {
+          helper.writeJsonToFile(userinfo, 'metadata.json');
+        }
+         Get.offNamed('/index');
+        isLoading.value = false;
+      } else {
+ Alert(title: 'Oops!', text: 'Username or Password is Incorrect');
+        isLoading.value = false;
+      }
+    } catch (error) {
+      print(error);
+      isLoading.value = false;
+      
+    }
   }
 
   void showDialog(String title, String content) {

@@ -189,7 +189,7 @@ final StaffController controller = Get.put(StaffController());
                                     width: 180,
                                     height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Role', style: TextStyles.AppBartext,),),
+                                    child: Center(child: Text('Type', style: TextStyles.AppBartext,),),
                                   ),
                                     Container(
                                     width: 180,
@@ -243,7 +243,7 @@ final StaffController controller = Get.put(StaffController());
                                     width: 100,
                                     height: 80,
                                    color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('${staff.staff_id}', style: TextStyles.AppBartext,),),
+                                    child: Center(child: Text('${staff.id}', style: TextStyles.AppBartext,),),
                                   ),
                                   Container(
                                     width: 250,
@@ -256,7 +256,7 @@ final StaffController controller = Get.put(StaffController());
                                     width: 180,
                                     height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child:  Text('${staff.role}', style: TextStyles.AppBartext,),),
+                                    child: Center(child:  Text('${staff.type}', style: TextStyles.AppBartext,),),
                                   ),
                                     Container(
                                     width: 180,

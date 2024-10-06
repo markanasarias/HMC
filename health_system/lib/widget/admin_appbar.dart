@@ -3,6 +3,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:get/get.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:health_system/widget/logout.dart';
+import 'package:health_system/presentation/dashboard/controllers/dashboard_controllers.dart';
 
 class AdminAppbar extends StatelessWidget {
   final String title;
@@ -14,6 +15,7 @@ class AdminAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DashboardController controller = Get.put(DashboardController());
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 80,
@@ -40,10 +42,10 @@ class AdminAppbar extends StatelessWidget {
             ),
             Row(
               children: [
-                Text(
-                  'Mark Anasarias',
+                Obx(() => Text(
+                  controller.fullname.value,
                   style: TextStyles.AppBartext,
-                ),
+                )),
                 const SizedBox(width: 20),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(80.0),
@@ -63,7 +65,9 @@ class AdminAppbar extends StatelessWidget {
                           ),
                         ),
                         const DropdownMenuItem<Divider>(
-                            enabled: false, child: Divider()),
+                          enabled: false,
+                          child: Divider(),
+                        ),
                         ...AdminMenuItems.secondItems.map(
                           (item) => DropdownMenuItem<MenuItem>(
                             value: item,
@@ -127,9 +131,7 @@ abstract class AdminMenuItems {
     return Row(
       children: [
         Icon(item.icon, color: Colors.black, size: 22),
-        const SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Expanded(
           child: Text(
             item.text,

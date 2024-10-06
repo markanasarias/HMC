@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/presentation/inventory/controller/items/items_controller.dart';
+import 'package:health_system/presentation/inventory/controller/request_staff/request_staff.dart';
 import 'package:health_system/presentation/inventory/pages/stocks/inventory_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
-class EquipmentListPages extends StatelessWidget {
-  const EquipmentListPages({super.key});
+class RequestStaffListPages extends StatelessWidget {
+  const RequestStaffListPages({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> patients = List.generate(
-      10,
-      (index) => {
-        'id': '24090${index + 1}',
-        'name': 'Mark Anasarias ${index + 1}',
-        'age': '${20 + index}',
-        'dob': '11/14/19${99 + index}',
-        'gender': index % 2 == 0 ? 'Male' : 'Female',
-        'contact': '09205447${10 + index}',
-      },
-    );
+    final RequestStaff controller = Get.put(RequestStaff());
+
     return Scaffold(
       body: Container(
         color: Colors.grey.withOpacity(0.1),
@@ -27,43 +21,24 @@ class EquipmentListPages extends StatelessWidget {
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              AdminAppbar(title: 'Medical & Equipment'),
-              SizedBox(
-                height: 20,
-              ),
+              AdminAppbar(title: 'Request Inventory'),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        'Home',
-                        style: TextStyles.Tableloc,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '>',
-                        style: TextStyles.Text1,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        'Medical & Equipment List',
-                        style: TextStyles.Tableloc,
-                      ),
+                      SizedBox(width: 20),
+                      Text('Home', style: TextStyles.Tableloc),
+                      SizedBox(width: 5),
+                      Text('>', style: TextStyles.Text1),
+                      SizedBox(width: 5),
+                      Text('Request Inventory List', style: TextStyles.Tableloc),
                     ],
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10),
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 475,
@@ -80,8 +55,7 @@ class EquipmentListPages extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.symmetric(
-                      horizontal: 20, vertical: 10),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 20, vertical: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -109,10 +83,7 @@ class EquipmentListPages extends StatelessWidget {
                                 ],
                               ),
                               child: Center(
-                                child: Text(
-                                  'Add Inventory',
-                                  style: TextStyles.Textwhite,
-                                ),
+                                child: Text('Add Inventory', style: TextStyles.Textwhite),
                               ),
                             ),
                           ),
@@ -131,19 +102,14 @@ class EquipmentListPages extends StatelessWidget {
                                 ),
                                 prefix: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Icon(
-                                    Icons.search,
-                                    color: Color(0xFF9E9E9E),
-                                  ),
+                                  child: Icon(Icons.search, color: Color(0xFF9E9E9E)),
                                 ),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 10),
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: 400,
@@ -181,10 +147,7 @@ class EquipmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'ID',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('ID', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -192,10 +155,7 @@ class EquipmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Name',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Name', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -203,10 +163,7 @@ class EquipmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Category',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Quantity', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -214,10 +171,7 @@ class EquipmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Created Date',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Requested Date', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -225,10 +179,7 @@ class EquipmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Created By',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Status', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -236,24 +187,19 @@ class EquipmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text(
-                                          'Action',
-                                          style: TextStyles.AppBartext,
-                                        ),
+                                        child: Text('Action', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
+                            SizedBox(height: 5),
                             Expanded(
-                              child: ListView.builder(
-                                itemCount: patients.length,
+                              child: Obx(() => ListView.builder(
+                                itemCount: controller.requestsstaff.length,
                                 itemBuilder: (context, index) {
-                                  final patient = patients[index];
+                                  final requestsstaff = controller.requestsstaff[index];
                                   return Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 50,
@@ -274,7 +220,7 @@ class EquipmentListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['id']!,
+                                              requestsstaff.item_id,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -285,7 +231,7 @@ class EquipmentListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['name']!,
+                                              requestsstaff.item_name,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -296,7 +242,7 @@ class EquipmentListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['age']!,
+                                              requestsstaff.requested_quantity,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -307,7 +253,7 @@ class EquipmentListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['dob']!,
+                                              requestsstaff.request_date,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -318,7 +264,7 @@ class EquipmentListPages extends StatelessWidget {
                                           color: Colors.grey.withOpacity(0.01),
                                           child: Center(
                                             child: Text(
-                                              patient['gender']!,
+                                              requestsstaff.status,
                                               style: TextStyles.AppBartext,
                                             ),
                                           ),
@@ -330,17 +276,13 @@ class EquipmentListPages extends StatelessWidget {
                                           child: Center(
                                             child: Row(
                                               children: [
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
+                                                SizedBox(width: 20),
                                                 IconButton(
-                                                  icon: Icon(Icons.visibility,
-                                                      color: Colors.blue),
+                                                  icon: Icon(Icons.visibility, color: Colors.blue),
                                                   onPressed: () {},
                                                 ),
                                                 IconButton(
-                                                  icon: Icon(Icons.edit,
-                                                      color: Colors.blue),
+                                                  icon: Icon(Icons.edit, color: Colors.blue),
                                                   onPressed: () {},
                                                 ),
                                               ],
@@ -351,7 +293,7 @@ class EquipmentListPages extends StatelessWidget {
                                     ),
                                   );
                                 },
-                              ),
+                              )),
                             ),
                           ],
                         ),
