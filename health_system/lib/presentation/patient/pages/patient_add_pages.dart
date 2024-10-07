@@ -23,7 +23,7 @@ void AddPatient(BuildContext context) {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Container(
-          width: 600,
+          width: 640,
           height: 550,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -56,7 +56,7 @@ void AddPatient(BuildContext context) {
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 10,
-                        left: 20,
+                        left: 40,
                         right: 30,
                       ),
                       child: Text(
@@ -97,7 +97,7 @@ void AddPatient(BuildContext context) {
                 ],
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: Row(
                   children: [
                     //lastname
@@ -157,7 +157,7 @@ void AddPatient(BuildContext context) {
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 10,
-                        left: 20,
+                        left: 40,
                         right: 30,
                       ),
                       child: Text(
@@ -198,26 +198,28 @@ void AddPatient(BuildContext context) {
                 ],
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: Row(
                   children: [
                     Obx(
                       () => GestureDetector(
                           onTap: () async {
-      await showDatePicker(
-        context: context,
-        firstDate: DateTime(1940),
-        lastDate: DateTime(2015),
-        currentDate: DateTime(2008),
-      ).then((date) {
-        if (date != null) {
-          controller.birthdayC.value = DateFormat('yyyy-MM-dd').format(date);
-          controller.age.value = controller.calculateAge(date).toString(); 
-          print(controller.birthdayC.value);
-          print("Age: ${controller.age.value}");
-        }
-      });
-    },
+                            await showDatePicker(
+                              context: context,
+                              firstDate: DateTime(1940),
+                              lastDate: DateTime(2015),
+                              currentDate: DateTime(2008),
+                            ).then((date) {
+                              if (date != null) {
+                                controller.birthdayC.value =
+                                    DateFormat('yyyy-MM-dd').format(date);
+                                controller.age.value =
+                                    controller.calculateAge(date).toString();
+                                print(controller.birthdayC.value);
+                                print("Age: ${controller.age.value}");
+                              }
+                            });
+                          },
                           child: Container(
                             width: 150,
                             height: 35,
@@ -306,7 +308,7 @@ void AddPatient(BuildContext context) {
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 10,
-                        left: 20,
+                        left: 40,
                         right: 30,
                       ),
                       child: Text(
@@ -360,14 +362,14 @@ void AddPatient(BuildContext context) {
                 ],
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: Row(
                   children: [
                     SizedBox(
                       width: 120,
                       height: 35,
                       child: CupertinoTextField(
-                         controller: controller.nationalityC,
+                        controller: controller.nationalityC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -397,7 +399,7 @@ void AddPatient(BuildContext context) {
                       width: 150,
                       height: 35,
                       child: CupertinoTextField(
-                         controller: controller.occupationC,
+                        controller: controller.occupationC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -432,7 +434,7 @@ void AddPatient(BuildContext context) {
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 10,
-                        left: 20,
+                        left: 40,
                         right: 30,
                       ),
                       child: Text(
@@ -459,7 +461,7 @@ void AddPatient(BuildContext context) {
               ),
 
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: Row(
                   children: [
                     SizedBox(
@@ -488,7 +490,7 @@ void AddPatient(BuildContext context) {
                                 if (newValue != null) {
                                   controller.selectedcivilstatus.value =
                                       newValue;
-                                      print( controller.selectedcivilstatus.value);
+                                  print(controller.selectedcivilstatus.value);
                                 }
                               },
                               hint: Text(
@@ -525,7 +527,7 @@ void AddPatient(BuildContext context) {
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 10,
-                        left: 20,
+                        left: 40,
                         right: 30,
                       ),
                       child: Text(
@@ -566,7 +568,7 @@ void AddPatient(BuildContext context) {
                 ],
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: Row(
                   children: [
                     SizedBox(
@@ -623,7 +625,7 @@ void AddPatient(BuildContext context) {
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 10,
-                        left: 20,
+                        left: 40,
                         right: 30,
                       ),
                       child: Text(
@@ -664,7 +666,7 @@ void AddPatient(BuildContext context) {
                 ],
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: Row(
                   children: [
                     SizedBox(
@@ -827,7 +829,7 @@ void AddPatient(BuildContext context) {
                       onPressed: () {
                         controller.addpatient(context);
                         //showSuccessToast(context);
-                       // Navigator.of(context).pop();
+                        // Navigator.of(context).pop();
                         //loadingform(context);
                         switch (controller.selectedOption.value) {
                           case 1:
