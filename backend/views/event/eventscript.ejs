@@ -1,0 +1,235 @@
+<script>
+
+$(document).ready(function(){
+        console.log('Initialize');
+        LoadTable();
+  
+        function LoadTable() {
+            $("#master_event-table").DataTable({
+              destroy: true,
+              processing: true,
+              serverSide: true,
+              paging: false,
+              searching: false,
+              info: false,
+              scrollY: 400,
+              scrollCollapse: true,
+              serverMethod: "GET",
+              ajax: {
+                url: "/event/load",
+                dataSrc: (json) => {
+                  var finalData = [];
+                  var data = json.data;
+      
+                  console.log(data);
+                  $.each(data, (key, item) => {
+                    var action = "";
+                    var action = item.action;
+
+                    action = `
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" id="editbtn">Edit</button>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#smsModal">Send SMS</button>`;
+                  
+                  
+                    finalData.push({
+                        id: item.id,
+                        date: item.date,
+                        title: item.title,
+                        description: item.description,
+                        action: action,
+                    }); 
+                  });
+      
+                  return finalData;
+                },
+              },
+              columnDefs: [
+                {
+                  targets: 1,
+                  className: "td-indent",
+                },
+              ],
+              columns: [
+                { data: "id" },
+                { data: "date" },
+                { data: "title" },
+                { data: "description" },
+                { data: "action" },
+              ],
+              initComplete: function () {
+                console.log('Done');
+              },
+            });
+          }
+      
+    });
+
+    var exampleModal = document.getElementById('exampleModal')
+exampleModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var recipient = button.getAttribute('data-bs-whatever')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  var modalTitle = exampleModal.querySelector('.modal-title')
+  var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+  modalTitle.textContent = 'Create new event '
+  modalBodyInput.value = recipient
+})
+
+var editModal = document.getElementById('editModal')
+editModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var recipient = button.getAttribute('data-bs-whatever')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  var modalTitle = editModal.querySelector('.modal-title')
+  var modalBodyInput = editModal.querySelector('.modal-body input')
+
+  modalTitle.textContent = 'Edit Event '
+  modalBodyInput.value = recipient
+})
+var smsModal = document.getElementById('smsModal')
+smsModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var recipient = button.getAttribute('data-bs-whatever')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  var modalTitle = smsModal.querySelector('.modal-title')
+  var modalBodyInput = smsModal.querySelector('.modal-body input')
+
+  modalTitle.textContent = 'Send SMS '
+  modalBodyInput.value = recipient
+})
+
+
+    $(document).on("click", "#btnsaveevent", function () {
+      let date = $("#date").val();
+      let title = $("#title").val();
+      let description = $("#description").val();
+
+      var message = "";
+
+      if (date == "") {
+        message += "POSITION NAME ";
+      }
+
+      if (title == "") {
+        message += "POSITION NAME ";
+      }
+      
+      if (description == "") {
+        message += "POSITION NAME ";
+      }
+
+      if (message != "") {
+        
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/event/save",
+          data: {
+            date: date,
+            title: title,
+            description: description,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              swal({
+                title: "Saved Successfully",
+                text: "You clicked the button!",
+                icon: "success",
+                button: "OK!",
+              })
+              .then(results => {
+              window.location.reload();
+              })
+              LoadTable();
+              
+            }
+          },
+          error: function (err) {
+            swal("Error!", "You clicked the button!", "warning");
+          },
+        });
+      }
+    });
+    $(document).ready(function () {
+      $(document).on('click','#master_event-table tbody tr',function() {
+        $("#editModal").modal("show");
+        var id=$(this).find('td:eq(0)').text();
+        var date=$(this).find('td:eq(1)').text();
+        var title=$(this).find('td:eq(2)').text();
+        var description=$(this).find('td:eq(3)').text();
+        $('#emodalid').val(id);
+        $('#emodaldate').val(date);
+        $('#emodaltitle').val(title);
+        $('#emodaldescription').val(description);
+      })
+    })
+    $(document).on("click", "#editsavebtn", function () {
+      let id = $("#emodalid").val();
+      let date = $("#emodaldate").val();
+      let title = $("#emodaltitle").val();
+      let description = $("#emodaldescription").val();
+
+      var message = "";
+
+      if (date == "") {
+        message += "POSITION NAME ";
+      }
+
+      if (title == "") {
+        message += "POSITION NAME ";
+      }
+      
+      if (description == "") {
+        message += "POSITION NAME ";
+      }
+
+      if (message != "") {
+        
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/event/update",
+          data: {
+            id: id,
+            date: date,
+            title: title,
+            description: description,
+          },
+          success: function (result) {
+            if (result.msg == "success") {
+              swal({
+                title: "Saved Successfully",
+                text: "You clicked the button!",
+                icon: "success",
+                button: "OK!",
+              })
+              .then(results => {
+              window.location.reload();
+              })
+              LoadTable();
+              
+            }
+          },
+          error: function (err) {
+            swal("Error!", "You clicked the button!", "warning");
+          },
+        });
+      }
+    });
+    </script>
