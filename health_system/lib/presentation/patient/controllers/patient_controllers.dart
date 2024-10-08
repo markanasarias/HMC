@@ -10,8 +10,6 @@ import 'package:health_system/widget/error.dart';
 import 'package:health_system/widget/success.dart';
 import 'package:flutter/cupertino.dart';
 
-
-
 class PatientControllers extends GetxController {
   var isChecked1 = false.obs;
   var isChecked2 = false.obs;
@@ -25,6 +23,7 @@ class PatientControllers extends GetxController {
   var selectedcivilstatus = 'Single'.obs;
   var selectedbloodtype = 'O+'.obs;
   var fullname = ''.obs;
+  var selectedTab = 0.obs;
 
   final TextEditingController first_nameC = TextEditingController();
   final TextEditingController last_nameC = TextEditingController();
@@ -39,7 +38,8 @@ class PatientControllers extends GetxController {
   final TextEditingController emailC = TextEditingController();
   final TextEditingController addressC = TextEditingController();
   final TextEditingController emergency_contact_nameC = TextEditingController();
-  final TextEditingController emergency_contact_phoneC = TextEditingController();
+  final TextEditingController emergency_contact_phoneC =
+      TextEditingController();
   final TextEditingController philhealth_numberC = TextEditingController();
   final TextEditingController allergiesC = TextEditingController();
 
@@ -77,38 +77,60 @@ class PatientControllers extends GetxController {
     return '';
   }
 
-  Future<void> addpatient(BuildContext context) async {
-  try {
-    final response = await Patient().addpatient(
-      first_nameC.text, last_nameC.text, middle_nameC.text, 
-      age.value, birthdayC.value, birth_placeC.text,
-      selectedGender.value, selectedcivilstatus.value, nationalityC.text,
-      religionC.text, occupationC.text, phone_numberC.text,
-      emailC.text, addressC.text, emergency_contact_nameC.text,
-      emergency_contact_phoneC.text, selectedbloodtype.value, philhealth_numberC.text,
-      allergiesC.text, fullname.value,);
-    if (response.message == 'success') {
-      showSuccessToast(context, title: 'Success!', text: 'Your request has been successfully submitted.');
-      getloadpatient();
-       Navigator.of(context).pop();
-    } else {
-      showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
-    }
-  } catch (e) {
-    print('An error occurred: $e');
-    showErrorToast(context, title: 'Oops!', text: 'There was an issue. Please try again.');
+  void updateTab(int index) {
+    selectedTab.value = index;
   }
-}
 
-int calculateAge(DateTime birthDate) {
-  final currentDate = DateTime.now();
-  int age = currentDate.year - birthDate.year;
-  if (currentDate.month < birthDate.month ||
-      (currentDate.month == birthDate.month && currentDate.day < birthDate.day)) {
-    age--;
+  Future<void> addpatient(BuildContext context) async {
+    try {
+      final response = await Patient().addpatient(
+        first_nameC.text,
+        last_nameC.text,
+        middle_nameC.text,
+        age.value,
+        birthdayC.value,
+        birth_placeC.text,
+        selectedGender.value,
+        selectedcivilstatus.value,
+        nationalityC.text,
+        religionC.text,
+        occupationC.text,
+        phone_numberC.text,
+        emailC.text,
+        addressC.text,
+        emergency_contact_nameC.text,
+        emergency_contact_phoneC.text,
+        selectedbloodtype.value,
+        philhealth_numberC.text,
+        allergiesC.text,
+        fullname.value,
+      );
+      if (response.message == 'success') {
+        showSuccessToast(context,
+            title: 'Success!',
+            text: 'Your request has been successfully submitted.');
+        getloadpatient();
+        Navigator.of(context).pop();
+      } else {
+        showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      showErrorToast(context,
+          title: 'Oops!', text: 'There was an issue. Please try again.');
+    }
   }
-  return age;
-}
+
+  int calculateAge(DateTime birthDate) {
+    final currentDate = DateTime.now();
+    int age = currentDate.year - birthDate.year;
+    if (currentDate.month < birthDate.month ||
+        (currentDate.month == birthDate.month &&
+            currentDate.day < birthDate.day)) {
+      age--;
+    }
+    return age;
+  }
 
   Future<void> getloadpatient() async {
     print('loadpatient');

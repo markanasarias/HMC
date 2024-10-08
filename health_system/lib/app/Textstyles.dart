@@ -129,6 +129,15 @@ class TextStyles {
     color: Colors.black,
     overflow: TextOverflow.visible,
   );
+  static final TextStyle AppBartextwhite = TextStyle(
+    decoration: TextDecoration.none,
+    decorationColor: Colors.black,
+    fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w500).fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+    overflow: TextOverflow.visible,
+  );
   static final TextStyle tabletext = TextStyle(
     decoration: TextDecoration.none,
     decorationColor: Colors.black,

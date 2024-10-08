@@ -82,7 +82,7 @@ class Index extends StatelessWidget {
                     },
                     icon: const Icon(Icons.supervisor_account),
                   ),
-                   if (controllers.usertype.value == 'Admin') 
+                  //if (controllers.usertype.value == 'Admin')
                   SideMenuItem(
                     title: 'Staff',
                     onTap: (index, _) {
@@ -90,7 +90,7 @@ class Index extends StatelessWidget {
                     },
                     icon: const Icon(Icons.person_outline_outlined),
                   ),
-                   if (controllers.usertype.value == 'Admin') 
+                  //if (controllers.usertype.value == 'Admin')
                   SideMenuItem(
                     title: 'Center',
                     onTap: (index, _) {
@@ -102,7 +102,7 @@ class Index extends StatelessWidget {
                     title: "Inventory",
                     icon: const Icon(Icons.inventory_2_outlined),
                     children: [
-                       if (controllers.usertype.value == 'Admin') 
+                      //if (controllers.usertype.value == 'Admin')
                       SideMenuItem(
                         title: 'Items',
                         onTap: (index, _) {
@@ -117,7 +117,7 @@ class Index extends StatelessWidget {
                         },
                         icon: const Icon(Icons.medication_outlined),
                       ),
-                      if (controllers.usertype.value == 'Admin') 
+                      //if (controllers.usertype.value == 'Admin')
                       SideMenuItem(
                         title: 'Center Request',
                         onTap: (index, _) {
@@ -125,7 +125,7 @@ class Index extends StatelessWidget {
                         },
                         icon: const Icon(Icons.medication_outlined),
                       ),
-                       SideMenuItem(
+                      SideMenuItem(
                         title: 'Request',
                         onTap: (index, _) {
                           controller.changePage(index);
@@ -141,7 +141,7 @@ class Index extends StatelessWidget {
                     },
                     icon: const Icon(Icons.person_outline_outlined),
                   ),
-                  if (controllers.usertype.value == 'Admin') 
+                  //if (controllers.usertype.value == 'Admin')
                   SideMenuItem(
                     title: 'Calendar',
                     onTap: (index, _) {
@@ -149,15 +149,15 @@ class Index extends StatelessWidget {
                     },
                     icon: const Icon(Icons.calendar_today_outlined),
                   ),
-                  if (controllers.usertype.value == 'Admin') 
-                    SideMenuItem(
-                      title: 'Services',
-                      onTap: (index, _) {
-                        controller.changePage(index);
-                      },
-                      icon: const Icon(Icons.design_services_outlined),
-                    ),
-                  if (controllers.usertype.value == 'Admin') 
+                  //if (controllers.usertype.value == 'Admin')
+                  SideMenuItem(
+                    title: 'Services',
+                    onTap: (index, _) {
+                      controller.changePage(index);
+                    },
+                    icon: const Icon(Icons.design_services_outlined),
+                  ),
+                  //if (controllers.usertype.value == 'Admin')
                   SideMenuItem(
                     title: 'Logs',
                     onTap: (index, _) {
