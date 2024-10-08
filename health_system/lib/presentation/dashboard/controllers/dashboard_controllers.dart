@@ -1,10 +1,27 @@
 import 'package:get/get.dart';
+import 'package:health_system/data/api/dashboard.dart';
+import 'package:health_system/data/model/dashboard_model.dart';
 import 'package:health_system/data/model/userinfo.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
 import 'package:health_system/repository/helper.dart';
+import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:health_system/data/api/calendar.dart';
+import 'package:health_system/data/api/center.dart';
+import 'package:health_system/data/api/logs.dart';
+import 'package:health_system/data/model/calendar_model.dart';
+import 'package:health_system/data/model/center_model.dart';
+import 'package:health_system/data/model/logs_model.dart';
+import 'package:health_system/repository/helper.dart';
+import 'package:calendar_view/calendar_view.dart';
+import 'package:intl/intl.dart';
 
 class DashboardController extends GetxController {
   var loading = true.obs; 
+  var total_patients = ''.obs;
+  var total_admin_staff = ''.obs;
+  var total_doctors = ''.obs;
+  var total_scheduled_appointments= ''.obs;
   var id = ''.obs;
   var type = ''.obs;
   var fullname = ''.obs;
@@ -26,8 +43,12 @@ class DashboardController extends GetxController {
 
 
   Helper helper = Helper();
+
+  var card = <CardModel>[].obs;
+  var graph = <GraphModel>[].obs;
+  
   RxList<PatientData> patientData =
-      <PatientData>[].obs; // Observable list of PatientData
+      <PatientData>[].obs; 
 
   // Columns for PlutoGrid
   List<PlutoColumn> get columns => [
@@ -72,9 +93,79 @@ class DashboardController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchPatientData();
     _getUserInfo();
+    getloadcard();
+    getloadgraph();
   }
+
+    Future<void> getloadcard() async {
+    print('getloadcenter');
+    loading.value = true;
+    try {
+      final response = await Dashboard().getcount();
+
+      if (helper.getStatusString(APIStatus.success) == response.message) {
+    loading.value = false;
+        final jsondata = json.encode(response.result);
+      
+
+        for (var cardcount in json.decode(jsondata)) {
+          CardModel cardinfo = CardModel(
+            cardcount['total_patients'].toString(),
+            cardcount['total_admin_staff'].toString(),
+            cardcount['total_doctors'].toString(),
+            cardcount['total_scheduled_appointments'].toString(),
+           
+          );
+          card.add(cardinfo);
+          total_patients.value = cardinfo.total_patients;
+          total_admin_staff.value = cardinfo.total_admin_staff;
+          total_doctors.value = cardinfo.total_doctors;
+          total_scheduled_appointments.value = cardinfo.total_scheduled_appointments;
+        }
+      } else {
+        print('Error: ${response.message}');
+      }
+    } catch (e) {
+      print('An error occurred while loading patient data: $e');
+    }
+  }
+
+Future<void> getloadgraph() async {
+  loading.value = true;
+  try {
+    final response = await Dashboard().getgraph();
+
+    if (helper.getStatusString(APIStatus.success) == response.message) {
+      loading.value = false;
+      final jsondata = json.encode(response.result);
+
+      graph.clear(); // Clear previous data
+      for (var graphinfos in json.decode(jsondata)) {
+        // Use the factory constructor to create GraphModel instances
+        GraphModel graphinfo = GraphModel.fromJson(graphinfos);
+        graph.add(graphinfo);
+      }
+    } else {
+      print('Error: ${response.message}');
+    }
+  } catch (e) {
+    print('An error occurred while loading patient data: $e');
+  }
+}
+
+DateTime? parseCreationMonth(String creationMonth) {
+  try {
+    final currentYear = DateTime.now().year; // Get the current year
+    return DateFormat('MMMM').parse(creationMonth).copyWith(year: currentYear);
+  } catch (e) {
+    print("Error parsing date: $e");
+    return null; // Handle as needed
+  }
+}
+
+
+
 
     Future<void> _getUserInfo() async {
     Map<String, dynamic> userinfo =
@@ -119,26 +210,6 @@ print('name: $fullname');
 print('usertype: $usertype');
   }
 
-  Future<void> fetchPatientData() async {
-    loading.value = true;
-    await Future.delayed(Duration(seconds: 1));
-    try {
-      patientData.value = [
-        PatientData(
-            '001', 'John Doe', '123-456-7890', 'Consultation', DateTime.now()),
-        PatientData('002', 'Jane Smith', '987-654-3210', 'Routine Checkup',
-            DateTime.now()),
-        PatientData('003', 'Alice Johnson', '555-123-4567', 'Emergency',
-            DateTime.now()),
-        PatientData(
-            '004', 'Bob Brown', '555-987-6543', 'Follow-up', DateTime.now()),
-      ];
-    } catch (error) {
-      print('Error fetching patient data: $error');
-    } finally {
-      loading.value = false;
-    }
-  }
 }
 
 class PatientData {

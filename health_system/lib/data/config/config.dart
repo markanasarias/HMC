@@ -17,4 +17,6 @@ class Config{
   static const String loadservice = 'service/load';
   static const String loadlogs = 'logs/load';
   static const String loadappointment = 'appointment/load';
+  static const String loadcount = 'dashboard/loadcount';
+  static const String loadlinegraph = 'dashboard/countlatestpatient';
 }

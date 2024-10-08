@@ -9,6 +9,7 @@ import 'package:health_system/widget/loading.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:health_system/presentation/dashboard/controllers/dashboard_controllers.dart';
 import 'package:pluto_grid_plus/pluto_grid_plus.dart';
+import 'package:health_system/data/model/dashboard_model.dart';
 
 class DashboardPages extends StatelessWidget {
   const DashboardPages({super.key});
@@ -65,7 +66,7 @@ class DashboardPages extends StatelessWidget {
                                       ),
                                       SizedBox(height: 4),
                                       Text(
-                                        '100',
+                                        controller.total_patients.value,
                                         style: TextStyles.Text5,
                                       ),
                                     ],
@@ -113,7 +114,7 @@ class DashboardPages extends StatelessWidget {
                                       ),
                                       SizedBox(height: 4),
                                       Text(
-                                        '100',
+                                        controller.total_admin_staff.value,
                                         style: TextStyles.Text5,
                                       ),
                                     ],
@@ -161,7 +162,7 @@ class DashboardPages extends StatelessWidget {
                                       ),
                                       SizedBox(height: 4),
                                       Text(
-                                        '100',
+                                        controller.total_doctors.value,
                                         style: TextStyles.Text5,
                                       ),
                                     ],
@@ -209,7 +210,7 @@ class DashboardPages extends StatelessWidget {
                                       ),
                                       SizedBox(height: 4),
                                       Text(
-                                        '100',
+                                        controller.total_scheduled_appointments.value,
                                         style: TextStyles.Text5,
                                       ),
                                     ],
@@ -230,129 +231,134 @@ class DashboardPages extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(
-                          child: Container(
-                            height: 370,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Expanded(
-                              child: Obx(
-                                () {
-                                  if (controller.patientData.isEmpty) {
-                                    return Center(
-                                      child: Text('No Data Available'),
-                                    );
-                                  }
-                                  return Container(
-                                    height: 300,
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(20)),
-                                      color: Colors.white,
-                                    ),
-                                    child: SfCircularChart(
-                                      series: <CircularSeries>[
-                                        PieSeries<PatientData, String>(
-                                          dataSource: controller.patientData,
-                                          xValueMapper: (PatientData data, _) =>
-                                              data.name,
-                                          yValueMapper: (PatientData data, _) =>
-                                              data.patiendid.length
-                                                  .toDouble(), // Just for example
-                                          dataLabelSettings:
-                                              const DataLabelSettings(
-                                                  isVisible: true),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
+                      Expanded(
+  child: Container(
+    height: 370,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(15),
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          spreadRadius: 1,
+          blurRadius: 5,
+          offset: Offset(0, 3),
+        ),
+      ],
+    ),
+    child: Obx(
+      () {
+        if (controller.card.isEmpty) {
+          return Center(
+            child: Text('No Data Available'),
+          );
+        }
+        
+        final cardInfo = controller.card.first;
+
+        List<PieData> pieDataList = [
+          PieData(label: 'Total Patients', value: double.parse(cardInfo.total_patients)),
+          PieData(label: 'Total Admin Staff', value: double.parse(cardInfo.total_admin_staff)),
+          PieData(label: 'Total Doctors', value: double.parse(cardInfo.total_doctors)),
+          PieData(label: 'Total Scheduled Appointments', value: double.parse(cardInfo.total_scheduled_appointments)),
+        ];
+
+        return Container(
+          height: 300,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            color: Colors.white,
+          ),
+          child: SfCircularChart(
+            series: <CircularSeries>[
+              PieSeries<PieData, String>(
+                dataSource: pieDataList,
+                xValueMapper: (PieData data, _) => data.label,
+                yValueMapper: (PieData data, _) => data.value,
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
+              ),
+            ],
+          ),
+        );
+      },
+    ),
+  ),
+),
+
                         const SizedBox(width: 30),
-                        Expanded(
-                          child: Container(
-                            height: 370,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Obx(
-                              () {
-                                final currentDate = DateTime.now();
-                                List<MonthData> last5MonthsData =
-                                    List.generate(5, (index) {
-                                  final month = DateTime(currentDate.year,
-                                      currentDate.month - index);
-                                  final count = controller.patientData
-                                      .where((data) =>
-                                          data.date.month == month.month &&
-                                          data.date.year == month.year)
-                                      .length;
+                     Expanded(
+      child: Container(
+        height: 370,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Obx(
+          () {
+            if (controller.loading.value) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-                                  return MonthData(
-                                    "${month.month}/${month.year}",
-                                    count,
-                                  );
-                                });
+            if (controller.graph.isEmpty) {
+              return Center(
+                child: Text('No Data Available'),
+              );
+            }
 
-                                if (last5MonthsData.isEmpty) {
-                                  return Center(
-                                    child: Text('No Data Available'),
-                                  );
-                                }
-                                return Container(
-                                  height: 300,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(20)),
-                                    color: Colors.white,
-                                  ),
-                                  child: SfCartesianChart(
-                                    primaryXAxis: CategoryAxis(),
-                                    primaryYAxis: NumericAxis(),
-                                    series: <SplineAreaSeries<MonthData,
-                                        String>>[
-                                      SplineAreaSeries<MonthData, String>(
-                                        dataSource: last5MonthsData,
-                                        xValueMapper: (MonthData data, _) =>
-                                            data.name,
-                                        yValueMapper: (MonthData data, _) =>
-                                            data.count.toDouble(),
-                                        color: Colors.blue.withOpacity(0.3),
-                                        borderColor: Colors.blue,
-                                        borderWidth: 2,
-                                        dataLabelSettings:
-                                            const DataLabelSettings(
-                                                isVisible: true),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
+            // Prepare the last 5 months data
+            final currentDate = DateTime.now();
+           List<MonthData> last5MonthsData = List.generate(5, (index) {
+  final month = DateTime(currentDate.year, currentDate.month - index);
+  final count = controller.graph
+      .where((data) {
+        final creationDate = controller.parseCreationMonth(data.creation_month);
+        return creationDate != null && creationDate.month == month.month && creationDate.year == month.year;
+      })
+      .fold(0, (sum, data) => sum + int.parse(data.patient_count));
+  
+  return MonthData(
+    "${month.month}/${month.year}",
+    count,
+  );
+});
+
+
+            return Container(
+              height: 300,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                color: Colors.white,
+              ),
+              child: SfCartesianChart(
+                primaryXAxis: CategoryAxis(),
+                primaryYAxis: NumericAxis(),
+                series: <SplineAreaSeries<MonthData, String>>[
+                  SplineAreaSeries<MonthData, String>(
+                    dataSource: last5MonthsData,
+                    xValueMapper: (MonthData data, _) => data.name,
+                    yValueMapper: (MonthData data, _) => data.count.toDouble(),
+                    color: Colors.blue.withOpacity(0.3),
+                    borderColor: Colors.blue,
+                    borderWidth: 2,
+                    dataLabelSettings: const DataLabelSettings(isVisible: true),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    )
                       ],
                     ),
                   ],

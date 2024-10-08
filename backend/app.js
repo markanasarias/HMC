@@ -17,6 +17,7 @@ var requestinventoryRouter = require('./routes/request_inventory');
 var inventoryRouter = require('./routes/inventory');
 var serviceRouter = require('./routes/service');
 var appointmentRouter = require('./routes/appointment');
+var dashboardRouter = require('./routes/dashboard');
 
 var app = express();
 
@@ -44,6 +45,7 @@ app.use('/request_inventory', requestinventoryRouter);
 app.use('/inventory', inventoryRouter);
 app.use('/service', serviceRouter);
 app.use('/appointment', appointmentRouter);
+app.use('/dashboard', dashboardRouter);
 
 
 

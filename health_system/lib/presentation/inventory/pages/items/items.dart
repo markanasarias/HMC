@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/presentation/inventory/controller/items/items_controller.dart';
+import 'package:health_system/presentation/inventory/pages/items/items_add.dart';
+import 'package:health_system/presentation/inventory/pages/items/items_view.dart';
 import 'package:health_system/presentation/inventory/pages/stocks/inventory_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
@@ -63,8 +65,8 @@ class ItemsListPages extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              print('add');
-                              AddInventory(context);
+                             
+                              AddItems(context);
                             },
                             child: Container(
                               width: 100,
@@ -178,7 +180,7 @@ class ItemsListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Created By', style: TextStyles.AppBartext),
+                                        child: Text('Status', style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -275,14 +277,13 @@ class ItemsListPages extends StatelessWidget {
                                           child: Center(
                                             child: Row(
                                               children: [
-                                                SizedBox(width: 20),
-                                                IconButton(
-                                                  icon: Icon(Icons.visibility, color: Colors.blue),
-                                                  onPressed: () {},
-                                                ),
+                                                SizedBox(width: 40),
+                                                
                                                 IconButton(
                                                   icon: Icon(Icons.edit, color: Colors.blue),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    ViewItems(context);
+                                                  },
                                                 ),
                                               ],
                                             ),

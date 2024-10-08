@@ -932,7 +932,8 @@ void ViewPatient(BuildContext context) {
                             ),
                           ]));
                 } else {
-                  return Container(
+                  return Padding(padding: EdgeInsets.symmetric(horizontal: 20), child: 
+                  Container(
                     width: MediaQuery.of(context).size.width,
                     height: 381,
                     decoration: BoxDecoration(
@@ -968,18 +969,18 @@ void ViewPatient(BuildContext context) {
                                   width: 100,
                                   height: 80,
                                   child: Center(
-                                      child: Text('Patient ID',
+                                      child: Text('ID',
                                           style: TextStyles.AppBartext)),
                                 ),
                                 Container(
                                   width: 250,
                                   height: 80,
                                   child: Center(
-                                      child: Text('Full Name',
+                                      child: Text('Name',
                                           style: TextStyles.AppBartext)),
                                 ),
                                 Container(
-                                  width: 80,
+                                  width: 120,
                                   height: 80,
                                   child: Center(
                                       child: Text('Date',
@@ -1030,7 +1031,7 @@ void ViewPatient(BuildContext context) {
                                               style: TextStyles.AppBartext)),
                                     ),
                                     Container(
-                                      width: 80,
+                                      width: 120,
                                       height: 80,
                                       child: Center(
                                           child: Text('1',
@@ -1065,6 +1066,7 @@ void ViewPatient(BuildContext context) {
                         )
                       ],
                     ),
+                     ),
                   );
                 }
               }),

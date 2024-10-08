@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/presentation/appointment/controllers/appointment_controllers.dart';
+import 'package:health_system/presentation/appointment/pages/appointment_view.dart';
+import 'package:health_system/presentation/appointment/pages/appointmet_add.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
@@ -62,6 +64,7 @@ class AppointmentListPages extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               print('add');
+                              AddAppointment(context);
                             },
                             child: Container(
                               width: 130,
@@ -254,14 +257,13 @@ class AppointmentListPages extends StatelessWidget {
                                             child: Center(
                                               child: Row(
                                                 children: [
-                                                  SizedBox(width: 20),
-                                                  IconButton(
-                                                    icon: Icon(Icons.visibility, color: Colors.blue),
-                                                    onPressed: () {},
-                                                  ),
+                                                  SizedBox(width: 40),
+                                                  
                                                   IconButton(
                                                     icon: Icon(Icons.edit, color: Colors.blue),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      ViewAppointment(context);
+                                                    },
                                                   ),
                                                 ],
                                               ),

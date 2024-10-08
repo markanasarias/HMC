@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/presentation/services/controller/service_controller.dart';
+import 'package:health_system/presentation/services/pages/services_add_page.dart';
+import 'package:health_system/presentation/services/pages/services_view.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
@@ -81,8 +83,7 @@ class ServicesListPages extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              print('add');
-                              //AddPatient(context);
+                              AddServices(context);
                             },
                             child: Container(
                               width: 100,
@@ -279,17 +280,15 @@ class ServicesListPages extends StatelessWidget {
                                             child: Row(
                                               children: [
                                                 SizedBox(
-                                                  width: 20,
+                                                  width: 40,
                                                 ),
-                                                IconButton(
-                                                  icon: Icon(Icons.visibility,
-                                                      color: Colors.blue),
-                                                  onPressed: () {},
-                                                ),
+                                               
                                                 IconButton(
                                                   icon: Icon(Icons.edit,
                                                       color: Colors.blue),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    ViewServices(context);
+                                                  },
                                                 ),
                                               ],
                                             ),

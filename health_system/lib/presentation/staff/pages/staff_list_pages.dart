@@ -276,12 +276,8 @@ final StaffController controller = Get.put(StaffController());
                                     color: Colors.grey.withOpacity(0.01),
                                   child: Center(child: Row(
                                           children: [
-                                            SizedBox(width: 20,),
-                                            IconButton(
-                                              icon: Icon(Icons.visibility,
-                                                  color: Colors.blue),
-                                              onPressed: () {},
-                                            ),
+                                            SizedBox(width: 40,),
+                                            
                                             IconButton(
                                               icon: Icon(Icons.edit,
                                                   color: Colors.blue),

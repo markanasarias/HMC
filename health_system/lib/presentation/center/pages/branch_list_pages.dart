@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/presentation/center/controller/center_controller.dart';
 import 'package:health_system/presentation/center/pages/branch_add_pages.dart';
+import 'package:health_system/presentation/center/pages/branch_view_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
@@ -239,14 +240,13 @@ class BranchListPages extends StatelessWidget {
                                             child: Center(
                                               child: Row(
                                                 children: [
-                                                  SizedBox(width: 20),
-                                                  IconButton(
-                                                    icon: Icon(Icons.visibility, color: Colors.blue),
-                                                    onPressed: () {},
-                                                  ),
+                                                  SizedBox(width: 40),
+                                                 
                                                   IconButton(
                                                     icon: Icon(Icons.edit, color: Colors.blue),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      ViewBranches(context);
+                                                    },
                                                   ),
                                                 ],
                                               ),
