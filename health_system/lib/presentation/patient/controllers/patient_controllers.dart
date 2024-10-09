@@ -9,6 +9,40 @@ import 'package:health_system/data/api/center.dart';
 import 'package:health_system/widget/error.dart';
 import 'package:health_system/widget/success.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:health_system/data/api/staff.dart';
+import 'package:health_system/data/model/staff_model.dart';
+import 'package:health_system/repository/helper.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:health_system/data/api/calendar.dart';
+import 'package:health_system/data/api/center.dart';
+import 'package:health_system/data/model/calendar_model.dart';
+import 'package:health_system/data/model/center_model.dart';
+import 'package:health_system/repository/helper.dart';
+import 'package:calendar_view/calendar_view.dart';
+import 'package:health_system/widget/error.dart';
+import 'package:health_system/widget/success.dart';
+import 'package:flutter/material.dart';
+import 'package:health_system/app/Textstyles.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:health_system/presentation/center/controller/center_controller.dart';
+import 'package:health_system/presentation/staff/controllers/staff_controller.dart';
+import 'package:health_system/widget/success.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:open_filex/open_filex.dart';
+import 'dart:io';
+import 'dart:convert';
+import 'package:path_provider/path_provider.dart';
 
 class PatientControllers extends GetxController {
   var isChecked1 = false.obs;
@@ -19,12 +53,18 @@ class PatientControllers extends GetxController {
   var selectedOption = 1.obs;
   var birthdayC = ''.obs;
   var age = ''.obs;
+  var patient_id = ''.obs;
+  var createby = 'Mark'.obs;
   var selectedGender = 'Male'.obs;
   var selectedcivilstatus = 'Single'.obs;
   var selectedbloodtype = 'O+'.obs;
   var fullname = ''.obs;
   var selectedTab = 0.obs;
-
+  var selectedFileNames = ''.obs;
+  RxString fileAttachment = ''.obs;
+  Rx<String?> selectedFileName = Rx<String?>(null);
+  Rx<File?> selectedFile = Rx<File?>(null);
+  final TextEditingController medical_record = TextEditingController();
   final TextEditingController first_nameC = TextEditingController();
   final TextEditingController last_nameC = TextEditingController();
   final TextEditingController middle_nameC = TextEditingController();
@@ -49,6 +89,7 @@ class PatientControllers extends GetxController {
 
   Helper helper = Helper();
   var patient = <PatientModel>[].obs;
+  var medicalrecord = <MedicalRecordModel>[].obs;
   var filteredPatients = <PatientModel>[].obs;
   var searchQuery = ''.obs;
 
@@ -121,6 +162,32 @@ class PatientControllers extends GetxController {
     }
   }
 
+    Future<void> addmedicalrecord(BuildContext context) async {
+    try {
+      final response = await Patient().addmedicalrecord(
+        patient_id.value,
+        medical_record.text,
+        fileAttachment.value,
+        selectedFileName.value!,
+        createby.value,
+      );
+      if (response.message == 'success') {
+        showSuccessToast(context,
+            title: 'Success!',
+            text: 'Your request has been successfully submitted.');
+        getloadpatient();
+        Navigator.of(context).pop();
+      } else {
+        showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      showErrorToast(context,
+          title: 'Oops!', text: 'There was an issue. Please try again.');
+    }
+  }
+
+
   int calculateAge(DateTime birthDate) {
     final currentDate = DateTime.now();
     int age = currentDate.year - birthDate.year;
@@ -175,6 +242,64 @@ class PatientControllers extends GetxController {
     }
   }
 
+Future<void> getloadmedicalrecord() async {
+  print('Loading medical records for patient ID: ${patient_id.value}');
+medicalrecord.clear();
+  try {
+    final response = await Patient().getmedicalrecord(patient_id.value);
+    
+    print('Response result: ${response.result}'); 
+    if (helper.getStatusString(APIStatus.success) == response.message) {
+      for (var attendanceInfo in response.result) {
+        // Parse and format the created_date
+        DateTime createdDate = DateTime.parse(attendanceInfo['created_date']);
+        String formattedDate = DateFormat('yyyy-MM-dd').format(createdDate);
+
+        MedicalRecordModel loadpatient = MedicalRecordModel(
+          attendanceInfo['id'].toString(),
+          attendanceInfo['patient_id'].toString(),
+          attendanceInfo['medical_record'].toString(),
+          attendanceInfo['file'].toString(),
+          attendanceInfo['status'].toString(),
+          attendanceInfo['created_by'].toString(),
+          formattedDate, // Use the formatted date
+          attendanceInfo['file_name'].toString(),
+          attendanceInfo['full_name'].toString(),
+        );
+        medicalrecord.add(loadpatient);
+      }
+    } else {
+      print('Error: ${response.message}');
+    }
+  } catch (e) {
+    print('An error occurred while loading patient data: $e');
+  }
+}
+
+Future<void> openMedicalRecordFile(String base64File, String fileName) async {
+  try {
+    // Get the temporary directory of the device
+    final tempDir = await getTemporaryDirectory();
+
+    // Create a temporary file with the file name
+    final file = File('${tempDir.path}/$fileName');
+
+    // Decode the base64 string and write the content to the file
+    await file.writeAsBytes(base64Decode(base64File));
+
+    // Wait for a short time to ensure the file is ready
+    await Future.delayed(Duration(milliseconds: 500));
+
+    // Open the file using open_filex
+    await OpenFilex.open(file.path);
+  } catch (e) {
+    print('Error opening file: $e');
+  }
+}
+
+
+
+
   void filterPatients() {
     if (searchQuery.value.isEmpty) {
       filteredPatients.value = patient;
@@ -188,5 +313,50 @@ class PatientControllers extends GetxController {
                 .contains(searchQuery.value.toLowerCase());
       }).toList();
     }
+  }
+
+void openFileExplorer() async {
+  print('open');
+  FilePickerResult? result = await FilePicker.platform.pickFiles();
+  if (result != null) {
+    selectedFile.value = File(result.files.single.path!);
+    selectedFileName.value = result.files.single.name;
+
+    if (selectedFile.value != null) {
+      List<int> fileBytes = await selectedFile.value!.readAsBytes();
+      
+      // Print the size of the file in bytes
+      int fileSizeInBytes = fileBytes.length;
+      print('File size in bytes: $fileSizeInBytes');
+
+      // Check if the file size exceeds the limit
+      if (fileSizeInBytes > 65535) {
+        print('File exceeds the limit of 65,535 bytes.');
+        return; // Optionally return or handle the limit exceeded case
+      }
+
+      String base64File = base64Encode(fileBytes);
+      fileAttachment.value = base64File;
+
+      // Print the Base64 file
+      
+
+      // Convert Base64 string back to bytes
+      List<int> decodedBytes = base64Decode(fileAttachment.value);
+      // print('Decoded bytes: $decodedBytes');
+    }
+  } else {
+    print('No file selected.');
+  }
+}
+
+
+  void setSelectedFile(String fileName) {
+    selectedFileName.value = fileName;
+  }
+
+  void removeSelectedFile() {
+    selectedFile.value = null;
+    selectedFileName.value = null;
   }
 }

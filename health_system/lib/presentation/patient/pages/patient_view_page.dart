@@ -4,9 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:health_system/presentation/patient/controllers/patient_controllers.dart';
 import 'package:get/get.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:health_system/presentation/patient/pages/medical_record_add.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert'; // For base64 decoding
+import 'dart:io'; // For file operations
+import 'package:path_provider/path_provider.dart'; // To get the temporary directory
+import 'package:open_filex/open_filex.dart';
 
-void ViewPatient(BuildContext context) {
+void ViewPatient(BuildContext context){
   final PatientControllers controller = Get.put(PatientControllers());
 
   showDialog(
@@ -47,14 +52,15 @@ void ViewPatient(BuildContext context) {
               Row(
                 children: [
                   SizedBox(
-                    width: 10,
+                    width: 20,
                   ),
                   GestureDetector(
                     onTap: () {
                       controller.updateTab(0);
+                     
                     },
                     child: Obx(() => Container(
-                          width: 120,
+                          width: 300,
                           height: 50,
                           decoration: BoxDecoration(
                             color: controller.selectedTab.value == 0
@@ -75,9 +81,12 @@ void ViewPatient(BuildContext context) {
                   GestureDetector(
                     onTap: () {
                       controller.updateTab(1);
+                      
+                      
+                      controller.getloadmedicalrecord();
                     },
                     child: Obx(() => Container(
-                          width: 70,
+                          width: 300,
                           height: 50,
                           decoration: BoxDecoration(
                             color: controller.selectedTab.value == 1
@@ -87,7 +96,7 @@ void ViewPatient(BuildContext context) {
                           ),
                           child: Center(
                             child: Text(
-                              'EPI',
+                              'MEDICAL RECORD',
                               style: controller.selectedTab.value == 1
                                   ? TextStyles.AppBartextwhite
                                   : TextStyles.AppBartext,
@@ -95,100 +104,9 @@ void ViewPatient(BuildContext context) {
                           ),
                         )),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      controller.updateTab(2);
-                    },
-                    child: Obx(() => Container(
-                          width: 130,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: controller.selectedTab.value == 2
-                                ? Colors.blue
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'TB TREATEMENT',
-                              style: controller.selectedTab.value == 2
-                                  ? TextStyles.AppBartextwhite
-                                  : TextStyles.AppBartext,
-                            ),
-                          ),
-                        )),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      controller.updateTab(3);
-                    },
-                    child: Obx(() => Container(
-                          width: 100,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: controller.selectedTab.value == 3
-                                ? Colors.blue
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'PRENATAL',
-                              style: controller.selectedTab.value == 3
-                                  ? TextStyles.AppBartextwhite
-                                  : TextStyles.AppBartext,
-                            ),
-                          ),
-                        )),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      controller.updateTab(4);
-                    },
-                    child: Obx(() => Container(
-                          width: 100,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: controller.selectedTab.value == 4
-                                ? Colors.blue
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'ADMISSION',
-                              style: controller.selectedTab.value == 4
-                                  ? TextStyles.AppBartextwhite
-                                  : TextStyles.AppBartext,
-                            ),
-                          ),
-                        )),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      controller.updateTab(5);
-                    },
-                    child: Obx(() => Container(
-                          width: 100,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: controller.selectedTab.value == 5
-                                ? Colors.blue
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'DENTAL',
-                              style: controller.selectedTab.value == 5
-                                  ? TextStyles.AppBartextwhite
-                                  : TextStyles.AppBartext,
-                            ),
-                          ),
-                        )),
-                  ),
+
                   SizedBox(
-                    width: 10,
+                    width: 20,
                   )
                 ],
               ),
@@ -947,6 +865,7 @@ void ViewPatient(BuildContext context) {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+              SizedBox(height: 20,),
                         Material(
                           elevation: 1,
                           borderRadius: BorderRadius.only(
@@ -966,17 +885,17 @@ void ViewPatient(BuildContext context) {
                             child: Row(
                               children: [
                                 Container(
-                                  width: 100,
+                                  width: 130,
                                   height: 80,
                                   child: Center(
-                                      child: Text('ID',
+                                      child: Text('Record',
                                           style: TextStyles.AppBartext)),
                                 ),
                                 Container(
-                                  width: 250,
+                                  width: 120,
                                   height: 80,
                                   child: Center(
-                                      child: Text('Name',
+                                      child: Text('File',
                                           style: TextStyles.AppBartext)),
                                 ),
                                 Container(
@@ -984,6 +903,13 @@ void ViewPatient(BuildContext context) {
                                   height: 80,
                                   child: Center(
                                       child: Text('Date',
+                                          style: TextStyles.AppBartext)),
+                                ),
+                                Container(
+                                  width: 110,
+                                  height: 80,
+                                  child: Center(
+                                      child: Text('Status',
                                           style: TextStyles.AppBartext)),
                                 ),
                                 Container(
@@ -998,72 +924,83 @@ void ViewPatient(BuildContext context) {
                           ),
                         ),
                         SizedBox(height: 5),
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: 10,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.withOpacity(0.1),
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.grey,
-                                      width: 0.2,
-                                    ),
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 100,
-                                      height: 80,
-                                      child: Center(
-                                          child: Text('1',
-                                              style: TextStyles.AppBartext)),
-                                    ),
-                                    Container(
-                                      width: 250,
-                                      height: 80,
-                                      child: Center(
-                                          child: Text('1',
-                                              style: TextStyles.AppBartext)),
-                                    ),
-                                    Container(
-                                      width: 120,
-                                      height: 80,
-                                      child: Center(
-                                          child: Text('1',
-                                              style: TextStyles.AppBartext)),
-                                    ),
-                                    Container(
-                                      width: 118,
-                                      height: 80,
-                                      child: Center(
-                                        child: Row(
-                                          children: [
-                                            SizedBox(width: 20),
-                                            IconButton(
-                                              icon: Icon(Icons.visibility,
-                                                  color: Colors.blue),
-                                              onPressed: () {},
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.edit,
-                                                  color: Colors.blue),
-                                              onPressed: () {},
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        )
+                      Expanded(
+  child: ListView.builder(
+    itemCount: controller.medicalrecord.length,
+    itemBuilder: (context, index) {
+      final medicalrecord = controller.medicalrecord[index];
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: 50,
+        decoration: BoxDecoration(
+          color: Colors.grey.withOpacity(0.1),
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.grey,
+              width: 0.2,
+            ),
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 130,
+              height: 80,
+              child: Center(
+                child: Text('${medicalrecord.medical_record}', style: TextStyles.AppBartext),
+              ),
+            ),
+            Container(
+              width: 120,
+              height: 80,
+              child: Center(
+                child: Text('${medicalrecord.file_name}', style: TextStyles.AppBartext),
+              ),
+            ),
+            Container(
+              width: 120,
+              height: 80,
+              child: Center(
+                child: Text('${medicalrecord.created_date}', style: TextStyles.AppBartext),
+              ),
+            ),
+            Container(
+              width: 110,
+              height: 80,
+              child: Center(
+                child: Text('${medicalrecord.status}', style: TextStyles.AppBartext),
+              ),
+            ),
+            Container(
+              width: 118,
+              height: 80,
+              child: Center(
+                child: Row(
+                  children: [
+                    SizedBox(width: 20),
+                    IconButton(
+                      icon: Icon(Icons.visibility, color: Colors.blue),
+                      onPressed: () {
+                        // Open the base64 file when the visibility icon is pressed
+                        controller.openMedicalRecordFile(medicalrecord.file, medicalrecord.file_name);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.edit, color: Colors.blue),
+                      onPressed: () {
+                        // Add edit functionality here
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  ),
+),
                       ],
                     ),
                      ),
@@ -1084,9 +1021,23 @@ void ViewPatient(BuildContext context) {
                         Get.back();
                       },
                     ),
+                    TextButton(
+                      child: Text("Open Form"),
+                      onPressed: () {
+                        Get.back();
+                      },
+                    ),
+                     TextButton(
+                      child: Text("Upload Medical Record"),
+                      onPressed: () {
+                          Get.back();
+                          AddMedicalRecord(context);
+                      },
+                    ),
                   ],
                 ),
               ),
+              
             ],
           ),
         ),

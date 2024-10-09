@@ -24,7 +24,7 @@ void AddPatient(BuildContext context) {
         ),
         child: Container(
           width: 640,
-          height: 550,
+          height: 500,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -742,76 +742,6 @@ void AddPatient(BuildContext context) {
               SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  // Radio 1
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 1,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("EPI FORM"),
-                    ],
-                  ),
-                  // Radio 2
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 2,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("DB-TB TREATEMENT CARD"),
-                    ],
-                  ),
-                  // Radio 3
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 3,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("PRENATAL FORM"),
-                    ],
-                  ),
-                  // Radio 4
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 4,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("PHC FORM"),
-                    ],
-                  ),
-                  // Radio 5
-                  Column(
-                    children: [
-                      Obx(() => Radio<int>(
-                            value: 5,
-                            groupValue: controller.selectedOption.value,
-                            onChanged: (int? value) {
-                              controller.selectedOption.value = value!;
-                            },
-                          )),
-                      Text("SERVICE FORM"),
-                    ],
-                  ),
-                ],
-              ),
               Divider(),
               Padding(
                 padding: EdgeInsets.only(right: 10),
@@ -828,28 +758,7 @@ void AddPatient(BuildContext context) {
                       child: Text("Save"),
                       onPressed: () {
                         controller.addpatient(context);
-                        //showSuccessToast(context);
-                        // Navigator.of(context).pop();
-                        //loadingform(context);
-                        switch (controller.selectedOption.value) {
-                          case 1:
-                            EPIFORM(context);
-                            break;
-                          case 2:
-                            // TBFORM(context);
-                            break;
-                          case 3:
-                            PRENATALFORM(context);
-                            break;
-                          case 4:
-                            PHCFORM(context);
-                            break;
-                          case 5:
-                            SERVICEFORM(context);
-                            break;
-                          default:
-                            break;
-                        }
+                    
                       },
                     ),
                   ],

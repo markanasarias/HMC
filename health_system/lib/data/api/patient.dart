@@ -67,4 +67,46 @@ class Patient {
     return data;
   }
 
+    Future<ResponceModel> addmedicalrecord(
+    String patient_id, String medical_record, String file,
+    String file_name, String createby,) async {
+    final url = Uri.parse('${Config.apiUrl}${Config.savemedicalrecord}');
+    final response = await http.post(url, body: {
+      'patient_id': patient_id,
+      'medical_record': medical_record,
+      'file': file,
+      'file_name': file_name,
+      'createby': createby,
+    });
+
+    final responseData = json.decode(response.body);
+    final status = response.statusCode;
+    final message = responseData['msg'];
+    final result = responseData['data'] ?? [];
+    final description = responseData['description'] ?? "";
+
+    print(result);
+
+    ResponceModel data = ResponceModel(message, status, result, description);
+    return data;
+  }
+
+    Future<ResponceModel> getmedicalrecord(String patient_id) async {
+    final url = Uri.parse('${Config.apiUrl}${Config.loadmedicalrecoard}');
+    final response = await http.post(url, body: {
+       'patient_id': patient_id,
+    });
+
+    final responseData = json.decode(response.body);
+    final status = response.statusCode;
+    final message = responseData['msg'];
+    final result = responseData['data'] ?? [];
+    final description = responseData['description'] ?? "";
+
+    print(result);
+
+    ResponceModel data = ResponceModel(message, status, result, description);
+    return data;
+  }
+
 }

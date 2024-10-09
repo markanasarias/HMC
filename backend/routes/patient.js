@@ -27,6 +27,83 @@ router.get('/load', (req, res) => {
   }
 });
 
+router.post("/loadmedicalrecord", (req, res) => {
+  try {
+    let patient_id = req.body.patient_id;
+      let sql = `
+         SELECT 
+    mmr.id, 
+    mmr.patient_id, 
+    mmr.medical_record, 
+    mmr.file, 
+    mmr.status, 
+    mmr.created_by, 
+    mmr.created_date, 
+    mmr.file_name, 
+    CONCAT(mp.first_name, ' ', mp.middle_name, ' ', mp.last_name) AS full_name
+FROM 
+    master_medical_record mmr
+JOIN 
+    master_patient mp 
+ON 
+    mmr.patient_id = mp.patient_id 
+WHERE 
+    mmr.patient_id = '${patient_id}';
+
+      `;
+
+      mysql.SelectResult(sql, (err, result) => {
+          if (err) {
+              return res.json({
+                  msg: err,
+              });
+          }
+          res.json({
+              msg: "success",
+              data: result,
+          });
+      });
+  } catch (error) {
+      res.json({
+          msg: error,
+      });
+  }
+});
+
+router.post('/savemedicalrecord', (req, res) => {
+  try {
+    let patient_id = req.body.patient_id;
+    let medical_record = req.body.medical_record;
+    let file = req.body.file;
+    let file_name = req.body.file_name;
+    let createby = req.body.createby; 
+    let status = 'Active';
+    let today = new Date();
+    let createddate = today.toISOString().split('T')[0];
+
+    let data = [];
+    data.push([
+      patient_id, medical_record, file, status, createby, createddate, file_name,
+    ]);
+
+    mysql.InsertTable("master_medical_record", data, (err, result) => {
+      if (err) {
+        console.error('Error: ', err);
+        return res.json({ msg: 'error' });
+      }
+
+      console.log(result);
+      res.json({
+        msg: 'success'
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: 'error'
+    });
+  }
+});
+
 router.post('/save', (req, res) => {
   try {
     let {

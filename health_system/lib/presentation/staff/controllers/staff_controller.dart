@@ -31,12 +31,13 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 
 
 class StaffController extends GetxController {
-  var selectedFileName = ''.obs;
+  var selectedFileNames = ''.obs;
   var hiredate = ''.obs;
   var fullname = ''.obs;
   var selectedrole = 'Staff'.obs;
   var selectedbranch = ''.obs;
   RxString fileAttachment = ''.obs;
+  Rx<String?> selectedFileName = Rx<String?>(null);
 
   final TextEditingController fullnameC = TextEditingController();
   final TextEditingController positionC = TextEditingController();
@@ -134,6 +135,7 @@ class StaffController extends GetxController {
   }
 
 void openFileExplorer() async {
+  print('open');
   FilePickerResult? result = await FilePicker.platform.pickFiles();
   if (result != null) {
     selectedFile.value = File(result.files.single.path!);
@@ -158,9 +160,8 @@ void openFileExplorer() async {
     selectedFileName.value = fileName;
   }
 
-  // Method to clear the selected file
   void removeSelectedFile() {
-    selectedFileName.value = '';
+    selectedFile.value = null;
+    selectedFileName.value = null;
   }
-
 }

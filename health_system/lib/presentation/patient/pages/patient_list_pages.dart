@@ -291,13 +291,14 @@ class PatientListPages extends StatelessWidget {
                                                   children: [
                                                     SizedBox(width: 40),
                                                     IconButton(
-                                                      icon: Icon(
-                                                          Icons.edit,
-                                                          color: Colors.blue),
-                                                      onPressed: () {
-                                                        ViewPatient(context);
-                                                      },
-                                                    ),
+  icon: Icon(Icons.edit, color: Colors.blue),
+  onPressed: () {
+    print('Patient ID: ${patient.id}');
+    controller.patient_id.value = patient.id;
+    ViewPatient(context);
+  },
+),
+
                                                     
                                                   ],
                                                 ),

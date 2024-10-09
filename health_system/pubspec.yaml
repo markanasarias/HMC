@@ -19,6 +19,7 @@ dependencies:
   flutter_spinkit: ^5.2.1
   get: ^4.6.6
   google_fonts: ^6.2.1
+  open_filex: ^4.5.0
   panara_dialogs: ^0.1.5
   pluto_grid_plus: ^8.4.2
   scrollable_table_view: ^2.0.3

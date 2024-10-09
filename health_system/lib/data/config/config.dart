@@ -19,4 +19,6 @@ class Config{
   static const String loadappointment = 'appointment/load';
   static const String loadcount = 'dashboard/loadcount';
   static const String loadlinegraph = 'dashboard/countlatestpatient';
+  static const String savemedicalrecord = 'patient/savemedicalrecord';
+  static const String loadmedicalrecoard = 'patient/loadmedicalrecord';
 }

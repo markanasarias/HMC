@@ -116,6 +116,19 @@ exports.InsertTable = (tablename, data, callback) => {
    
     this.Insert(sql, data, callback); 
   }
+  if (tablename === "master_medical_record") {
+    let sql = `INSERT INTO master_medical_record(
+        patient_id,
+        medical_record,
+        file,
+        status,
+        created_by,
+        created_date,
+        file_name) VALUES ?`;
+
+   
+    this.Insert(sql, data, callback); 
+  }
 };
 
 exports.Insert = (sql, values, callback) => {

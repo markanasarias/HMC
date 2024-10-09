@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:health_system/widget/loading.dart';
 import 'package:health_system/widget/nodata.dart';
+import 'package:open_filex/open_filex.dart';
 
 class BranchListPages extends StatelessWidget {
   const BranchListPages({super.key});
@@ -66,8 +67,10 @@ class BranchListPages extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              AddBranches(context);
+                            onTap: () async {
+                             AddBranches(context);
+        // final filePath = 'assets/tb.docx';
+        // await OpenFilex.open(filePath);
                             },
                             child: Container(
                               width: 100,
