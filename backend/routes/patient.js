@@ -27,6 +27,25 @@ router.get('/load', (req, res) => {
   }
 });
 
+router.post('/getpatient', (req, res) => {
+  try {
+    let {patientid} =  req.body;
+    let sql =  `SELECT * FROM master_patient WHERE id = '${patientid}'`;
+
+    mysql.Select(sql, 'MasterPatient', (err, result) => {
+      if (err) console.error('Error: ', err);
+
+      res.json({
+        msg: 'success', data: result
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: error
+    })
+  }
+});
+
 router.post("/loadmedicalrecord", (req, res) => {
   try {
     let patient_id = req.body.patient_id;

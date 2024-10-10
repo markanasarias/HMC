@@ -30,6 +30,29 @@ router.get("/load", (req, res) => {
   }
 });
 
+router.post("/getcenter", (req, res) => {
+  try {
+    let {branch_id} =  req.body;
+    let sql = `SELECT * FROM master_branch WHERE branch_id = '${branch_id}'`;
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) {
+        return res.json({
+          msg: err,
+        });
+      }
+      res.json({
+        msg: "success",
+        data: result,
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
 
 router.post('/save', (req, res) => {
   try {

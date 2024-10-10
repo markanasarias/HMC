@@ -43,6 +43,39 @@ router.get("/load", (req, res) => {
         });
     }
   });
+
+  router.post('/save', (req, res) => {
+    try {
+      let user_id = req.body.user_id;
+      let action = req.body.action;
+      let today = new Date();
+      let created_at = today.toISOString().split('T')[0];
+  
+      let data = [];
+      data.push([
+        user_id, action, created_at,
+      ]);
+  
+      mysql.InsertTable("master_event", data, (err, result) => {
+        if (err) {
+          console.error('Error: ', err);
+          return res.json({ msg: 'error' });
+        }
+  
+        console.log(result);
+        res.json({
+          msg: 'success'
+        });
+      });
+    } catch (error) {
+      res.json({
+        msg: 'error'
+      });
+    }
+  });
+  
+
+
   
 
 
