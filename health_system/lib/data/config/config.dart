@@ -21,4 +21,9 @@ class Config{
   static const String loadlinegraph = 'dashboard/countlatestpatient';
   static const String savemedicalrecord = 'patient/savemedicalrecord';
   static const String loadmedicalrecoard = 'patient/loadmedicalrecord';
+  static const String selectstaff = 'staff/getstaff';
+  static const String selectcenter = 'center/getcenter';
+  static const String saveitems = 'items/save';
+  static const String selectitems = 'items/getitems';
+  static const String savecalendar = 'event/save';
 }

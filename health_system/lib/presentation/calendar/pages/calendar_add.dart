@@ -5,10 +5,11 @@ import 'package:health_system/presentation/staff/controllers/staff_controller.da
 import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:health_system/presentation/calendar/controller/calendar_controller.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 void AddCalendar(BuildContext context) {
-  final StaffController controller = Get.put(StaffController());
+  final CalendarController controller = Get.put(CalendarController());
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -19,7 +20,7 @@ void AddCalendar(BuildContext context) {
         ),
         child: Container(
           width: 425,
-          height: 375,
+          height: 410,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -63,6 +64,7 @@ void AddCalendar(BuildContext context) {
                       width: 385,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.NameC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -115,15 +117,38 @@ void AddCalendar(BuildContext context) {
                     Obx(
                       () => GestureDetector(
                           onTap: () async {
-                            await showDatePicker(
-                                    context: context,
-                                    firstDate: DateTime(1940),
-                                    lastDate: DateTime(2015),
-                                    currentDate: DateTime(2008))
-                                .then((date) {
-                              controller.hiredate.value =
-                                  DateFormat('MMMM dd, y').format(date!);
-                            });
+                            print('Yes');
+                            DateTime? selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2101),
+                            );
+
+                            if (selectedDate != null) {
+                              TimeOfDay? selectedTime = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              );
+
+                              if (selectedTime != null) {
+                                // Combine the selected date and time
+                                DateTime combinedDateTime = DateTime(
+                                  selectedDate.year,
+                                  selectedDate.month,
+                                  selectedDate.day,
+                                  selectedTime.hour,
+                                  selectedTime.minute,
+                                );
+
+                                // Format the combined DateTime as needed
+                                final formattedDateTime =
+                                    "${combinedDateTime.toLocal()}";
+
+                                controller.start_date.value = formattedDateTime;
+                                // If you want to store the full datetime as well, you can store combinedDateTime directly or format it
+                              }
+                            }
                           },
                           child: Container(
                             width: 188,
@@ -134,7 +159,7 @@ void AddCalendar(BuildContext context) {
                             ),
                             child: Padding(
                               padding: EdgeInsets.only(top: 7, left: 10),
-                              child: Text(controller.hiredate.value),
+                              child: Text(controller.start_date.value),
                             ),
                           )),
                     ),
@@ -142,15 +167,37 @@ void AddCalendar(BuildContext context) {
                     Obx(
                       () => GestureDetector(
                           onTap: () async {
-                            await showDatePicker(
-                                    context: context,
-                                    firstDate: DateTime(1940),
-                                    lastDate: DateTime(2015),
-                                    currentDate: DateTime(2008))
-                                .then((date) {
-                              controller.hiredate.value =
-                                  DateFormat('MMMM dd, y').format(date!);
-                            });
+                            DateTime? selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2101),
+                            );
+
+                            if (selectedDate != null) {
+                              TimeOfDay? selectedTime = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              );
+
+                              if (selectedTime != null) {
+                                // Combine the selected date and time
+                                DateTime combinedDateTime = DateTime(
+                                  selectedDate.year,
+                                  selectedDate.month,
+                                  selectedDate.day,
+                                  selectedTime.hour,
+                                  selectedTime.minute,
+                                );
+
+                                // Format the combined DateTime as needed
+                                final formattedDateTime =
+                                    "${combinedDateTime.toLocal()}";
+
+                                controller.end_date.value = formattedDateTime;
+                                // If you want to store the full datetime as well, you can store combinedDateTime directly or format it
+                              }
+                            }
                           },
                           child: Container(
                             width: 187,
@@ -161,7 +208,7 @@ void AddCalendar(BuildContext context) {
                             ),
                             child: Padding(
                               padding: EdgeInsets.only(top: 7, left: 10),
-                              child: Text(controller.hiredate.value),
+                              child: Text(controller.end_date.value),
                             ),
                           )),
                     ),
@@ -188,8 +235,45 @@ void AddCalendar(BuildContext context) {
                   children: [
                     SizedBox(
                       width: 385,
-                      height: 110,
+                      height: 60,
                       child: CupertinoTextField(
+                        controller: controller.DescriptionC,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                        style: TextStyles.Text,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEFF1F6),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        maxLines: 5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    left: 20,
+                    right: 30,
+                  ),
+                  child: Text(
+                    'Location',
+                    style: TextStyles.Text,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 385,
+                      height: 60,
+                      child: CupertinoTextField(
+                        controller: controller.LocationC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -219,8 +303,9 @@ void AddCalendar(BuildContext context) {
                     TextButton(
                       child: Text("Save"),
                       onPressed: () {
+                        controller.addevent(context);
                         //showSuccessToast(context);
-                        Navigator.of(context).pop();
+                        //Navigator.of(context).pop();
                       },
                     ),
                   ],

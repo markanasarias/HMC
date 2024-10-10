@@ -129,6 +129,32 @@ exports.InsertTable = (tablename, data, callback) => {
    
     this.Insert(sql, data, callback); 
   }
+
+  if (tablename === "master_items") {
+    let sql = `INSERT INTO master_items(
+        item_name,
+        item_type,
+        created_by,
+        created_date,
+        status) VALUES ?`;
+
+   
+    this.Insert(sql, data, callback); 
+  }
+
+  if (tablename === "master_event") {
+    let sql = `INSERT INTO master_event(
+        name,
+        description,
+        start_time,
+        end_time,
+        location,
+        createddate,
+        createdby) VALUES ?`;
+
+   
+    this.Insert(sql, data, callback); 
+  }
 };
 
 exports.Insert = (sql, values, callback) => {

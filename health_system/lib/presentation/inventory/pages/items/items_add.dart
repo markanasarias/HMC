@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:health_system/presentation/inventory/controller/items/items_controller.dart';
 import 'package:health_system/presentation/staff/controllers/staff_controller.dart';
 import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 void AddItems(BuildContext context) {
-  final StaffController controller = Get.put(StaffController());
+  final ItemsController controller = Get.put(ItemsController());
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -63,6 +64,7 @@ void AddItems(BuildContext context) {
                       width: 385,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.NameC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -97,6 +99,7 @@ void AddItems(BuildContext context) {
                       width: 385,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.TypeC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -126,7 +129,7 @@ void AddItems(BuildContext context) {
                       child: Text("Save"),
                       onPressed: () {
                         //showSuccessToast(context);
-                        Navigator.of(context).pop();
+                       controller.addcenter(context);
                       },
                     ),
                   ],

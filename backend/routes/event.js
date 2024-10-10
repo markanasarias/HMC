@@ -56,14 +56,14 @@ router.post('/save', (req, res) => {
     let description = req.body.description;
     let start_time = req.body.start_time;
     let end_time = req.body.end_time;
+    let location = req.body.location;
     let createby = req.body.createby; 
-    let status = 'Active';
     let today = new Date();
     let createddate = today.toISOString().split('T')[0];
 
     let data = [];
     data.push([
-      name, description,  start_time, end_time, createddate, createby, status,
+      name, description,  start_time, end_time, location, createddate, createby
     ]);
 
     mysql.InsertTable("master_event", data, (err, result) => {

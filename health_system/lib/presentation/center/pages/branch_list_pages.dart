@@ -248,6 +248,7 @@ class BranchListPages extends StatelessWidget {
                                                   IconButton(
                                                     icon: Icon(Icons.edit, color: Colors.blue),
                                                     onPressed: () {
+                                                      controller.selectcenter(center.branch_id);
                                                       ViewBranches(context);
                                                     },
                                                   ),

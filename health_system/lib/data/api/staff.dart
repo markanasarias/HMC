@@ -16,11 +16,30 @@ class Staff {
     final result = responseData['data'] ?? [];
     final description = responseData['description'] ?? "";
 
+   // print(result);
+
+    ResponceModel data = ResponceModel(message, status, result, description);
+    return data;
+  }
+
+    Future<ResponceModel> selectstaff(String staffid) async {
+    final url = Uri.parse('${Config.apiUrl}${Config.selectstaff}');
+    final response = await http.post(url, body: {
+      'staffid': staffid
+    });
+
+    final responseData = json.decode(response.body);
+    final status = response.statusCode;
+    final message = responseData['msg'];
+    final result = responseData['data'] ?? [];
+    final description = responseData['description'] ?? "";
+
     print(result);
 
     ResponceModel data = ResponceModel(message, status, result, description);
     return data;
   }
+
 
   Future<ResponceModel> addstaff(String type, String fullname, String position,
   String specialization, String phone_number, String email,

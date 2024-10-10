@@ -16,6 +16,24 @@ class BranchCenter {
     final result = responseData['data'] ?? [];
     final description = responseData['description'] ?? "";
 
+    //print(result);
+
+    ResponceModel data = ResponceModel(message, status, result, description);
+    return data;
+  }
+
+    Future<ResponceModel> selectcenter(String branch_id) async {
+    final url = Uri.parse('${Config.apiUrl}${Config.selectcenter}');
+    final response = await http.post(url, body: {
+      'branch_id': branch_id,
+    });
+
+    final responseData = json.decode(response.body);
+    final status = response.statusCode;
+    final message = responseData['msg'];
+    final result = responseData['data'] ?? [];
+    final description = responseData['description'] ?? "";
+
     print(result);
 
     ResponceModel data = ResponceModel(message, status, result, description);
@@ -35,7 +53,7 @@ class BranchCenter {
     final result = responseData['data'] ?? [];
     final description = responseData['description'] ?? "";
 
-    print(message);
+    //print(message);
 
     ResponceModel data = ResponceModel(message, status, result, description);
     return data;

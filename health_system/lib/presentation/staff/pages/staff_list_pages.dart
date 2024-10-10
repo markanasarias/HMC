@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/presentation/staff/controllers/staff_controller.dart';
 import 'package:health_system/presentation/staff/pages/staff_add_pages.dart';
+import 'package:health_system/presentation/staff/pages/staff_view_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
@@ -281,7 +282,10 @@ final StaffController controller = Get.put(StaffController());
                                             IconButton(
                                               icon: Icon(Icons.edit,
                                                   color: Colors.blue),
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                controller.selectstaff(staff.id);
+                                                ViewStaff(context);
+                                              },
                                             ),
                                           ],
                                         ),),

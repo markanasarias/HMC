@@ -43,6 +43,16 @@ import 'package:open_filex/open_filex.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
+import 'dart:convert'; // For base64 encoding/decoding
+import 'dart:io'; // For file operations
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:open_file/open_file.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:open_file/open_file.dart';
 
 class PatientControllers extends GetxController {
   var isChecked1 = false.obs;
@@ -297,6 +307,23 @@ Future<void> openMedicalRecordFile(String base64File, String fileName) async {
   }
 }
 
+  Future<void> openFile(String base64File, String fileName) async {
+    // Decode the base64 file
+    final bytes = base64.decode(base64File);
+    
+    // Get the temporary directory
+    final directory = await getTemporaryDirectory();
+    
+    // Create a file in the temporary directory
+    final file = File('${directory.path}/$fileName');
+    
+    // Write the bytes to the file
+    await file.writeAsBytes(bytes);
+
+    // Open the file
+    await OpenFile.open(file.path);
+  }
+
 
 
 
@@ -317,14 +344,20 @@ Future<void> openMedicalRecordFile(String base64File, String fileName) async {
 
 void openFileExplorer() async {
   print('open');
-  FilePickerResult? result = await FilePicker.platform.pickFiles();
+  
+  // Allow only PDF files
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['pdf'],
+  );
+
   if (result != null) {
     selectedFile.value = File(result.files.single.path!);
     selectedFileName.value = result.files.single.name;
 
     if (selectedFile.value != null) {
       List<int> fileBytes = await selectedFile.value!.readAsBytes();
-      
+
       // Print the size of the file in bytes
       int fileSizeInBytes = fileBytes.length;
       print('File size in bytes: $fileSizeInBytes');
@@ -339,7 +372,7 @@ void openFileExplorer() async {
       fileAttachment.value = base64File;
 
       // Print the Base64 file
-      
+      print('Base64 encoded file: $base64File');
 
       // Convert Base64 string back to bytes
       List<int> decodedBytes = base64Decode(fileAttachment.value);
@@ -349,6 +382,23 @@ void openFileExplorer() async {
     print('No file selected.');
   }
 }
+
+ Future<void> openMedicalRecord(String base64File, String fileName) async {
+    // Decode Base64 string
+    final bytes = base64Decode(base64File);
+
+    // Get the temporary directory
+    final tempDir = await getTemporaryDirectory();
+    final filePath = '${tempDir.path}/$fileName';
+
+    // Write bytes to a file
+    final file = File(filePath);
+    await file.writeAsBytes(bytes);
+
+    // Open the file
+    await OpenFile.open(filePath);
+  }
+
 
 
   void setSelectedFile(String fileName) {

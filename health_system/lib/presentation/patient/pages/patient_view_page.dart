@@ -10,6 +10,12 @@ import 'dart:convert'; // For base64 decoding
 import 'dart:io'; // For file operations
 import 'package:path_provider/path_provider.dart'; // To get the temporary directory
 import 'package:open_filex/open_filex.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:open_file/open_file.dart';
+
 
 void ViewPatient(BuildContext context){
   final PatientControllers controller = Get.put(PatientControllers());
@@ -988,7 +994,7 @@ void ViewPatient(BuildContext context){
                     IconButton(
                       icon: Icon(Icons.edit, color: Colors.blue),
                       onPressed: () {
-                        // Add edit functionality here
+                      controller.openMedicalRecord(medicalrecord.file, medicalrecord.file_name);
                       },
                     ),
                   ],

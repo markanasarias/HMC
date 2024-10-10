@@ -74,12 +74,53 @@ class CenterController extends GetxController {
     }
   }
 
+    Future<void> selectcenter(String branch_id) async {
+    print('getloadcenter');
+    try {
+      final response = await BranchCenter().selectcenter(branch_id);
+
+      if (helper.getStatusString(APIStatus.success) == response.message) {
+        final jsondata = json.encode(response.result);
+
+        for (var centerinfo in json.decode(jsondata)) {
+          CenterModel loadcenter = CenterModel(
+            centerinfo['branch_id'].toString(),
+            centerinfo['branch_name'].toString(),
+            centerinfo['address'].toString(),
+            centerinfo['createddate'].toString(),
+            centerinfo['createdby'].toString(),
+            centerinfo['status'].toString(),
+          );
+
+          center.add(loadcenter);
+          NameC.text = loadcenter.branch_name;
+          LocationC.text = loadcenter.address;
+        }
+
+       
+        if (center.isNotEmpty) {
+          selectedBranchId.value = center.first.branch_id; 
+        }
+      } else {
+        print('Error: ${response.message}');
+      }
+    } catch (e) {
+      print('An error occurred while loading patient data: $e');
+    }
+  }
+
+  void clear(){
+    NameC.clear();
+    LocationC.clear();
+  }
+
+
 Future<void> addcenter(BuildContext context) async {
   isloading = true.obs;
   try {
     final response = await BranchCenter().addcenter(NameC.text, LocationC.text, fullname.value);
     if (response.message == 'success') {
-      showSuccessToast(context, title: 'Success!', text: 'Patient added successfully.');
+      showSuccessToast(context, title: 'Success!', text: 'Center added successfully.');
       await Future.delayed(Duration(seconds: 1));
       isloading = false.obs;
       getloadcenter();

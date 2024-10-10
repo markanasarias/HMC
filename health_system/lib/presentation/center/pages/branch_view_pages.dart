@@ -123,6 +123,8 @@ void ViewBranches(BuildContext context) {
                     TextButton(
                       child: Text("Cancel"),
                       onPressed: () {
+                        controller.getloadcenter();
+                        controller.clear();
                         Navigator.of(context).pop();
                       },
                     ),
@@ -130,6 +132,7 @@ void ViewBranches(BuildContext context) {
                       child: Text("Save"),
                       onPressed: () {
                         controller.addcenter(context);
+                        
                        // showSuccessToast(context, title: 'Success!', text: 'Your request has been successfully submitted.');
 
                        

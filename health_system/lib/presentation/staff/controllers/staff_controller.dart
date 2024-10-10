@@ -32,6 +32,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 
 class StaffController extends GetxController {
   var selectedFileNames = ''.obs;
+  var staffid = '';
   var hiredate = ''.obs;
   var fullname = ''.obs;
   var selectedrole = 'Staff'.obs;
@@ -90,7 +91,7 @@ class StaffController extends GetxController {
 
       Future<void> getloadstaff() async {
     print('loaddoctor');
-    
+    staff.clear();
     try {
       final response = await Staff().getstaff();
 
@@ -124,6 +125,56 @@ class StaffController extends GetxController {
       print('An error occurred while loading patient data: $e');
     }
   }
+
+Future<void> selectstaff(String staffid) async {
+  print('loaddoctor');
+  try {
+    final response = await Staff().selectstaff(staffid);
+
+    if (helper.getStatusString(APIStatus.success) == response.message) {
+      final jsondata = json.encode(response.result);
+      for (var attendanceInfo in json.decode(jsondata)) {
+        StaffModel loadstaff = StaffModel(
+          attendanceInfo['id'].toString(),
+          attendanceInfo['type'].toString(),
+          attendanceInfo['fullname'].toString(),
+          attendanceInfo['position'].toString(),
+          attendanceInfo['specialization'].toString(),
+          attendanceInfo['phone_number'].toString(),
+          attendanceInfo['email'].toString(),
+          attendanceInfo['address'].toString(),
+          // Format the hire_date to YYYY-MM-DD
+          DateFormat('yyyy-MM-dd').format(DateTime.parse(attendanceInfo['hire_date'])),
+          attendanceInfo['years_of_experience'].toString(),
+          attendanceInfo['medical_license_number'].toString(),
+          attendanceInfo['image'].toString(),
+          attendanceInfo['createby'].toString(),
+          attendanceInfo['createddate'].toString(),
+          attendanceInfo['status'].toString(),
+          attendanceInfo['center'].toString(),
+        );
+        staff.add(loadstaff);
+        fullnameC.text = loadstaff.fullname;
+        //selectedrole.value = loadstaff.type;
+        positionC.text = loadstaff.position;
+        hiredate.value = DateFormat('yyyy-MM-dd').format(DateTime.parse(loadstaff.hire_date)); // Ensure it is formatted in the same way here
+        specializationC.text = loadstaff.specialization;
+        medical_license_numberC.text = loadstaff.medical_license_number;
+        years_of_experienceC.text = loadstaff.years_of_experience;
+        selectedbranch.value = loadstaff.center;
+        phone_numberC.text = loadstaff.phone_number;
+        emailC.text = loadstaff.email;
+        addressC.text = loadstaff.address;
+        fileAttachment.value = loadstaff.image;
+      }
+    } else {
+      print('Error: ${response.message}');
+    }
+  } catch (e) {
+    print('An error occurred while loading patient data: $e');
+  }
+}
+
       void filterStaff() {
     if (searchQuery.value.isEmpty) {
       filteredStaff.value = staff; 
@@ -153,6 +204,21 @@ void openFileExplorer() async {
     print('No file selected.');
   }
 }
+
+  void clearFields() {
+    fullnameC.clear();
+    positionC.clear();
+    //selectedrole.value = ''; 
+    hiredate.value = ''; 
+    specializationC.clear();
+    medical_license_numberC.clear();
+    years_of_experienceC.clear();
+    selectedbranch.value = '';
+    phone_numberC.clear();
+    emailC.clear();
+    addressC.clear();
+    fileAttachment.value = '';
+  }
 
 
 

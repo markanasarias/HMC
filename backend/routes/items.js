@@ -55,9 +55,9 @@ router.get("/load", (req, res) => {
 
   router.post('/save', (req, res) => {
     try {
-      let {
-        item_name, item_type, created_by
-      } = req.body;
+      let item_name = req.body.item_name;
+      let item_type = req.body.item_type;
+      let created_by = req.body.created_by;
       let status = 'Active';
       let today = new Date();
       let createddate = today.toISOString().split('T')[0];
@@ -90,6 +90,7 @@ router.get("/load", (req, res) => {
       res.json({ msg: 'error' });
     }
   });
+  
 
 
 
