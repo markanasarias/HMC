@@ -98,6 +98,7 @@ class CalendarListPages extends StatelessWidget {
                       onCellTap: (events, date) {
                         if (events.isNotEmpty) {
                           // Format the date to 'yyyy-MM-dd'
+                          
                           String formattedDate =
                               DateFormat('yyyy-MM-dd').format(date);
                           print("Selected date: $formattedDate");

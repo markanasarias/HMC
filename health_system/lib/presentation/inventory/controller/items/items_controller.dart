@@ -124,7 +124,24 @@ Future<void> addcenter(BuildContext context) async {
     final response = await Items().saveitems(NameC.text, TypeC.text, fullname.value);
     if (response.message == 'success') {
       showSuccessToast(context, title: 'Success!', text: 'Items added successfully.');
-      await Future.delayed(Duration(seconds: 1));
+      getloaditems();
+       Navigator.of(context).pop();
+    } else {
+      showErrorToast(context, title: 'Oops!', text: 'Items Already Exist!');
+    }
+  } catch (e) {
+    print('An error occurred: $e');
+    showErrorToast(context, title: 'Oops!', text: 'There was an issue. Please try again.');
+  }
+}
+
+Future<void> updatecenter(BuildContext context, String item_id) async {
+  //isloading = true.obs;
+  try {
+    final response = await Items().updateitems(item_id,NameC.text, TypeC.text, Status.text);
+    if (response.message == 'success') {
+      showSuccessToast(context, title: 'Success!', text: 'Items udpate successfully.');
+
       //isloading = false.obs;
       getloaditems();
        Navigator.of(context).pop();
@@ -136,5 +153,6 @@ Future<void> addcenter(BuildContext context) async {
     showErrorToast(context, title: 'Oops!', text: 'There was an issue. Please try again.');
   }
 }
+
 
 }

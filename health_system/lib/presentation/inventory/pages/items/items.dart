@@ -283,7 +283,7 @@ class ItemsListPages extends StatelessWidget {
                                                   icon: Icon(Icons.edit, color: Colors.blue),
                                                   onPressed: () {
                                                     controller.selectitems(item.item_id);
-                                                    ViewItems(context);
+                                                    ViewItems(context, item.item_id);
                                                   },
                                                 ),
                                               ],

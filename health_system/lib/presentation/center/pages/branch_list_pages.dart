@@ -249,7 +249,7 @@ class BranchListPages extends StatelessWidget {
                                                     icon: Icon(Icons.edit, color: Colors.blue),
                                                     onPressed: () {
                                                       controller.selectcenter(center.branch_id);
-                                                      ViewBranches(context);
+                                                      ViewBranches(context, center.branch_id);
                                                     },
                                                   ),
                                                 ],

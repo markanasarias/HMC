@@ -30,4 +30,9 @@ class Config {
   static const String selectservice = 'service/getservice';
   static const String savelogs = 'logs/save';
   static const String getevents = 'event/getevents';
+  static const String updatecenter = 'center/update';
+  static const String updateitems = 'items/update';
+  static const String updateservies = 'service/update';
+  static const String selectpatient = 'patient/getpatient';
+  static const String updatepatient = 'patient/update';
 }

@@ -30,7 +30,7 @@ class CenterController extends GetxController {
   Helper helper = Helper();
   final TextEditingController NameC = TextEditingController();
   final TextEditingController LocationC = TextEditingController();
-
+ final TextEditingController StatusC = TextEditingController();
   var center = <CenterModel>[].obs;
 
   @override
@@ -95,6 +95,7 @@ class CenterController extends GetxController {
           center.add(loadcenter);
           NameC.text = loadcenter.branch_name;
           LocationC.text = loadcenter.address;
+          StatusC.text = loadcenter.status;
         }
 
         if (center.isNotEmpty) {
@@ -117,7 +118,7 @@ class CenterController extends GetxController {
     isloading.value = true;
     try {
       final response = await BranchCenter()
-          .addcenter(NameC.text, LocationC.text, fullname.value);
+          .addcenter( NameC.text, LocationC.text, fullname.value);
       if (response.message == 'success') {
         showSuccessToast(context,
             title: 'Success!', text: 'Center added successfully.');
@@ -125,6 +126,33 @@ class CenterController extends GetxController {
 
         final logsController = Get.put(LogsController());
         await logsController.addlogs(context, staffid.value, 'Added center');
+
+        isloading.value = false;
+        getloadcenter();
+
+        Navigator.of(context).pop();
+      } else {
+        showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      showErrorToast(context,
+          title: 'Oops!', text: 'There was an issue. Please try again.');
+      isloading.value = false; // Update loading state
+    }
+  }
+    Future<void> updatecenter(BuildContext context, String branch_id) async {
+    isloading.value = true;
+    try {
+      final response = await BranchCenter()
+          .updatecenter(branch_id, NameC.text, LocationC.text, StatusC.text);
+      if (response.message == 'success') {
+        showSuccessToast(context,
+            title: 'Success!', text: 'Center updated successfully.');
+        await Future.delayed(Duration(seconds: 1));
+
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(context, staffid.value, 'Updated center');
 
         isloading.value = false;
         getloadcenter();

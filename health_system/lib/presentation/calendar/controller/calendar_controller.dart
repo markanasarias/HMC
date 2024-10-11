@@ -102,7 +102,7 @@ class CalendarController extends GetxController {
 
   Future<void> selectevents(String date) async {
     print('loaddoctor');
-
+calendar.clear();
     try {
       final response = await Calendar().getevents(date);
 

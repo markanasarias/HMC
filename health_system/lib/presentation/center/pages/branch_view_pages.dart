@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-void ViewBranches(BuildContext context) {
+void ViewBranches(BuildContext context, String branch_id) {
   final CenterController controller = Get.put(CenterController());
   showDialog(
     context: context,
@@ -20,7 +20,7 @@ void ViewBranches(BuildContext context) {
         ),
         child: Container(
           width: 425,
-          height: 310,
+          height: 345,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -77,7 +77,7 @@ void ViewBranches(BuildContext context) {
                   ],
                 ),
               ),
-                            Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -97,7 +97,7 @@ void ViewBranches(BuildContext context) {
                   children: [
                     SizedBox(
                       width: 385,
-                      height: 110,
+                      height: 80,
                       child: CupertinoTextField(
                         controller: controller.LocationC,
                         padding:
@@ -107,7 +107,42 @@ void ViewBranches(BuildContext context) {
                           color: Color(0xFFEFF1F6),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                          maxLines: 5,
+                        maxLines: 5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    left: 20,
+                    right: 30,
+                  ),
+                  child: Text(
+                    'Status',
+                    style: TextStyles.Text,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 385,
+                      height: 35,
+                      child: CupertinoTextField(
+                        controller: controller.StatusC,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                        style: TextStyles.Text,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEFF1F6),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                       ),
                     ),
                   ],
@@ -131,11 +166,9 @@ void ViewBranches(BuildContext context) {
                     TextButton(
                       child: Text("Save"),
                       onPressed: () {
-                        controller.addcenter(context);
-                        
-                       // showSuccessToast(context, title: 'Success!', text: 'Your request has been successfully submitted.');
+                        controller.updatecenter(context, branch_id);
 
-                       
+                        // showSuccessToast(context, title: 'Success!', text: 'Your request has been successfully submitted.');
                       },
                     ),
                   ],

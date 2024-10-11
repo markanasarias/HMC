@@ -92,6 +92,7 @@ class PatientControllers extends GetxController {
       TextEditingController();
   final TextEditingController philhealth_numberC = TextEditingController();
   final TextEditingController allergiesC = TextEditingController();
+  final TextEditingController StatusC = TextEditingController();
 
   final genders = ['Male', 'Female'];
   final civilstatus = ['Single', 'Married'];
@@ -128,6 +129,23 @@ class PatientControllers extends GetxController {
     return '';
   }
 
+String _formatDate1(String? date) {
+  if (date == null || date.isEmpty) return '';
+  
+  // Specify the input format
+  String inputFormat = 'yyyy-MM-dd';
+  String outputFormat = 'yyyy-MM-dd';
+
+  try {
+    // Parse the date using the specified input format
+    DateTime dateTime = DateFormat(inputFormat).parse(date);
+    // Return the formatted date as a string
+    return DateFormat(outputFormat, 'en_US').format(dateTime);
+  } catch (e) {
+    return ''; // Return empty string if parsing fails
+  }
+}
+
   void updateTab(int index) {
     selectedTab.value = index;
   }
@@ -155,6 +173,46 @@ class PatientControllers extends GetxController {
         philhealth_numberC.text,
         allergiesC.text,
         fullname.value,
+      );
+      if (response.message == 'success') {
+        showSuccessToast(context,
+            title: 'Success!',
+            text: 'Your request has been successfully submitted.');
+        getloadpatient();
+        Navigator.of(context).pop();
+      } else {
+        showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      showErrorToast(context,
+          title: 'Oops!', text: 'There was an issue. Please try again.');
+    }
+  }
+
+  Future<void> updatepatient(BuildContext context, String patientid) async {
+    try {
+      final response = await Patient().updatepatient(
+        patientid,
+        first_nameC.text,
+        last_nameC.text,
+        middle_nameC.text,
+        birthdayC.value,
+        birth_placeC.text,
+        selectedGender.value,
+        selectedcivilstatus.value,
+        nationalityC.text,
+        religionC.text,
+        occupationC.text,
+        phone_numberC.text,
+        emailC.text,
+        addressC.text,
+        emergency_contact_nameC.text,
+        emergency_contact_phoneC.text,
+        selectedbloodtype.value,
+        philhealth_numberC.text,
+        allergiesC.text,
+        StatusC.text,
       );
       if (response.message == 'success') {
         showSuccessToast(context,
@@ -211,7 +269,7 @@ class PatientControllers extends GetxController {
 
   Future<void> getloadpatient() async {
     print('loadpatient');
-
+patient.clear();
     try {
       final response = await Patient().getpatient();
 
@@ -243,6 +301,67 @@ class PatientControllers extends GetxController {
             attendanceInfo['createdDate'].toString(),
           );
           patient.add(loadpatient);
+        }
+      } else {
+        print('Error: ${response.message}');
+      }
+    } catch (e) {
+      print('An error occurred while loading patient data: $e');
+    }
+  }
+
+    Future<void> selectpatient(String patientid) async {
+    print('loadpatient');
+
+    try {
+      final response = await Patient().selectpatient(patientid);
+
+      if (helper.getStatusString(APIStatus.success) == response.message) {
+        final jsondata = json.encode(response.result);
+        for (var attendanceInfo in json.decode(jsondata)) {
+          PatientModel loadpatient = PatientModel(
+            attendanceInfo['id'].toString(),
+            attendanceInfo['firstName'].toString(),
+            attendanceInfo['lastName'].toString(),
+            attendanceInfo['middleName'].toString(),
+            attendanceInfo['age'].toString(),
+            _formatDate1(attendanceInfo['dateOfBirth'].toString()),
+            attendanceInfo['birthPlace'].toString(),
+            attendanceInfo['gender'].toString(),
+            attendanceInfo['civilStatus'].toString(),
+            attendanceInfo['nationality'].toString(),
+            attendanceInfo['religion'].toString(),
+            attendanceInfo['occupation'].toString(),
+            attendanceInfo['phoneNumber'].toString(),
+            attendanceInfo['email'].toString(),
+            attendanceInfo['address'].toString(),
+            attendanceInfo['emergencyContactName'].toString(),
+            attendanceInfo['emergencyContactPhone'].toString(),
+            attendanceInfo['bloodType'].toString(),
+            attendanceInfo['philhealthNumber'].toString(),
+            attendanceInfo['allergies'].toString(),
+            attendanceInfo['createdBy'].toString(),
+            attendanceInfo['createdDate'].toString(),
+          );
+          patient.add(loadpatient);
+          last_nameC.text = loadpatient.lastName;
+          first_nameC.text = loadpatient.firstName;
+          middle_nameC.text = loadpatient.middleName;
+          birthdayC.value = loadpatient.dateOfBirth;
+          birth_placeC.text = loadpatient.birthPlace;
+          selectedGender.value = loadpatient.gender;
+          nationalityC.text = loadpatient.nationality;
+          religionC.text = loadpatient.religion;
+          occupationC.text = loadpatient.occupation;
+          phone_numberC.text = loadpatient.phoneNumber;
+          selectedcivilstatus.value = loadpatient.civilStatus;
+          addressC.text = loadpatient.address;
+          emailC.text = loadpatient.email;
+          emergency_contact_nameC.text = loadpatient.emergencyContactName;
+          emergency_contact_phoneC.text = loadpatient.emergencyContactPhone;
+          selectedbloodtype.value = loadpatient.bloodType;
+          allergiesC.text = loadpatient.allergies;
+          philhealth_numberC.text = loadpatient.philhealthNumber;
         }
       } else {
         print('Error: ${response.message}');

@@ -39,6 +39,8 @@ class ServiceController extends GetxController {
   var service = <ServiceModel>[].obs;
 
   final TextEditingController NameC = TextEditingController();
+  final TextEditingController StatusC = TextEditingController();
+  final TextEditingController daysC = TextEditingController();
   @override
   void onInit() async {
     super.onInit();
@@ -95,8 +97,9 @@ class ServiceController extends GetxController {
 
           service.add(services);
           NameC.text = services.service_name;
-          schedule_days.value = services.schedule_days;
+          daysC.text = services.schedule_days;
           schedule_time.value = services.schedule_time;
+          StatusC.text = services.status;
         }
       } else {
         print('Error: ${response.message}');
@@ -114,8 +117,25 @@ class ServiceController extends GetxController {
       if (response.message == 'success') {
         showSuccessToast(context,
             title: 'Success!', text: 'Service added successfully.');
-        await Future.delayed(Duration(seconds: 1));
-        //isloading = false.obs;
+        getloadservice();
+        Navigator.of(context).pop();
+      } else {
+        showErrorToast(context, title: 'Oops!', text: 'Service Already Exist!');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      showErrorToast(context,
+          title: 'Oops!', text: 'There was an issue. Please try again.');
+    }
+  }
+    Future<void> updateservice(BuildContext context, String id) async {
+    //isloading = true.obs;
+    try {
+      final response = await Service().updateservice(
+          id,NameC.text, daysC.text, schedule_time.value, StatusC.text);
+      if (response.message == 'success') {
+        showSuccessToast(context,
+            title: 'Success!', text: 'Service added successfully.');
         getloadservice();
         Navigator.of(context).pop();
       } else {

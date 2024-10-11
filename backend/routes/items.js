@@ -90,6 +90,31 @@ router.get("/load", (req, res) => {
       res.json({ msg: 'error' });
     }
   });
+
+  router.post('/update', (req, res) => {
+    try {
+      let item_id = req.body.item_id;
+      let item_name = req.body.item_name;
+      let item_type = req.body.item_type;
+      let status = req.body.status;
+      let sqlupdate = `UPDATE master_items SET  item_name = '${item_name}', item_type ='${item_type}', status ='${status}' WHERE item_id ='${item_id}'`
+      
+      mysql.Update(sqlupdate, (err,result) =>{
+        if(err) console.error('Error: ', err);
+    
+        console.log(result);
+    
+        res.json({
+          msg: 'success'
+        })
+      })
+    
+    } catch (error) {
+      res.json({
+        msg: 'error'
+      })
+    }
+    });
   
 
 

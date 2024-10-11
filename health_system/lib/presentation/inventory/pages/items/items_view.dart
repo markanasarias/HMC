@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-void ViewItems(BuildContext context) {
+void ViewItems(BuildContext context, String item_id) {
   final ItemsController controller = Get.put(ItemsController());
   showDialog(
     context: context,
@@ -164,8 +164,8 @@ void ViewItems(BuildContext context) {
                     TextButton(
                       child: Text("Save"),
                       onPressed: () {
-                        //showSuccessToast(context);
-                        Navigator.of(context).pop();
+                       controller.updatecenter(context, item_id);
+                        
                       },
                     ),
                   ],

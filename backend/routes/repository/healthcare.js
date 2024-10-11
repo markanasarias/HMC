@@ -207,6 +207,21 @@ exports.SelectResult = (sql, callback) => {
   }
 };
 
+exports.Update = async (sql, callback) => {
+  try {
+    connection.query(sql, (error, results, fields) => {
+      if (error) {
+        callback(error, null);
+      }
+      // console.log('Rows affected:', results.affectedRows);
+
+      callback(null, `Rows affected: ${results.affectedRows}`);
+    });
+  } catch (error) {
+    callback(error, null);
+  }
+};
+
 exports.mysqlQueryPromise = (sql) => {
   return new Promise((resolve, reject) => {
     connection.query(sql, (error, results) => {

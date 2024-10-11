@@ -22,13 +22,26 @@ class RequestStaffController extends GetxController {
   Helper helper = Helper();
 
   var requestsstaff = <RequestStaffModel>[].obs;
-  var addedItems = <InventoryItem>[].obs;
+   var addedItems = <InventoryItem>[].obs;
 
   @override
   void onInit() async {
     super.onInit();
     branch_id.value = await helper.getbranchid();
     await getloadrequeststaff();
+  }
+
+    void printItemsAsJson() {
+    // Convert each InventoryItem to JSON
+    var jsonData = addedItems.map((item) => item.toJson()).toList();
+    
+    // Wrap the list inside a map with key "data"
+    var result = {
+      "data": jsonData
+    };
+
+    // Print the result in JSON-like format
+    print(result);
   }
 
   Future<void> getloadrequeststaff() async {
@@ -79,13 +92,13 @@ class RequestStaffController extends GetxController {
       showSuggestions.value = true;
     }
   }
-  void addItem(String itemName, String quantity) {
+  void addItem(String itemid, String itemName, String quantity) {
     addedItems.add(
-        InventoryItem(itemName: itemName, quantity: quantity)); // Add new item
+        InventoryItem(itemid: itemid, itemName: itemName, quantity: quantity)); 
   }
 
   void removeItem(InventoryItem item) {
-    addedItems.remove(item); // Remove item from the list
+    addedItems.remove(item);
   }
 }
 
@@ -97,8 +110,23 @@ class AddedItem {
 }
 
 class InventoryItem {
+  final String itemid;
   final String itemName;
   final String quantity;
 
-  InventoryItem({required this.itemName, required this.quantity});
+  InventoryItem({required this.itemid, required this.itemName, required this.quantity});
+
+  // Convert the InventoryItem class to JSON format
+  Map<String, dynamic> toJson() {
+    return {
+      'itemid': itemid,
+      'itemName': itemName,
+      'quantity': quantity,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'ItemID: $itemid,  Item: $itemName, Quantity: $quantity';
+  }
 }

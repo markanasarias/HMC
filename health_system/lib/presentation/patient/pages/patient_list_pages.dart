@@ -87,7 +87,6 @@ class PatientListPages extends StatelessWidget {
                               ),
                             ),
                           ),
-                         
                           Padding(
                             padding: EdgeInsets.only(top: 0),
                             child: SizedBox(
@@ -291,15 +290,19 @@ class PatientListPages extends StatelessWidget {
                                                   children: [
                                                     SizedBox(width: 40),
                                                     IconButton(
-  icon: Icon(Icons.edit, color: Colors.blue),
-  onPressed: () {
-    print('Patient ID: ${patient.id}');
-    controller.patient_id.value = patient.id;
-    ViewPatient(context);
-  },
-),
-
-                                                    
+                                                      icon: Icon(Icons.edit,
+                                                          color: Colors.blue),
+                                                      onPressed: () {
+                                                        print(
+                                                            'Patient ID: ${patient.id}');
+                                                        controller.patient_id
+                                                            .value = patient.id;
+                                                        controller
+                                                            .selectpatient(
+                                                                patient.id);
+                                                        ViewPatient(context, patient.id);
+                                                      },
+                                                    ),
                                                   ],
                                                 ),
                                               ),

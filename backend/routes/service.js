@@ -91,6 +91,37 @@ router.get("/load", (req, res) => {
     }
   });
 
+  router.post('/update', (req, res) => {
+    try {
+      let id = req.body.id;
+      let service_name = req.body.service_name;
+      let schedule_days = req.body.schedule_days;
+      let schedule_time = req.body.schedule_time;
+      let status = req.body.status;
+      let sqlupdate = `UPDATE master_service SET  
+      service_name = '${service_name}', 
+      schedule_days ='${schedule_days}',
+      schedule_time ='${schedule_time}',
+      status ='${status}'
+      WHERE id ='${id}'`
+      
+      mysql.Update(sqlupdate, (err,result) =>{
+        if(err) console.error('Error: ', err);
+    
+        console.log(result);
+    
+        res.json({
+          msg: 'success'
+        })
+      })
+    
+    } catch (error) {
+      res.json({
+        msg: 'error'
+      })
+    }
+    });
+
 
 
 

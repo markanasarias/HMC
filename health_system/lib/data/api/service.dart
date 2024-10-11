@@ -48,6 +48,34 @@ class Service {
     return data;
   }
 
+    Future<ResponceModel> updateservice(
+    String id,
+    String service_name,
+    String schedule_days,
+    String schedule_time,
+    String statuss,
+  ) async {
+    final url = Uri.parse('${Config.apiUrl}${Config.updateservies}');
+    final response = await http.post(url, body: {
+      'id': id,
+      'service_name': service_name,
+      'schedule_days': schedule_days,
+      'schedule_time': schedule_time,
+      'status': statuss,
+    });
+
+    final responseData = json.decode(response.body);
+    final status = response.statusCode;
+    final message = responseData['msg'];
+    final result = responseData['data'] ?? [];
+    final description = responseData['description'] ?? "";
+
+    print(result);
+
+    ResponceModel data = ResponceModel(message, status, result, description);
+    return data;
+  }
+
   Future<ResponceModel> selectservices(
     String id,
   ) async {

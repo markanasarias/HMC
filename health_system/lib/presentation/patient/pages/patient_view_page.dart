@@ -17,7 +17,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 
 
-void ViewPatient(BuildContext context){
+void ViewPatient(BuildContext context, String patientid){
   final PatientControllers controller = Get.put(PatientControllers());
 
   showDialog(
@@ -1025,6 +1025,12 @@ void ViewPatient(BuildContext context){
                       child: Text("Close"),
                       onPressed: () {
                         Get.back();
+                      },
+                    ),
+                    TextButton(
+                      child: Text("Update"),
+                      onPressed: () {
+                        controller.updatepatient(context, patientid);
                       },
                     ),
                     TextButton(

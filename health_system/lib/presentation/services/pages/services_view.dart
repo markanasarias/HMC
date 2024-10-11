@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-void ViewServices(BuildContext context) {
+void ViewServices(BuildContext context, String id) {
   final ServiceController controller = Get.put(ServiceController());
   showDialog(
     context: context,
@@ -20,7 +20,7 @@ void ViewServices(BuildContext context) {
         ),
         child: Container(
           width: 425,
-          height: 300,
+          height: 360,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -91,44 +91,21 @@ void ViewServices(BuildContext context) {
                   ),
                 ),
               ),
-              Container(
+               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   children: [
                     SizedBox(
                       width: 385,
                       height: 35,
-                      child: Obx(
-                        () => GestureDetector(
-                          onTap: () async {
-                            print('Yes');
-                            DateTime? selectedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2101),
-                            );
-
-                            if (selectedDate != null) {
-                              // Format the selected date to only include the date part (YYYY-MM-DD)
-                              final formattedDate =
-                                  "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
-
-                              controller.schedule_days.value = formattedDate;
-                            }
-                          },
-                          child: Container(
-                            width: 188,
-                            height: 35,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFEFF1F6),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 7, left: 10),
-                              child: Text(controller.schedule_days.value),
-                            ),
-                          ),
+                      child: CupertinoTextField(
+                        controller: controller.daysC,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                        style: TextStyles.Text,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEFF1F6),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),
@@ -200,6 +177,41 @@ void ViewServices(BuildContext context) {
                   ],
                 ),
               ),
+               Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    left: 20,
+                    right: 30,
+                  ),
+                  child: Text(
+                    'Status',
+                    style: TextStyles.Text,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 385,
+                      height: 35,
+                      child: CupertinoTextField(
+                        controller: controller.StatusC,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                        style: TextStyles.Text,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEFF1F6),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: 10),
               Divider(),
               Padding(
@@ -217,7 +229,7 @@ void ViewServices(BuildContext context) {
                     TextButton(
                       child: Text("Save"),
                       onPressed: () {
-                        controller.addservice(context);
+                        controller.updateservice(context, id);
                       },
                     ),
                   ],

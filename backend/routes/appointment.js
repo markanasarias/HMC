@@ -127,6 +127,41 @@ router.post('/save', (req, res) => {
   });
 
 
+  router.post('/update', (req, res) => {
+    try {
+      let appointment_id = req.body.appointment_id;
+      let staff_id = req.body.staff_id;
+      let purpose = req.body.purpose;
+      let startdate = req.body.startdate;
+      let enddate = req.body.enddate;
+      let status = req.body.status;
+      let sqlupdate = `UPDATE master_appointment SET  
+      staff_id = '${staff_id}', 
+      purpose ='${purpose}',
+      startdate = '${startdate}', 
+      enddate ='${enddate}',
+      status ='${status}'
+      WHERE appointment_id ='${appointment_id}'`
+      
+      mysql.Update(sqlupdate, (err,result) =>{
+        if(err) console.error('Error: ', err);
+    
+        console.log(result);
+    
+        res.json({
+          msg: 'success'
+        })
+      })
+    
+    } catch (error) {
+      res.json({
+        msg: 'error'
+      })
+    }
+    });
+
+
+
 
 
 

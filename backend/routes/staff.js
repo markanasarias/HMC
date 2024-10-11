@@ -128,6 +128,56 @@ router.post('/saveuser', (req, res) => {
 });
 
 
+router.post('/update', (req, res) => {
+  try {
+    let id = req.body.id;
+    let type = req.body.type;
+    let fullname = req.body.fullname;
+    let position = req.body.position;
+    let specialization = req.body.specialization;
+    let phone_number = req.body.phone_number;
+    let email = req.body.email;
+    let address = req.body.address;
+    let hire_date = req.body.hire_date;
+    let years_of_experience = req.body.years_of_experience;
+    let medical_license_number = req.body.medical_license_number;
+    let image = req.body.image;
+    let status = req.body.status;
+    let center = req.body.center;
+    let sqlupdate = `UPDATE master_staff SET  
+    type = '${type}', 
+    fullname ='${fullname}',
+    position = '${position}', 
+    specialization ='${specialization}',
+    phone_number = '${phone_number}', 
+    email ='${email}',
+    address = '${address}', 
+    hire_date ='${hire_date}',
+    years_of_experience = '${years_of_experience}', 
+    medical_license_number ='${medical_license_number}',
+    image = '${image}', 
+    status ='${status}',
+    center = '${center}', 
+    WHERE id ='${id}'`
+    
+    mysql.Update(sqlupdate, (err,result) =>{
+      if(err) console.error('Error: ', err);
+  
+      console.log(result);
+  
+      res.json({
+        msg: 'success'
+      })
+    })
+  
+  } catch (error) {
+    res.json({
+      msg: 'error'
+    })
+  }
+  });
+
+
 
 
 

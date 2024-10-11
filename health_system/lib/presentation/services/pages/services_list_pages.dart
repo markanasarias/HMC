@@ -294,7 +294,7 @@ class ServicesListPages extends StatelessWidget {
                                                         controller
                                                             .selectservice(
                                                                 service.id);
-                                                        ViewServices(context);
+                                                        ViewServices(context, service.id);
                                                       },
                                                     ),
                                                   ],

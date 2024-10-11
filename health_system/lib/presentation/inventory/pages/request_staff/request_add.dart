@@ -14,8 +14,9 @@ import 'package:dropdown_textfield/dropdown_textfield.dart';
 void RequestStaff(BuildContext context) {
   final ItemsController itemcontroller = Get.put(ItemsController());
   final RequestStaffController controller = Get.put(RequestStaffController());
-  String? selectedItem; // Store selected item ID
-  String quantity = ''; // Store quantity
+  String? selectedItem;
+  String? selecteditemname;
+  String quantity = '';
 
   showDialog(
     context: context,
@@ -126,6 +127,7 @@ void RequestStaff(BuildContext context) {
                                   dropDownList: dropDownItems,
                                   onChanged: (val) {
                                     selectedItem = val.value;
+                                    selecteditemname = val.name;
                                     print('Selected item: ${val.name}');
                                   },
                                 );
@@ -156,7 +158,8 @@ void RequestStaff(BuildContext context) {
                             SizedBox(width: 75),
                             GestureDetector(
                               onTap: () {
-                                controller.addItem(selectedItem!, quantity);
+                                print(selectedItem);
+                                controller.addItem(selectedItem!, selecteditemname!, quantity);
                                 selectedItem = null;
                                 quantity = '';
                               },
@@ -299,7 +302,7 @@ void RequestStaff(BuildContext context) {
                                                     .withOpacity(0.01),
                                                 child: Center(
                                                   child: Text(
-                                                    (index + 1).toString(),
+                                                    item.itemid,
                                                     style:
                                                         TextStyles.AppBartext,
                                                   ),
@@ -355,17 +358,14 @@ void RequestStaff(BuildContext context) {
                                                         text: item.quantity
                                                             .toString(),
                                                       ),
-                                                      onChanged: (value) {
-                                                        // Handle any changes here if needed
-                                                      },
+                                                      onChanged: (value) {},
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                               GestureDetector(
                                                 onTap: () {
-                                                  controller.removeItem(
-                                                      item); // Add your remove logic
+                                                  controller.removeItem(item);
                                                 },
                                                 child: Container(
                                                   width: 50,
@@ -386,6 +386,30 @@ void RequestStaff(BuildContext context) {
                                       );
                                     },
                                   )),
+                            ),
+                            Divider(),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  TextButton(
+                                    child: Text("Back"),
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text("Submit"),
+                                    onPressed: () {
+                                      controller.addedItems.forEach((item) {
+                                        print(item
+                                            .toJson()); // or simply print(item.toString());
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

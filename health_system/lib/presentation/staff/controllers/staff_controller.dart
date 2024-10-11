@@ -35,7 +35,7 @@ class StaffController extends GetxController {
   var staffid = '';
   var hiredate = ''.obs;
   var fullname = ''.obs;
-  var selectedrole = 'Staff'.obs;
+  var selectedrole = ''.obs;
   var selectedbranch = ''.obs;
   RxString fileAttachment = ''.obs;
   Rx<String?> selectedFileName = Rx<String?>(null);
@@ -127,7 +127,7 @@ class StaffController extends GetxController {
   }
 
 Future<void> selectstaff(String staffid) async {
-  print('loaddoctor');
+  print('Loading staff information...');
   try {
     final response = await Staff().selectstaff(staffid);
 
@@ -143,7 +143,6 @@ Future<void> selectstaff(String staffid) async {
           attendanceInfo['phone_number'].toString(),
           attendanceInfo['email'].toString(),
           attendanceInfo['address'].toString(),
-          // Format the hire_date to YYYY-MM-DD
           DateFormat('yyyy-MM-dd').format(DateTime.parse(attendanceInfo['hire_date'])),
           attendanceInfo['years_of_experience'].toString(),
           attendanceInfo['medical_license_number'].toString(),
@@ -155,9 +154,9 @@ Future<void> selectstaff(String staffid) async {
         );
         staff.add(loadstaff);
         fullnameC.text = loadstaff.fullname;
-        //selectedrole.value = loadstaff.type;
+        selectedrole.value = loadstaff.type; 
         positionC.text = loadstaff.position;
-        hiredate.value = DateFormat('yyyy-MM-dd').format(DateTime.parse(loadstaff.hire_date)); // Ensure it is formatted in the same way here
+        hiredate.value = DateFormat('yyyy-MM-dd').format(DateTime.parse(loadstaff.hire_date));
         specializationC.text = loadstaff.specialization;
         medical_license_numberC.text = loadstaff.medical_license_number;
         years_of_experienceC.text = loadstaff.years_of_experience;
@@ -166,12 +165,13 @@ Future<void> selectstaff(String staffid) async {
         emailC.text = loadstaff.email;
         addressC.text = loadstaff.address;
         fileAttachment.value = loadstaff.image;
+        selectedbranch.value = loadstaff.center;
       }
     } else {
       print('Error: ${response.message}');
     }
   } catch (e) {
-    print('An error occurred while loading patient data: $e');
+    print('An error occurred while loading staff data: $e');
   }
 }
 

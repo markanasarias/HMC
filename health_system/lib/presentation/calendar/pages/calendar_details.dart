@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:health_system/presentation/calendar/controller/calendar_controller.dart';
-import 'package:health_system/presentation/patient/controllers/patient_controllers.dart';
 import 'package:get/get.dart';
 
 void Calendar_details(BuildContext context) {
@@ -79,22 +78,22 @@ void Calendar_details(BuildContext context) {
                                 width: 190,
                                 height: 80,
                                 child: Center(
-                                    child: Text('Name',
-                                        style: TextStyles.AppBartext)),
+                                  child: Text('Name', style: TextStyles.AppBartext),
+                                ),
                               ),
                               Container(
                                 width: 270,
                                 height: 80,
                                 child: Center(
-                                    child: Text('Date',
-                                        style: TextStyles.AppBartext)),
+                                  child: Text('Date', style: TextStyles.AppBartext),
+                                ),
                               ),
                               Container(
                                 width: 118,
                                 height: 80,
                                 child: Center(
-                                    child: Text('Action',
-                                        style: TextStyles.AppBartext)),
+                                  child: Text('Action', style: TextStyles.AppBartext),
+                                ),
                               ),
                             ],
                           ),
@@ -102,7 +101,7 @@ void Calendar_details(BuildContext context) {
                       ),
                       SizedBox(height: 5),
                       Expanded(
-                        child: ListView.builder(
+                        child: Obx(() => ListView.builder(
                           itemCount: controller.calendar.length,
                           itemBuilder: (context, index) {
                             final event = controller.calendar[index];
@@ -124,16 +123,14 @@ void Calendar_details(BuildContext context) {
                                     width: 190,
                                     height: 80,
                                     child: Center(
-                                      child: Text('${event.name}',
-                                          style: TextStyles.AppBartext),
+                                      child: Text('${event.name}', style: TextStyles.AppBartext),
                                     ),
                                   ),
                                   Container(
                                     width: 270,
                                     height: 80,
                                     child: Center(
-                                      child: Text('${event.start_time}',
-                                          style: TextStyles.AppBartext),
+                                      child: Text('${event.start_time}', style: TextStyles.AppBartext),
                                     ),
                                   ),
                                   Container(
@@ -144,13 +141,11 @@ void Calendar_details(BuildContext context) {
                                         children: [
                                           SizedBox(width: 20),
                                           IconButton(
-                                            icon: Icon(Icons.visibility,
-                                                color: Colors.blue),
+                                            icon: Icon(Icons.visibility, color: Colors.blue),
                                             onPressed: () {},
                                           ),
                                           IconButton(
-                                            icon: Icon(Icons.edit,
-                                                color: Colors.blue),
+                                            icon: Icon(Icons.edit, color: Colors.blue),
                                             onPressed: () {},
                                           ),
                                         ],
@@ -161,7 +156,7 @@ void Calendar_details(BuildContext context) {
                               ),
                             );
                           },
-                        ),
+                        )),
                       ),
                     ],
                   ),
@@ -184,6 +179,7 @@ void Calendar_details(BuildContext context) {
                     child: Text("Add Event"),
                     onPressed: () {
                       Get.back();
+                      // Add your code to handle adding an event
                     },
                   ),
                 ],

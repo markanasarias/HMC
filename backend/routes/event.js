@@ -109,6 +109,34 @@ router.post('/save', (req, res) => {
   }
 });
 
+router.post('/update', (req, res) => {
+  try {
+    let id = req.body.id;
+    let name = req.body.name;
+    let description = req.body.description;
+    let start_time = req.body.start_time;
+    let end_time = req.body.end_time;
+    let location = req.body.location;
+    let status = req.body.status;
+    let sqlupdate = `UPDATE master_event SET  name = '${name}', description ='${description}', start_time = '${start_time}', end_time ='${end_time}', location ='${location}', status ='${status}' WHERE id ='${id}'`
+    
+    mysql.Update(sqlupdate, (err,result) =>{
+      if(err) console.error('Error: ', err);
+  
+      console.log(result);
+  
+      res.json({
+        msg: 'success'
+      })
+    })
+  
+  } catch (error) {
+    res.json({
+      msg: 'error'
+    })
+  }
+  });
+
 
 
 

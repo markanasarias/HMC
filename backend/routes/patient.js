@@ -30,7 +30,7 @@ router.get('/load', (req, res) => {
 router.post('/getpatient', (req, res) => {
   try {
     let {patientid} =  req.body;
-    let sql =  `SELECT * FROM master_patient WHERE id = '${patientid}'`;
+    let sql =  `SELECT * FROM master_patient WHERE patient_id = '${patientid}'`;
 
     mysql.Select(sql, 'MasterPatient', (err, result) => {
       if (err) console.error('Error: ', err);
@@ -88,6 +88,54 @@ WHERE
       });
   }
 });
+
+router.post('/update', (req, res) => {
+  try {
+    let {
+      patient_id, first_name, last_name, middle_name, age, date_of_birth,
+      birth_place, gender, civil_status, nationality, religion,
+      occupation, phone_number, email, address, emergency_contact_name,
+      emergency_contact_phone, blood_type, philhealth_number, allergies,
+      status
+    } = req.body;
+    let sqlupdate = `UPDATE master_patient SET  
+    first_name ='${first_name}',
+    last_name ='${last_name}',
+    middle_name = '${middle_name}', 
+    date_of_birth ='${date_of_birth}',
+    birth_place = '${birth_place}', 
+    gender ='${gender}',
+    civil_status ='${civil_status}',
+    nationality = '${nationality}', 
+    religion ='${religion}',
+    occupation ='${occupation}',
+    phone_number = '${phone_number}', 
+    email ='${email}',
+    address ='${address}',
+    emergency_contact_name = '${emergency_contact_name}', 
+    emergency_contact_phone ='${emergency_contact_phone}',
+    blood_type ='${blood_type}',
+    philhealth_number ='${philhealth_number}',
+    allergies ='${allergies}',
+    status ='${status}'
+    WHERE patient_id ='${patient_id}'`
+    
+    mysql.Update(sqlupdate, (err,result) =>{
+      if(err) console.error('Error: ', err);
+  
+      console.log(result);
+  
+      res.json({
+        msg: 'success'
+      })
+    })
+  
+  } catch (error) {
+    res.json({
+      msg: 'error'
+    })
+  }
+  });
 
 router.post('/savemedicalrecord', (req, res) => {
   try {
