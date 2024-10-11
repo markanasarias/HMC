@@ -6,6 +6,7 @@ import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class CalendarListPages extends StatelessWidget {
   const CalendarListPages({super.key});
@@ -96,7 +97,11 @@ class CalendarListPages extends StatelessWidget {
                       onPageChange: (DateTime date, int pageIndex) {},
                       onCellTap: (events, date) {
                         if (events.isNotEmpty) {
-                          print("Selected date: $date");
+                          // Format the date to 'yyyy-MM-dd'
+                          String formattedDate =
+                              DateFormat('yyyy-MM-dd').format(date);
+                          print("Selected date: $formattedDate");
+                          controller.selectevents(formattedDate);
                           Calendar_details(context);
                         }
                       },

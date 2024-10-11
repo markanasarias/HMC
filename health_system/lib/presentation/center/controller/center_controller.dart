@@ -6,7 +6,6 @@ import 'package:health_system/data/api/center.dart';
 import 'package:health_system/data/model/calendar_model.dart';
 import 'package:health_system/data/model/center_model.dart';
 import 'package:health_system/repository/helper.dart';
-import 'package:calendar_view/calendar_view.dart';
 import 'package:health_system/widget/error.dart';
 import 'package:health_system/widget/success.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +17,12 @@ import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:health_system/presentation/logs/controller/logs_controller.dart'; // Import LogsController
 
 class CenterController extends GetxController {
   var selectedFileName = ''.obs;
   var fullname = ''.obs;
+  var staffid = ''.obs;
   var isloading = false.obs;
   var branchId = ''.obs;
   var branchName = ''.obs;
@@ -30,13 +31,13 @@ class CenterController extends GetxController {
   final TextEditingController NameC = TextEditingController();
   final TextEditingController LocationC = TextEditingController();
 
-
   var center = <CenterModel>[].obs;
 
   @override
   void onInit() async {
     super.onInit();
-      fullname.value = await helper.getfullname();
+    fullname.value = await helper.getfullname();
+    staffid.value = await helper.getstaffid();
     await getloadcenter();
   }
 
@@ -62,9 +63,8 @@ class CenterController extends GetxController {
           center.add(loadcenter);
         }
 
-       
         if (center.isNotEmpty) {
-          selectedBranchId.value = center.first.branch_id; 
+          selectedBranchId.value = center.first.branch_id;
         }
       } else {
         print('Error: ${response.message}');
@@ -74,7 +74,7 @@ class CenterController extends GetxController {
     }
   }
 
-    Future<void> selectcenter(String branch_id) async {
+  Future<void> selectcenter(String branch_id) async {
     print('getloadcenter');
     try {
       final response = await BranchCenter().selectcenter(branch_id);
@@ -97,9 +97,8 @@ class CenterController extends GetxController {
           LocationC.text = loadcenter.address;
         }
 
-       
         if (center.isNotEmpty) {
-          selectedBranchId.value = center.first.branch_id; 
+          selectedBranchId.value = center.first.branch_id;
         }
       } else {
         print('Error: ${response.message}');
@@ -109,28 +108,36 @@ class CenterController extends GetxController {
     }
   }
 
-  void clear(){
+  void clear() {
     NameC.clear();
     LocationC.clear();
   }
 
+  Future<void> addcenter(BuildContext context) async {
+    isloading.value = true;
+    try {
+      final response = await BranchCenter()
+          .addcenter(NameC.text, LocationC.text, fullname.value);
+      if (response.message == 'success') {
+        showSuccessToast(context,
+            title: 'Success!', text: 'Center added successfully.');
+        await Future.delayed(Duration(seconds: 1));
 
-Future<void> addcenter(BuildContext context) async {
-  isloading = true.obs;
-  try {
-    final response = await BranchCenter().addcenter(NameC.text, LocationC.text, fullname.value);
-    if (response.message == 'success') {
-      showSuccessToast(context, title: 'Success!', text: 'Center added successfully.');
-      await Future.delayed(Duration(seconds: 1));
-      isloading = false.obs;
-      getloadcenter();
-       Navigator.of(context).pop();
-    } else {
-      showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(context, staffid.value, 'Added center');
+
+        isloading.value = false;
+        getloadcenter();
+
+        Navigator.of(context).pop();
+      } else {
+        showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      showErrorToast(context,
+          title: 'Oops!', text: 'There was an issue. Please try again.');
+      isloading.value = false; // Update loading state
     }
-  } catch (e) {
-    print('An error occurred: $e');
-    showErrorToast(context, title: 'Oops!', text: 'There was an issue. Please try again.');
   }
-}
 }

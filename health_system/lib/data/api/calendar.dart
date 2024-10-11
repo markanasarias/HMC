@@ -22,8 +22,34 @@ class Calendar {
     return data;
   }
 
-    Future<ResponceModel> savecalendar(String name, String descriptions, String start_time,
-    String end_time,String location, String createby,) async {
+  Future<ResponceModel> getevents(
+    String date,
+  ) async {
+    final url = Uri.parse('${Config.apiUrl}${Config.getevents}');
+    final response = await http.post(url, body: {
+      'date': date,
+    });
+
+    final responseData = json.decode(response.body);
+    final status = response.statusCode;
+    final message = responseData['msg'];
+    final result = responseData['data'] ?? [];
+    final description = responseData['description'] ?? "";
+
+    print(result);
+
+    ResponceModel data = ResponceModel(message, status, result, description);
+    return data;
+  }
+
+  Future<ResponceModel> savecalendar(
+    String name,
+    String descriptions,
+    String start_time,
+    String end_time,
+    String location,
+    String createby,
+  ) async {
     final url = Uri.parse('${Config.apiUrl}${Config.savecalendar}');
     final response = await http.post(url, body: {
       'name': name,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:health_system/presentation/services/controller/service_controller.dart';
 import 'package:health_system/presentation/staff/controllers/staff_controller.dart';
 import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 void AddServices(BuildContext context) {
-  final StaffController controller = Get.put(StaffController());
+  final ServiceController controller = Get.put(ServiceController());
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -63,6 +64,7 @@ void AddServices(BuildContext context) {
                       width: 385,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.NameC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -75,7 +77,7 @@ void AddServices(BuildContext context) {
                   ],
                 ),
               ),
-               Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -96,20 +98,44 @@ void AddServices(BuildContext context) {
                     SizedBox(
                       width: 385,
                       height: 35,
-                      child: CupertinoTextField(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                        style: TextStyles.Text,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFEFF1F6),
-                          borderRadius: BorderRadius.circular(10.0),
+                      child: Obx(
+                        () => GestureDetector(
+                          onTap: () async {
+                            print('Yes');
+                            DateTime? selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2101),
+                            );
+
+                            if (selectedDate != null) {
+                              // Format the selected date to only include the date part (YYYY-MM-DD)
+                              final formattedDate =
+                                  "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
+
+                              controller.schedule_days.value = formattedDate;
+                            }
+                          },
+                          child: Container(
+                            width: 188,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEFF1F6),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 7, left: 10),
+                              child: Text(controller.schedule_days.value),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-               Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -130,20 +156,50 @@ void AddServices(BuildContext context) {
                     SizedBox(
                       width: 385,
                       height: 35,
-                      child: CupertinoTextField(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                        style: TextStyles.Text,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFEFF1F6),
-                          borderRadius: BorderRadius.circular(10.0),
+                      child: Obx(
+                        () => GestureDetector(
+                          onTap: () async {
+                            print('Yes');
+                            TimeOfDay? startTime = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                            );
+
+                            if (startTime != null) {
+                              TimeOfDay? endTime = await showTimePicker(
+                                context: context,
+                                initialTime: startTime.replacing(
+                                    hour: startTime.hour + 1),
+                              );
+
+                              if (endTime != null) {
+                                final formattedStartTime =
+                                    "${startTime.hour.toString().padLeft(2, '0')}:${startTime.minute.toString().padLeft(2, '0')}";
+                                final formattedEndTime =
+                                    "${endTime.hour.toString().padLeft(2, '0')}:${endTime.minute.toString().padLeft(2, '0')}";
+                                controller.schedule_time.value =
+                                    "$formattedStartTime - $formattedEndTime";
+                              }
+                            }
+                          },
+                          child: Container(
+                            width: 188,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEFF1F6),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 7, left: 10),
+                              child: Text(controller.schedule_time.value),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-
               SizedBox(height: 10),
               Divider(),
               Padding(
@@ -154,14 +210,14 @@ void AddServices(BuildContext context) {
                     TextButton(
                       child: Text("Cancel"),
                       onPressed: () {
+                        controller.getloadservice();
                         Navigator.of(context).pop();
                       },
                     ),
                     TextButton(
                       child: Text("Save"),
                       onPressed: () {
-                        //showSuccessToast(context);
-                        Navigator.of(context).pop();
+                        controller.addservice(context);
                       },
                     ),
                   ],

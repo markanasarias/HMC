@@ -97,3 +97,50 @@ router.post('/save', (req, res) => {
     });
   }
 });
+
+
+router.post("/edit", (req, res) => {
+  try {
+    let categoryname = req.body.categoryname;
+    let categorycode = req.body.categorycode;
+
+    let data = [categoryname, categorycode];
+    // console.log(data);
+    let sql_Update = `UPDATE master_category 
+                       SET mc_categoryname = ?
+                       WHERE mc_categorycode = ?`;
+
+    let sql_check = `SELECT * FROM master_category WHERE mc_categoryname='${categoryname}'`;
+
+    mysql.Select(sql_check, "MasterCategory", (err, result) => {
+      if (err) console.error("Error: ", err);
+
+      if (result.length == 1) {
+        return res.json({
+          msg: "duplicate",
+        });
+      } else {
+        mysql.UpdateMultiple(sql_Update, data, (err, result) => {
+          if (err) console.error("Error: ", err);
+
+          console.log(result);
+
+          let loglevel = dictionary.INF();
+          let source = dictionary.MSTR();
+          let message = `${dictionary.GetValue(dictionary.UPDT())} -  [${sql_Update}]`;
+          let user = req.session.employeeid;
+
+          Logger(loglevel, source, message, user);
+
+          res.json({
+            msg: "success",
+          });
+        });
+      }
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});

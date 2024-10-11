@@ -221,85 +221,92 @@ class ServicesListPages extends StatelessWidget {
                             ),
                             // Wrap the ListView.builder with Obx
                             Obx(() => Expanded(
-                              child: ListView.builder(
-                                itemCount: controller.service.length,
-                                itemBuilder: (context, index) {
-                                  final service = controller.service[index];
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey,
-                                          width: 0.2,
-                                        ),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: 300,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              service.service_name,
-                                              style: TextStyles.AppBartext,
+                                  child: ListView.builder(
+                                    itemCount: controller.service.length,
+                                    itemBuilder: (context, index) {
+                                      final service = controller.service[index];
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.1),
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: Colors.grey,
+                                              width: 0.2,
                                             ),
                                           ),
                                         ),
-                                        Container(
-                                          width: 380,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              service.schedule_days,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 180,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              service.schedule_time,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 118,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Row(
-                                              children: [
-                                                SizedBox(
-                                                  width: 40,
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              width: 300,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  service.service_name,
+                                                  style: TextStyles.AppBartext,
                                                 ),
-                                               
-                                                IconButton(
-                                                  icon: Icon(Icons.edit,
-                                                      color: Colors.blue),
-                                                  onPressed: () {
-                                                    ViewServices(context);
-                                                  },
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
+                                            Container(
+                                              width: 380,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  service.schedule_days,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 180,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  service.schedule_time,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 118,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 40,
+                                                    ),
+                                                    IconButton(
+                                                      icon: Icon(Icons.edit,
+                                                          color: Colors.blue),
+                                                      onPressed: () {
+                                                        controller
+                                                            .selectservice(
+                                                                service.id);
+                                                        ViewServices(context);
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            )),
+                                      );
+                                    },
+                                  ),
+                                )),
                           ],
                         ),
                       ),

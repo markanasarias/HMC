@@ -11,6 +11,7 @@ dependencies:
   cell_calendar: ^0.8.0
   dotted_border: ^2.1.0
   dropdown_button2: ^2.3.9
+  dropdown_textfield: ^1.2.0
   easy_sidemenu: ^0.6.0
   expandable_datatable: ^0.0.7
   file_picker: ^8.1.2

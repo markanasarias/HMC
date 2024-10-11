@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/presentation/inventory/controller/items/items_controller.dart';
 import 'package:health_system/presentation/inventory/controller/request_staff/request_staff.dart';
+import 'package:health_system/presentation/inventory/pages/request_staff/request_add.dart';
 import 'package:health_system/presentation/inventory/pages/stocks/inventory_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
@@ -12,7 +13,7 @@ class RequestStaffListPages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RequestStaff controller = Get.put(RequestStaff());
+    final RequestStaffController controller = Get.put(RequestStaffController());
 
     return Scaffold(
       body: Container(
@@ -33,7 +34,8 @@ class RequestStaffListPages extends StatelessWidget {
                       SizedBox(width: 5),
                       Text('>', style: TextStyles.Text1),
                       SizedBox(width: 5),
-                      Text('Request Inventory List', style: TextStyles.Tableloc),
+                      Text('Request Inventory List',
+                          style: TextStyles.Tableloc),
                     ],
                   ),
                 ],
@@ -55,7 +57,8 @@ class RequestStaffListPages extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.symmetric(horizontal: 20, vertical: 10),
+                  padding: EdgeInsetsDirectional.symmetric(
+                      horizontal: 20, vertical: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -65,7 +68,9 @@ class RequestStaffListPages extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               print('add');
-                              AddInventory(context);
+                              //RequestStaff(context);
+                              //AddInventory(context);
+                              RequestStaff(context);
                             },
                             child: Container(
                               width: 100,
@@ -83,7 +88,8 @@ class RequestStaffListPages extends StatelessWidget {
                                 ],
                               ),
                               child: Center(
-                                child: Text('Add Inventory', style: TextStyles.Textwhite),
+                                child: Text('Add Inventory',
+                                    style: TextStyles.Textwhite),
                               ),
                             ),
                           ),
@@ -102,7 +108,8 @@ class RequestStaffListPages extends StatelessWidget {
                                 ),
                                 prefix: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Icon(Icons.search, color: Color(0xFF9E9E9E)),
+                                  child: Icon(Icons.search,
+                                      color: Color(0xFF9E9E9E)),
                                 ),
                               ),
                             ),
@@ -147,7 +154,8 @@ class RequestStaffListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('ID', style: TextStyles.AppBartext),
+                                        child: Text('ID',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -155,7 +163,8 @@ class RequestStaffListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Name', style: TextStyles.AppBartext),
+                                        child: Text('Name',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -163,7 +172,8 @@ class RequestStaffListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Quantity', style: TextStyles.AppBartext),
+                                        child: Text('Quantity',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -171,7 +181,8 @@ class RequestStaffListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Requested Date', style: TextStyles.AppBartext),
+                                        child: Text('Requested Date',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -179,7 +190,8 @@ class RequestStaffListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Status', style: TextStyles.AppBartext),
+                                        child: Text('Status',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -187,7 +199,8 @@ class RequestStaffListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Action', style: TextStyles.AppBartext),
+                                        child: Text('Action',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                   ],
@@ -197,103 +210,115 @@ class RequestStaffListPages extends StatelessWidget {
                             SizedBox(height: 5),
                             Expanded(
                               child: Obx(() => ListView.builder(
-                                itemCount: controller.requestsstaff.length,
-                                itemBuilder: (context, index) {
-                                  final requestsstaff = controller.requestsstaff[index];
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey,
-                                          width: 0.2,
-                                        ),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: 100,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              requestsstaff.item_id,
-                                              style: TextStyles.AppBartext,
+                                    itemCount: controller.requestsstaff.length,
+                                    itemBuilder: (context, index) {
+                                      final requestsstaff =
+                                          controller.requestsstaff[index];
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.1),
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: Colors.grey,
+                                              width: 0.2,
                                             ),
                                           ),
                                         ),
-                                        Container(
-                                          width: 250,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              requestsstaff.item_name,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 250,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              requestsstaff.requested_quantity,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 130,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              requestsstaff.request_date,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 130,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              requestsstaff.status,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 115,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Row(
-                                              children: [
-                                                SizedBox(width: 20),
-                                                IconButton(
-                                                  icon: Icon(Icons.visibility, color: Colors.blue),
-                                                  onPressed: () {},
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              width: 100,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  requestsstaff.item_id,
+                                                  style: TextStyles.AppBartext,
                                                 ),
-                                                IconButton(
-                                                  icon: Icon(Icons.edit, color: Colors.blue),
-                                                  onPressed: () {},
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
+                                            Container(
+                                              width: 250,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  requestsstaff.item_name,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 250,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  requestsstaff
+                                                      .requested_quantity,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 130,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  requestsstaff.request_date,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 130,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  requestsstaff.status,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 115,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(width: 20),
+                                                    IconButton(
+                                                      icon: Icon(
+                                                          Icons.visibility,
+                                                          color: Colors.blue),
+                                                      onPressed: () {},
+                                                    ),
+                                                    IconButton(
+                                                      icon: Icon(Icons.edit,
+                                                          color: Colors.blue),
+                                                      onPressed: () {},
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              )),
+                                      );
+                                    },
+                                  )),
                             ),
                           ],
                         ),

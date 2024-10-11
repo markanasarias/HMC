@@ -27,6 +27,31 @@ router.get('/load', (req, res) => {
   }
 });
 
+router.post("/getevents", (req, res) => {
+  try {
+    let {date} =  req.body;
+    let sql = `SELECT *
+              FROM master_event
+              WHERE DATE(start_time) = '${date}';`;
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) {
+        return res.json({
+          msg: err,
+        });
+      }
+      res.json({
+        msg: "success",
+        data: result,
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
 router.post("/getcalendar", (req, res) => {
   try {
     let {id} =  req.body;

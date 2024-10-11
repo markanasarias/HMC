@@ -66,7 +66,6 @@ class CalendarController extends GetxController {
 
       if (helper.getStatusString(APIStatus.success) == response.message) {
         final jsondata = json.encode(response.result);
-      
 
         for (var attendanceInfo in json.decode(jsondata)) {
           CalendarModel loadcalendar = CalendarModel(
@@ -79,9 +78,9 @@ class CalendarController extends GetxController {
             attendanceInfo['createby'].toString(),
             attendanceInfo['createddate'].toString(),
           );
-          
+
           calendar.add(loadcalendar);
-          
+
           DateTime startTime = DateTime.parse(loadcalendar.start_time);
           DateTime endTime = DateTime.parse(loadcalendar.end_time);
 
@@ -101,25 +100,63 @@ class CalendarController extends GetxController {
     }
   }
 
-  Future<void> addevent(BuildContext context) async {
-  //isloading = true.obs;
-  try {
-    final response = await Calendar().savecalendar(NameC.text, DescriptionC.text,
-     start_date.value, end_date.value, LocationC.text, fullname.value);
-    if (response.message == 'success') {
-      showSuccessToast(context, title: 'Success!', text: 'Items added successfully.');
-      await Future.delayed(Duration(seconds: 1));
-      //isloading = false.obs;
-      getloadevent();
-       Navigator.of(context).pop();
-    } else {
-      showErrorToast(context, title: 'Oops!', text: 'Items Already Exist!');
+  Future<void> selectevents(String date) async {
+    print('loaddoctor');
+
+    try {
+      final response = await Calendar().getevents(date);
+
+      if (helper.getStatusString(APIStatus.success) == response.message) {
+        final jsondata = json.encode(response.result);
+
+        for (var attendanceInfo in json.decode(jsondata)) {
+          CalendarModel loadcalendar = CalendarModel(
+            attendanceInfo['id'].toString(),
+            attendanceInfo['name'].toString(),
+            attendanceInfo['description'].toString(),
+            attendanceInfo['start_time'].toString(),
+            attendanceInfo['end_time'].toString(),
+            attendanceInfo['location'].toString(),
+            attendanceInfo['createby'].toString(),
+            attendanceInfo['createddate'].toString(),
+          );
+
+          calendar.add(loadcalendar);
+        }
+      } else {
+        print('Error: ${response.message}');
+      }
+    } catch (e) {
+      print('An error occurred while loading patient data: $e');
     }
-  } catch (e) {
-    print('An error occurred: $e');
-    showErrorToast(context, title: 'Oops!', text: 'There was an issue. Please try again.');
   }
-}
+
+  Future<void> addevent(BuildContext context) async {
+    //isloading = true.obs;
+    try {
+      final response = await Calendar().savecalendar(
+          NameC.text,
+          DescriptionC.text,
+          start_date.value,
+          end_date.value,
+          LocationC.text,
+          fullname.value);
+      if (response.message == 'success') {
+        showSuccessToast(context,
+            title: 'Success!', text: 'Items added successfully.');
+        await Future.delayed(Duration(seconds: 1));
+        //isloading = false.obs;
+        getloadevent();
+        Navigator.of(context).pop();
+      } else {
+        showErrorToast(context, title: 'Oops!', text: 'Items Already Exist!');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      showErrorToast(context,
+          title: 'Oops!', text: 'There was an issue. Please try again.');
+    }
+  }
 
   void setSelectedFile(String fileName) {
     selectedFileName.value = fileName;

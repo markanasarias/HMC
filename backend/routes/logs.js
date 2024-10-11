@@ -56,7 +56,7 @@ router.get("/load", (req, res) => {
         user_id, action, created_at,
       ]);
   
-      mysql.InsertTable("master_event", data, (err, result) => {
+      mysql.InsertTable("master_logs", data, (err, result) => {
         if (err) {
           console.error('Error: ', err);
           return res.json({ msg: 'error' });

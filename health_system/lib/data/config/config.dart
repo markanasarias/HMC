@@ -1,4 +1,4 @@
-class Config{
+class Config {
   static const String apiUrl = 'http://localhost:3000/';
 
   static const String login = 'login/login';
@@ -26,4 +26,8 @@ class Config{
   static const String saveitems = 'items/save';
   static const String selectitems = 'items/getitems';
   static const String savecalendar = 'event/save';
+  static const String saveservices = 'service/save';
+  static const String selectservice = 'service/getservice';
+  static const String savelogs = 'logs/save';
+  static const String getevents = 'event/getevents';
 }

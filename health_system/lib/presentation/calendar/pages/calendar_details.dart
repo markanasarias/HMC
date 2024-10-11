@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:health_system/presentation/calendar/controller/calendar_controller.dart';
 import 'package:health_system/presentation/patient/controllers/patient_controllers.dart';
 import 'package:get/get.dart';
 
 void Calendar_details(BuildContext context) {
-  final PatientControllers controller = Get.put(PatientControllers());
+  final CalendarController controller = Get.put(CalendarController());
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -102,10 +103,9 @@ void Calendar_details(BuildContext context) {
                       SizedBox(height: 5),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: controller.medicalrecord.length,
+                          itemCount: controller.calendar.length,
                           itemBuilder: (context, index) {
-                            final medicalrecord =
-                                controller.medicalrecord[index];
+                            final event = controller.calendar[index];
                             return Container(
                               width: MediaQuery.of(context).size.width,
                               height: 50,
@@ -121,36 +121,18 @@ void Calendar_details(BuildContext context) {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: 130,
+                                    width: 190,
                                     height: 80,
                                     child: Center(
-                                      child: Text(
-                                          '${medicalrecord.medical_record}',
+                                      child: Text('${event.name}',
                                           style: TextStyles.AppBartext),
                                     ),
                                   ),
                                   Container(
-                                    width: 120,
+                                    width: 270,
                                     height: 80,
                                     child: Center(
-                                      child: Text('${medicalrecord.file_name}',
-                                          style: TextStyles.AppBartext),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 120,
-                                    height: 80,
-                                    child: Center(
-                                      child: Text(
-                                          '${medicalrecord.created_date}',
-                                          style: TextStyles.AppBartext),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 110,
-                                    height: 80,
-                                    child: Center(
-                                      child: Text('${medicalrecord.status}',
+                                      child: Text('${event.start_time}',
                                           style: TextStyles.AppBartext),
                                     ),
                                   ),
@@ -164,21 +146,12 @@ void Calendar_details(BuildContext context) {
                                           IconButton(
                                             icon: Icon(Icons.visibility,
                                                 color: Colors.blue),
-                                            onPressed: () {
-                                              // Open the base64 file when the visibility icon is pressed
-                                              controller.openMedicalRecordFile(
-                                                  medicalrecord.file,
-                                                  medicalrecord.file_name);
-                                            },
+                                            onPressed: () {},
                                           ),
                                           IconButton(
                                             icon: Icon(Icons.edit,
                                                 color: Colors.blue),
-                                            onPressed: () {
-                                              controller.openMedicalRecord(
-                                                  medicalrecord.file,
-                                                  medicalrecord.file_name);
-                                            },
+                                            onPressed: () {},
                                           ),
                                         ],
                                       ),

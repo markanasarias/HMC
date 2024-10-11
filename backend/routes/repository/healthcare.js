@@ -1,22 +1,21 @@
 const model = require('../model/healthcare');
-const mysql = require("mysql");
+//const mysql = require("mysql");
 const crypto = require('crypto');
 require("dotenv").config();
-
+const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
   host: process.env._HOST_ADMIN,
   user: process.env._USER_ADMIN,
   password: process.env._PASSWORD_ADMIN,
   database: process.env._DATABASE_ADMIN,
-  port:3306
+  port: 3306
 });
-
 
 exports.CheckConnection = () => {
   connection.connect((err) => {
     if (err) {
-      console.error("Error connection to MYSQL databases: ", err);
+      console.error("Error connecting to MySQL database: ", err.message);
       return;
     }
     console.log("MySQL database connection established successfully!");
@@ -153,6 +152,28 @@ exports.InsertTable = (tablename, data, callback) => {
         createdby) VALUES ?`;
 
    
+    this.Insert(sql, data, callback); 
+  }
+
+  if (tablename === "master_service") {
+    let sql = `INSERT INTO master_service(
+        service_name,
+        schedule_days,
+        schedule_time,
+        status,
+        created_by,
+        created_date) VALUES ?`;
+
+   
+    this.Insert(sql, data, callback); 
+  }
+
+  if (tablename === "master_logs") {
+    let sql = `INSERT INTO master_logs(
+        user_id,
+        action,
+        created_at) VALUES ?`;
+
     this.Insert(sql, data, callback); 
   }
 };
