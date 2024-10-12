@@ -159,7 +159,8 @@ void RequestStaff(BuildContext context) {
                             GestureDetector(
                               onTap: () {
                                 print(selectedItem);
-                                controller.addItem(selectedItem!, selecteditemname!, quantity);
+                                controller.addItem(
+                                    selectedItem!, selecteditemname!, quantity);
                                 selectedItem = null;
                                 quantity = '';
                               },
@@ -402,10 +403,11 @@ void RequestStaff(BuildContext context) {
                                   TextButton(
                                     child: Text("Submit"),
                                     onPressed: () {
-                                      controller.addedItems.forEach((item) {
-                                        print(item
-                                            .toJson()); // or simply print(item.toString());
-                                      });
+                                      List<Map<String, dynamic>> itemsList =
+                                          controller.addedItems
+                                              .map((item) => item.toJson())
+                                              .toList();
+                                      print(itemsList);
                                     },
                                   ),
                                 ],

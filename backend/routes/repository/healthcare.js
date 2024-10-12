@@ -214,6 +214,17 @@ exports.InsertTable = (tablename, data, callback) => {
 
     this.Insert(sql, data, callback); 
   }
+  if (tablename === "master_requested_inventory") {
+    let sql = `INSERT INTO master_requested_inventory(
+        item_id,
+        requested_quantity,
+        request_date,
+        status,
+        requested_by,
+        branch_id) VALUES ?`;
+
+    this.Insert(sql, data, callback); 
+  }
 };
 
 exports.Insert = (sql, values, callback) => {
@@ -257,6 +268,21 @@ exports.Update = async (sql, callback) => {
     });
   } catch (error) {
     callback(error, null);
+  }
+};
+
+exports.UpdateMultiple = async (sql, data, callback) => {
+  try {
+    connection.query(sql, data, (error, results, fields) => {
+      if (error) {
+        callback(error, null);
+      }
+      // console.log('Rows affected:', results.affectedRows);
+
+      callback(null, `Rows affected: ${results.affectedRows}`);
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
 
