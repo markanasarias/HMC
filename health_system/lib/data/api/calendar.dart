@@ -22,6 +22,22 @@ class Calendar {
     return data;
   }
 
+  Future<ResponceModel> selectevent(String id) async {
+    final url = Uri.parse('${Config.apiUrl}${Config.selectevent}');
+    final response = await http.post(url, body: {'id': id});
+
+    final responseData = json.decode(response.body);
+    final status = response.statusCode;
+    final message = responseData['msg'];
+    final result = responseData['data'] ?? [];
+    final description = responseData['description'] ?? "";
+
+    print(result);
+
+    ResponceModel data = ResponceModel(message, status, result, description);
+    return data;
+  }
+
   Future<ResponceModel> getevents(
     String date,
   ) async {
@@ -58,6 +74,36 @@ class Calendar {
       'end_time': end_time,
       'location': location,
       'createby': createby,
+    });
+
+    final responseData = json.decode(response.body);
+    final status = response.statusCode;
+    final message = responseData['msg'];
+    final result = responseData['data'] ?? [];
+    final description = responseData['description'] ?? "";
+
+    print(result);
+
+    ResponceModel data = ResponceModel(message, status, result, description);
+    return data;
+  }
+
+  Future<ResponceModel> updatecalendar(
+    String id,
+    String name,
+    String descriptions,
+    String start_time,
+    String end_time,
+    String location,
+  ) async {
+    final url = Uri.parse('${Config.apiUrl}${Config.updateevent}');
+    final response = await http.post(url, body: {
+      'id': id,
+      'name': name,
+      'description': descriptions,
+      'start_time': start_time,
+      'end_time': end_time,
+      'location': location,
     });
 
     final responseData = json.decode(response.body);

@@ -176,6 +176,44 @@ exports.InsertTable = (tablename, data, callback) => {
 
     this.Insert(sql, data, callback); 
   }
+
+  if (tablename === "master_users") {
+    let sql = `INSERT INTO master_users(
+        user_id,
+        username,
+        password,
+        usertype,
+        status,
+        createby,
+        createddate) VALUES ?`;
+
+    this.Insert(sql, data, callback); 
+  }
+
+  if (tablename === "master_appointment") {
+    let sql = `INSERT INTO master_appointment(
+        staff_id,
+        requestedby,
+        purpose,
+        startdate,
+        enddate,
+        status,
+        created_by,
+        created_date) VALUES ?`;
+
+    this.Insert(sql, data, callback); 
+  }
+  if (tablename === "master_schedule") {
+    let sql = `INSERT INTO master_schedule(
+        staff_id,
+        work_date,
+        shift_time,
+        status,
+        createby,
+        createddate) VALUES ?`;
+
+    this.Insert(sql, data, callback); 
+  }
 };
 
 exports.Insert = (sql, values, callback) => {

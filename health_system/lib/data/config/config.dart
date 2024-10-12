@@ -35,4 +35,15 @@ class Config {
   static const String updateservies = 'service/update';
   static const String selectpatient = 'patient/getpatient';
   static const String updatepatient = 'patient/update';
+  static const String updatestaff = 'staff/update';
+  static const String getdoctor = 'staff/getdoctor';
+  static const String addappoinment = 'appointment/save';
+  static const String selectappoinment = 'appointment/getappointment';
+  static const String updateappoinment = 'appointment/update';
+  static const String selectevent = 'event/getcalendar';
+  static const String updateevent = 'event/update';
+  static const String loadsched = 'schedule/load';
+  static const String savesched = 'schedule/save';
+  static const String selectsched = 'schedule/getsched';
+  static const String updatesched = 'schedule/update';
 }

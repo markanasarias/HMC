@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:health_system/presentation/appointment/controllers/appointment_controllers.dart';
 import 'package:health_system/presentation/staff/controllers/staff_controller.dart';
 import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:health_system/presentation/calendar/controller/calendar_controller.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:health_system/data/model/staff_model.dart';
 
-void AddAppointment(BuildContext context) {
-  final AppointmentControllers controller = Get.put(AppointmentControllers());
+void ViewCalendar(BuildContext context, String id) {
+  final CalendarController controller = Get.put(CalendarController());
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -21,7 +20,7 @@ void AddAppointment(BuildContext context) {
         ),
         child: Container(
           width: 425,
-          height: 365,
+          height: 410,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -38,7 +37,7 @@ void AddAppointment(BuildContext context) {
                 child: Padding(
                   padding: EdgeInsets.only(left: 20, top: 12),
                   child: Text(
-                    'Add Appointment',
+                    'View',
                     style: TextStyles.Text4,
                   ),
                 ),
@@ -64,55 +63,17 @@ void AddAppointment(BuildContext context) {
                     SizedBox(
                       width: 385,
                       height: 35,
-                      child: Container(
+                      child: CupertinoTextField(
+                        controller: controller.NameC,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                        style: TextStyles.Text,
                         decoration: BoxDecoration(
                           color: Color(0xFFEFF1F6),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        child: Obx(() {
-                          return DropdownButtonHideUnderline(
-                            child: DropdownButton2(
-                              items: controller.staff.map((StaffModel doctor) {
-                                return DropdownMenuItem<String>(
-                                  value: doctor.id,
-                                  child: Text(
-                                    doctor.fullname,
-                                    style: TextStyles.Text,
-                                  ),
-                                );
-                              }).toList(),
-                              value: controller.selecteddoctor.value.isEmpty
-                                  ? null
-                                  : controller.selecteddoctor.value,
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  controller.selecteddoctor.value = newValue;
-                                  print(
-                                      'Selected Doctor: ${controller.selecteddoctor.value}');
-                                }
-                              },
-                              hint: Text(
-                                'Select Doctor',
-                                style: TextStyles.Text,
-                              ),
-                            ),
-                          );
-                        }),
                       ),
                     ),
-                    // SizedBox(
-                    //   width: 385,
-                    //   height: 35,
-                    //   child: CupertinoTextField(
-                    //     padding:
-                    //         EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                    //     style: TextStyles.Text,
-                    //     decoration: BoxDecoration(
-                    //       color: Color(0xFFEFF1F6),
-                    //       borderRadius: BorderRadius.circular(10.0),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -184,7 +145,7 @@ void AddAppointment(BuildContext context) {
                                 final formattedDateTime =
                                     "${combinedDateTime.toLocal()}";
 
-                                controller.startdate.value = formattedDateTime;
+                                controller.start_date.value = formattedDateTime;
                                 // If you want to store the full datetime as well, you can store combinedDateTime directly or format it
                               }
                             }
@@ -198,15 +159,14 @@ void AddAppointment(BuildContext context) {
                             ),
                             child: Padding(
                               padding: EdgeInsets.only(top: 7, left: 10),
-                              child: Text(controller.startdate.value),
+                              child: Text(controller.start_date.value),
                             ),
                           )),
                     ),
-                    SizedBox(width: 9),
+                    SizedBox(width: 10),
                     Obx(
                       () => GestureDetector(
                           onTap: () async {
-                            print('Yes');
                             DateTime? selectedDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
@@ -234,13 +194,13 @@ void AddAppointment(BuildContext context) {
                                 final formattedDateTime =
                                     "${combinedDateTime.toLocal()}";
 
-                                controller.enddate.value = formattedDateTime;
+                                controller.end_date.value = formattedDateTime;
                                 // If you want to store the full datetime as well, you can store combinedDateTime directly or format it
                               }
                             }
                           },
                           child: Container(
-                            width: 188,
+                            width: 187,
                             height: 35,
                             decoration: BoxDecoration(
                               color: Color(0xFFEFF1F6),
@@ -248,7 +208,7 @@ void AddAppointment(BuildContext context) {
                             ),
                             child: Padding(
                               padding: EdgeInsets.only(top: 7, left: 10),
-                              child: Text(controller.enddate.value),
+                              child: Text(controller.end_date.value),
                             ),
                           )),
                     ),
@@ -264,7 +224,7 @@ void AddAppointment(BuildContext context) {
                     right: 30,
                   ),
                   child: Text(
-                    'Purpose',
+                    'Description',
                     style: TextStyles.Text,
                   ),
                 ),
@@ -275,9 +235,9 @@ void AddAppointment(BuildContext context) {
                   children: [
                     SizedBox(
                       width: 385,
-                      height: 100,
+                      height: 60,
                       child: CupertinoTextField(
-                        controller: controller.purpose,
+                        controller: controller.DescriptionC,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -291,6 +251,77 @@ void AddAppointment(BuildContext context) {
                   ],
                 ),
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    left: 20,
+                    right: 30,
+                  ),
+                  child: Text(
+                    'Location',
+                    style: TextStyles.Text,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 385,
+                      height: 35,
+                      child: CupertinoTextField(
+                        controller: controller.LocationC,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                        style: TextStyles.Text,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEFF1F6),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Align(
+              //   alignment: Alignment.centerLeft,
+              //   child: Padding(
+              //     padding: EdgeInsets.only(
+              //       top: 10,
+              //       left: 20,
+              //       right: 30,
+              //     ),
+              //     child: Text(
+              //       'Status',
+              //       style: TextStyles.Text,
+              //     ),
+              //   ),
+              // ),
+              // Container(
+              //   padding: EdgeInsets.symmetric(horizontal: 20),
+              //   child: Row(
+              //     children: [
+              //       SizedBox(
+              //         width: 385,
+              //         height: 60,
+              //         child: CupertinoTextField(
+              //           controller: controller.StatusC,
+              //           padding:
+              //               EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+              //           style: TextStyles.Text,
+              //           decoration: BoxDecoration(
+              //             color: Color(0xFFEFF1F6),
+              //             borderRadius: BorderRadius.circular(10.0),
+              //           ),
+              //           maxLines: 5,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               SizedBox(height: 10),
               Divider(),
               Padding(
@@ -307,7 +338,9 @@ void AddAppointment(BuildContext context) {
                     TextButton(
                       child: Text("Save"),
                       onPressed: () {
-                        controller.addappointment(context);
+                        controller.updateevent(context, id);
+                        //showSuccessToast(context);
+                        //Navigator.of(context).pop();
                       },
                     ),
                   ],

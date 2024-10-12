@@ -14,25 +14,25 @@ class StaffModel {
   final String createby;
   final String createddate;
   final String status;
-final String center;
+  final String center;
   StaffModel(
-      this.id,
-      this.type,
-      this.fullname,
-      this.position,
-      this.specialization,
-      this.phone_number,
-      this.email,
-      this.address,
-      this.hire_date,
-      this.years_of_experience,
-      this.medical_license_number,
-      this.image,
-      this.createby,
-      this.createddate,
-      this.status,
-      this.center,
-      );
+    this.id,
+    this.type,
+    this.fullname,
+    this.position,
+    this.specialization,
+    this.phone_number,
+    this.email,
+    this.address,
+    this.hire_date,
+    this.years_of_experience,
+    this.medical_license_number,
+    this.image,
+    this.createby,
+    this.createddate,
+    this.status,
+    this.center,
+  );
   factory StaffModel.fromJson(Map<String, dynamic> json) {
     return StaffModel(
       json['id'],
@@ -46,12 +46,41 @@ final String center;
       json['hire_date'],
       json['years_of_experience'],
       json['medical_license_number'],
-      json['image'], 
+      json['image'],
       json['createby'],
       json['createddate'],
-      json['status'], 
+      json['status'],
       json['center'],
-                 
+    );
+  }
+}
+
+class ScheduleModel {
+  final String schedule_id;
+  final String staff_id;
+  final String work_date;
+  final String shift_time;
+  final String status;
+  final String createby;
+  final String createddate;
+  ScheduleModel(
+    this.schedule_id,
+    this.staff_id,
+    this.work_date,
+    this.shift_time,
+    this.status,
+    this.createby,
+    this.createddate,
+  );
+  factory ScheduleModel.fromJson(Map<String, dynamic> json) {
+    return ScheduleModel(
+      json['schedule_id'],
+      json['staff_id'],
+      json['work_date'],
+      json['shift_time'],
+      json['status'],
+      json['createby'],
+      json['createddate'],
     );
   }
 }

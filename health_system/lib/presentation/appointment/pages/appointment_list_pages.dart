@@ -54,7 +54,8 @@ class AppointmentListPages extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.symmetric(horizontal: 20, vertical: 10),
+                  padding: EdgeInsetsDirectional.symmetric(
+                      horizontal: 20, vertical: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -104,7 +105,8 @@ class AppointmentListPages extends StatelessWidget {
                                 ),
                                 prefix: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Icon(Icons.search, color: Color(0xFF9E9E9E)),
+                                  child: Icon(Icons.search,
+                                      color: Color(0xFF9E9E9E)),
                                 ),
                               ),
                             ),
@@ -149,7 +151,8 @@ class AppointmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Requested To', style: TextStyles.AppBartext),
+                                        child: Text('Requested To',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -157,7 +160,8 @@ class AppointmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Requested By', style: TextStyles.AppBartext),
+                                        child: Text('Requested By',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -165,7 +169,8 @@ class AppointmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Purpose', style: TextStyles.AppBartext),
+                                        child: Text('Purpose',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -173,7 +178,8 @@ class AppointmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Date', style: TextStyles.AppBartext),
+                                        child: Text('Date',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -181,7 +187,8 @@ class AppointmentListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Action', style: TextStyles.AppBartext),
+                                        child: Text('Action',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                   ],
@@ -194,14 +201,16 @@ class AppointmentListPages extends StatelessWidget {
                                 () => ListView.builder(
                                   itemCount: controller.appointment.length,
                                   itemBuilder: (context, index) {
-                                    final appointment = controller.appointment[index];
+                                    final appointment =
+                                        controller.appointment[index];
                                     return Container(
                                       width: MediaQuery.of(context).size.width,
                                       height: 50,
                                       decoration: BoxDecoration(
                                         color: Colors.grey.withOpacity(0.1),
                                         border: Border(
-                                          bottom: BorderSide(color: Colors.grey, width: 0.2),
+                                          bottom: BorderSide(
+                                              color: Colors.grey, width: 0.2),
                                         ),
                                       ),
                                       child: Row(
@@ -209,7 +218,8 @@ class AppointmentListPages extends StatelessWidget {
                                           Container(
                                             width: 200,
                                             height: 80,
-                                            color: Colors.grey.withOpacity(0.01),
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
                                             child: Center(
                                               child: Text(
                                                 appointment.staff_fullname,
@@ -220,10 +230,12 @@ class AppointmentListPages extends StatelessWidget {
                                           Container(
                                             width: 200,
                                             height: 80,
-                                            color: Colors.grey.withOpacity(0.01),
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
                                             child: Center(
                                               child: Text(
-                                                appointment.requestedby_fullname,
+                                                appointment
+                                                    .requestedby_fullname,
                                                 style: TextStyles.AppBartext,
                                               ),
                                             ),
@@ -231,7 +243,8 @@ class AppointmentListPages extends StatelessWidget {
                                           Container(
                                             width: 300,
                                             height: 80,
-                                            color: Colors.grey.withOpacity(0.01),
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
                                             child: Center(
                                               child: Text(
                                                 appointment.purpose,
@@ -242,7 +255,8 @@ class AppointmentListPages extends StatelessWidget {
                                           Container(
                                             width: 160,
                                             height: 80,
-                                            color: Colors.grey.withOpacity(0.01),
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
                                             child: Center(
                                               child: Text(
                                                 '${appointment.startdate} - ${appointment.enddate}',
@@ -253,16 +267,21 @@ class AppointmentListPages extends StatelessWidget {
                                           Container(
                                             width: 118,
                                             height: 80,
-                                            color: Colors.grey.withOpacity(0.01),
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
                                             child: Center(
                                               child: Row(
                                                 children: [
                                                   SizedBox(width: 40),
-                                                  
                                                   IconButton(
-                                                    icon: Icon(Icons.edit, color: Colors.blue),
+                                                    icon: Icon(Icons.edit,
+                                                        color: Colors.blue),
                                                     onPressed: () {
-                                                      ViewAppointment(context);
+                                                      ViewAppointment(
+                                                          context,
+                                                          appointment
+                                                              .appointment_id
+                                                              .toString());
                                                     },
                                                   ),
                                                 ],

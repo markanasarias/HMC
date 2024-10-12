@@ -18,6 +18,7 @@ var inventoryRouter = require('./routes/inventory');
 var serviceRouter = require('./routes/service');
 var appointmentRouter = require('./routes/appointment');
 var dashboardRouter = require('./routes/dashboard');
+var scheduleRouter = require('./routes/schedule');
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use('/inventory', inventoryRouter);
 app.use('/service', serviceRouter);
 app.use('/appointment', appointmentRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/schedule', scheduleRouter);
 
 
 

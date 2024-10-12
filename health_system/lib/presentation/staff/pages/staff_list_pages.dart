@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/presentation/staff/controllers/staff_controller.dart';
 import 'package:health_system/presentation/staff/pages/staff_add_pages.dart';
+import 'package:health_system/presentation/staff/pages/staff_doctor_view.dart';
 import 'package:health_system/presentation/staff/pages/staff_view_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
@@ -11,7 +12,7 @@ import 'package:health_system/widget/nodata.dart';
 class StaffListPages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-final StaffController controller = Get.put(StaffController());
+    final StaffController controller = Get.put(StaffController());
     return Scaffold(
       body: Container(
         color: Colors.grey.withOpacity(0.1),
@@ -56,7 +57,7 @@ final StaffController controller = Get.put(StaffController());
               SizedBox(
                 height: 10,
               ),
-                Container(
+              Container(
                 width: MediaQuery.of(context).size.width,
                 height: 475,
                 decoration: BoxDecoration(
@@ -84,7 +85,6 @@ final StaffController controller = Get.put(StaffController());
                             onTap: () {
                               print('add');
                               AddStaff(context);
-                             
                             },
                             child: Container(
                               width: 100,
@@ -129,7 +129,7 @@ final StaffController controller = Get.put(StaffController());
                                     color: Color(0xFF9E9E9E),
                                   ),
                                 ),
-                                 onChanged: (value) {
+                                onChanged: (value) {
                                   controller.searchQuery.value = value;
                                   controller.filterStaff();
                                 },
@@ -173,43 +173,72 @@ final StaffController controller = Get.put(StaffController());
                                 ),
                                 child: Row(
                                   children: [
-                                  Container(
-                                    width: 100,
-                                    height: 80,
-                                   color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Staff ID', style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 250,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Full Name', style: TextStyles.AppBartext,),),
-                                    
-                                  ),
                                     Container(
-                                    width: 180,
-                                    height: 80,
+                                      width: 100,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Type', style: TextStyles.AppBartext,),),
-                                  ),
+                                      child: Center(
+                                        child: Text(
+                                          'Staff ID',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
                                     Container(
-                                    width: 180,
-                                    height: 80,
+                                      width: 250,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('Position', style: TextStyles.AppBartext,),),
-                                  ),
+                                      child: Center(
+                                        child: Text(
+                                          'Full Name',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
                                     Container(
-                                    width: 150,
-                                    height: 80,
+                                      width: 180,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('Contact', style: TextStyles.AppBartext,),),
-                                  ), 
-                                  Container(
-                                    width: 118,
-                                    height: 80,
+                                      child: Center(
+                                        child: Text(
+                                          'Type',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 180,
+                                      height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                  child: Center(child: Text('Action', style: TextStyles.AppBartext,),),
-                                  ),
+                                      child: Center(
+                                        child: Text(
+                                          'Position',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 150,
+                                      height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                      child: Center(
+                                        child: Text(
+                                          'Contact',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 118,
+                                      height: 80,
+                                      color: Colors.grey.withOpacity(0.01),
+                                      child: Center(
+                                        child: Text(
+                                          'Action',
+                                          style: TextStyles.AppBartext,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -217,87 +246,132 @@ final StaffController controller = Get.put(StaffController());
                             SizedBox(
                               height: 5,
                             ),
-                            Expanded(
-                              child: Obx (() {
+                            Expanded(child: Obx(
+                              () {
                                 if (controller.filteredStaff.isEmpty) {
-                                  return Center(child: NoDataFound(),);
+                                  return Center(
+                                    child: NoDataFound(),
+                                  );
                                 }
                                 return ListView.builder(
-                                itemCount: controller.filteredStaff.length,
-                                itemBuilder: (context, index) {
-                                   final staff = controller.filteredStaff[index];
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey,
-                                          width: 0.2,
+                                  itemCount: controller.filteredStaff.length,
+                                  itemBuilder: (context, index) {
+                                    final staff =
+                                        controller.filteredStaff[index];
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.withOpacity(0.1),
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Colors.grey,
+                                            width: 0.2,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                  Container(
-                                    width: 100,
-                                    height: 80,
-                                   color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child: Text('${staff.id}', style: TextStyles.AppBartext,),),
-                                  ),
-                                  Container(
-                                    width: 250,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child: Text('${staff.fullname}', style: TextStyles.AppBartext,),),
-                                    
-                                  ),
-                                    Container(
-                                    width: 180,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child:  Text('${staff.type}', style: TextStyles.AppBartext,),),
-                                  ),
-                                    Container(
-                                    width: 180,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                    child: Center(child:  Text('${staff.position}', style: TextStyles.AppBartext,),),
-                                  ),
-                                    Container(
-                                    width: 150,
-                                    height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                   child: Center(child:  Text('${staff.phone_number}',style: TextStyles.AppBartext,),),
-                                  ), 
-                                   Container(
-                                    width: 118,
-                                    height: 80,
-                                    color: Colors.grey.withOpacity(0.01),
-                                  child: Center(child: Row(
-                                          children: [
-                                            SizedBox(width: 40,),
-                                            
-                                            IconButton(
-                                              icon: Icon(Icons.edit,
-                                                  color: Colors.blue),
-                                              onPressed: () {
-                                                controller.selectstaff(staff.id);
-                                                ViewStaff(context);
-                                              },
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 100,
+                                            height: 80,
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                '${staff.id}',
+                                                style: TextStyles.AppBartext,
+                                              ),
                                             ),
-                                          ],
-                                        ),),
-                                  ),
-                                  ],
-                                    ),
-                                  );
-                                },
-                              );
+                                          ),
+                                          Container(
+                                            width: 250,
+                                            height: 80,
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                '${staff.fullname}',
+                                                style: TextStyles.AppBartext,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 180,
+                                            height: 80,
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                '${staff.type}',
+                                                style: TextStyles.AppBartext,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 180,
+                                            height: 80,
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                '${staff.position}',
+                                                style: TextStyles.AppBartext,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 150,
+                                            height: 80,
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                '${staff.phone_number}',
+                                                style: TextStyles.AppBartext,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 118,
+                                            height: 80,
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width: 40,
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(Icons.edit,
+                                                        color: Colors.blue),
+                                                    onPressed: () {
+                                                      controller.selectstaff(
+                                                          staff.id);
+
+                                                      if (staff.type ==
+                                                          'Doctor') {
+                                                        print(staff.id);
+                                                        ViewDoctor(
+                                                            context, staff.id);
+                                                      } else {
+                                                        ViewStaff(
+                                                            context, staff.id);
+                                                      }
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
                               },
-                              )
-                            ),
+                            )),
                           ],
                         ),
                       ),

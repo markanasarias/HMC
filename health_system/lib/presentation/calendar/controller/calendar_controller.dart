@@ -48,6 +48,7 @@ class CalendarController extends GetxController {
   final TextEditingController NameC = TextEditingController();
   final TextEditingController DescriptionC = TextEditingController();
   final TextEditingController LocationC = TextEditingController();
+  final TextEditingController StatusC = TextEditingController();
 
   var calendar = <CalendarModel>[].obs;
 
@@ -68,12 +69,22 @@ class CalendarController extends GetxController {
         final jsondata = json.encode(response.result);
 
         for (var attendanceInfo in json.decode(jsondata)) {
+          // Parse the start_time and end_time
+          DateTime startTimes = DateTime.parse(attendanceInfo['start_time']);
+          DateTime endTimes = DateTime.parse(attendanceInfo['end_time']);
+
+          // Format the date to "yyyy-MM-dd HH:mm:ss"
+          String formattedStartTime =
+              DateFormat('yyyy-MM-dd HH:mm:ss').format(startTimes);
+          String formattedEndTime =
+              DateFormat('yyyy-MM-dd HH:mm:ss').format(endTimes);
+
           CalendarModel loadcalendar = CalendarModel(
             attendanceInfo['id'].toString(),
             attendanceInfo['name'].toString(),
             attendanceInfo['description'].toString(),
-            attendanceInfo['start_time'].toString(),
-            attendanceInfo['end_time'].toString(),
+            formattedStartTime, // Use formatted time here
+            formattedEndTime, // Use formatted time here
             attendanceInfo['location'].toString(),
             attendanceInfo['createby'].toString(),
             attendanceInfo['createddate'].toString(),
@@ -102,7 +113,7 @@ class CalendarController extends GetxController {
 
   Future<void> selectevents(String date) async {
     print('loaddoctor');
-calendar.clear();
+    calendar.clear();
     try {
       final response = await Calendar().getevents(date);
 
@@ -110,18 +121,74 @@ calendar.clear();
         final jsondata = json.encode(response.result);
 
         for (var attendanceInfo in json.decode(jsondata)) {
+          // Parse the start_time and end_time
+          DateTime startTime = DateTime.parse(attendanceInfo['start_time']);
+          DateTime endTime = DateTime.parse(attendanceInfo['end_time']);
+
+          // Format the date to "yyyy-MM-dd HH:mm:ss"
+          String formattedStartTime =
+              DateFormat('yyyy-MM-dd HH:mm:ss').format(startTime);
+          String formattedEndTime =
+              DateFormat('yyyy-MM-dd HH:mm:ss').format(endTime);
           CalendarModel loadcalendar = CalendarModel(
             attendanceInfo['id'].toString(),
             attendanceInfo['name'].toString(),
             attendanceInfo['description'].toString(),
-            attendanceInfo['start_time'].toString(),
-            attendanceInfo['end_time'].toString(),
+            formattedStartTime, // Use formatted time here
+            formattedEndTime, // Use formatted time here
             attendanceInfo['location'].toString(),
             attendanceInfo['createby'].toString(),
             attendanceInfo['createddate'].toString(),
           );
 
           calendar.add(loadcalendar);
+        }
+      } else {
+        print('Error: ${response.message}');
+      }
+    } catch (e) {
+      print('An error occurred while loading patient data: $e');
+    }
+  }
+
+  Future<void> selectevent(String id) async {
+    print('loaddoctor');
+    calendar.clear();
+
+    try {
+      final response = await Calendar().selectevent(id);
+
+      if (helper.getStatusString(APIStatus.success) == response.message) {
+        final jsondata = json.encode(response.result);
+
+        for (var attendanceInfo in json.decode(jsondata)) {
+          // Parse the start_time and end_time
+          DateTime startTime = DateTime.parse(attendanceInfo['start_time']);
+          DateTime endTime = DateTime.parse(attendanceInfo['end_time']);
+
+          // Format the date to "yyyy-MM-dd HH:mm:ss"
+          String formattedStartTime =
+              DateFormat('yyyy-MM-dd HH:mm:ss').format(startTime);
+          String formattedEndTime =
+              DateFormat('yyyy-MM-dd HH:mm:ss').format(endTime);
+
+          CalendarModel loadcalendar = CalendarModel(
+            attendanceInfo['id'].toString(),
+            attendanceInfo['name'].toString(),
+            attendanceInfo['description'].toString(),
+            formattedStartTime, // Use formatted time here
+            formattedEndTime, // Use formatted time here
+            attendanceInfo['location'].toString(),
+            attendanceInfo['createby'].toString(),
+            attendanceInfo['createddate'].toString(),
+          );
+
+          calendar.add(loadcalendar);
+          NameC.text = loadcalendar.name;
+          DescriptionC.text = loadcalendar.description;
+          start_date.value = loadcalendar.start_time;
+          end_date.value = loadcalendar.end_time;
+          LocationC.text = loadcalendar.location;
         }
       } else {
         print('Error: ${response.message}');
@@ -143,7 +210,29 @@ calendar.clear();
           fullname.value);
       if (response.message == 'success') {
         showSuccessToast(context,
-            title: 'Success!', text: 'Items added successfully.');
+            title: 'Success!', text: 'Event added successfully.');
+        await Future.delayed(Duration(seconds: 1));
+        //isloading = false.obs;
+        getloadevent();
+        Navigator.of(context).pop();
+      } else {
+        showErrorToast(context, title: 'Oops!', text: 'Event Already Exist!');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      showErrorToast(context,
+          title: 'Oops!', text: 'There was an issue. Please try again.');
+    }
+  }
+
+  Future<void> updateevent(BuildContext context, String id) async {
+    //isloading = true.obs;
+    try {
+      final response = await Calendar().updatecalendar(id, NameC.text,
+          DescriptionC.text, start_date.value, end_date.value, LocationC.text);
+      if (response.message == 'success') {
+        showSuccessToast(context,
+            title: 'Success!', text: 'Event update successfully.');
         await Future.delayed(Duration(seconds: 1));
         //isloading = false.obs;
         getloadevent();

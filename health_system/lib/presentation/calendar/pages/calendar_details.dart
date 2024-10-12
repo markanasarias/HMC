@@ -3,6 +3,8 @@ import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:health_system/presentation/calendar/controller/calendar_controller.dart';
 import 'package:get/get.dart';
+import 'package:health_system/presentation/calendar/pages/calendar_add.dart';
+import 'package:health_system/presentation/calendar/pages/calendar_view.dart';
 
 void Calendar_details(BuildContext context) {
   final CalendarController controller = Get.put(CalendarController());
@@ -78,21 +80,24 @@ void Calendar_details(BuildContext context) {
                                 width: 190,
                                 height: 80,
                                 child: Center(
-                                  child: Text('Name', style: TextStyles.AppBartext),
+                                  child: Text('Name',
+                                      style: TextStyles.AppBartext),
                                 ),
                               ),
                               Container(
                                 width: 270,
                                 height: 80,
                                 child: Center(
-                                  child: Text('Date', style: TextStyles.AppBartext),
+                                  child: Text('Date',
+                                      style: TextStyles.AppBartext),
                                 ),
                               ),
                               Container(
                                 width: 118,
                                 height: 80,
                                 child: Center(
-                                  child: Text('Action', style: TextStyles.AppBartext),
+                                  child: Text('Action',
+                                      style: TextStyles.AppBartext),
                                 ),
                               ),
                             ],
@@ -102,61 +107,70 @@ void Calendar_details(BuildContext context) {
                       SizedBox(height: 5),
                       Expanded(
                         child: Obx(() => ListView.builder(
-                          itemCount: controller.calendar.length,
-                          itemBuilder: (context, index) {
-                            final event = controller.calendar[index];
-                            return Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.withOpacity(0.1),
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Colors.grey,
-                                    width: 0.2,
-                                  ),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 190,
-                                    height: 80,
-                                    child: Center(
-                                      child: Text('${event.name}', style: TextStyles.AppBartext),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 270,
-                                    height: 80,
-                                    child: Center(
-                                      child: Text('${event.start_time}', style: TextStyles.AppBartext),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 118,
-                                    height: 80,
-                                    child: Center(
-                                      child: Row(
-                                        children: [
-                                          SizedBox(width: 20),
-                                          IconButton(
-                                            icon: Icon(Icons.visibility, color: Colors.blue),
-                                            onPressed: () {},
-                                          ),
-                                          IconButton(
-                                            icon: Icon(Icons.edit, color: Colors.blue),
-                                            onPressed: () {},
-                                          ),
-                                        ],
+                              itemCount: controller.calendar.length,
+                              itemBuilder: (context, index) {
+                                final event = controller.calendar[index];
+                                return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.withOpacity(0.1),
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.2,
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            );
-                          },
-                        )),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 190,
+                                        height: 80,
+                                        child: Center(
+                                          child: Text('${event.name}',
+                                              style: TextStyles.AppBartext),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 270,
+                                        height: 80,
+                                        child: Center(
+                                          child: Text('${event.start_time}',
+                                              style: TextStyles.AppBartext),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 118,
+                                        height: 80,
+                                        child: Center(
+                                          child: Row(
+                                            children: [
+                                              SizedBox(width: 20),
+                                              IconButton(
+                                                icon: Icon(Icons.visibility,
+                                                    color: Colors.blue),
+                                                onPressed: () {
+                                                  controller
+                                                      .selectevent(event.id);
+                                                  ViewCalendar(
+                                                      context, event.id);
+                                                },
+                                              ),
+                                              IconButton(
+                                                icon: Icon(Icons.edit,
+                                                    color: Colors.blue),
+                                                onPressed: () {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            )),
                       ),
                     ],
                   ),

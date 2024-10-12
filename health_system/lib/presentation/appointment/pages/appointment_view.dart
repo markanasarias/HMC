@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:health_system/presentation/appointment/controllers/appointment_controllers.dart';
 import 'package:health_system/presentation/staff/controllers/staff_controller.dart';
 import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-void ViewAppointment(BuildContext context) {
-  final StaffController controller = Get.put(StaffController());
+void ViewAppointment(BuildContext context, String appointment_id) {
+  final AppointmentControllers controller = Get.put(AppointmentControllers());
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -19,7 +20,7 @@ void ViewAppointment(BuildContext context) {
         ),
         child: Container(
           width: 425,
-          height: 365,
+          height: 430,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -63,9 +64,11 @@ void ViewAppointment(BuildContext context) {
                       width: 385,
                       height: 35,
                       child: CupertinoTextField(
+                        controller: controller.doctorname,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
+                        readOnly: true, // Makes the field disabled
                         decoration: BoxDecoration(
                           color: Color(0xFFEFF1F6),
                           borderRadius: BorderRadius.circular(10.0),
@@ -115,15 +118,38 @@ void ViewAppointment(BuildContext context) {
                     Obx(
                       () => GestureDetector(
                           onTap: () async {
-                            await showDatePicker(
-                                    context: context,
-                                    firstDate: DateTime(1940),
-                                    lastDate: DateTime(2015),
-                                    currentDate: DateTime(2008))
-                                .then((date) {
-                              controller.hiredate.value =
-                                  DateFormat('MMMM dd, y').format(date!);
-                            });
+                            print('Yes');
+                            DateTime? selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2101),
+                            );
+
+                            if (selectedDate != null) {
+                              TimeOfDay? selectedTime = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              );
+
+                              if (selectedTime != null) {
+                                // Combine the selected date and time
+                                DateTime combinedDateTime = DateTime(
+                                  selectedDate.year,
+                                  selectedDate.month,
+                                  selectedDate.day,
+                                  selectedTime.hour,
+                                  selectedTime.minute,
+                                );
+
+                                // Format the combined DateTime as needed
+                                final formattedDateTime =
+                                    "${combinedDateTime.toLocal()}";
+
+                                controller.startdate.value = formattedDateTime;
+                                // If you want to store the full datetime as well, you can store combinedDateTime directly or format it
+                              }
+                            }
                           },
                           child: Container(
                             width: 188,
@@ -134,26 +160,49 @@ void ViewAppointment(BuildContext context) {
                             ),
                             child: Padding(
                               padding: EdgeInsets.only(top: 7, left: 10),
-                              child: Text(controller.hiredate.value),
+                              child: Text(controller.startdate.value),
                             ),
                           )),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 9),
                     Obx(
                       () => GestureDetector(
                           onTap: () async {
-                            await showDatePicker(
-                                    context: context,
-                                    firstDate: DateTime(1940),
-                                    lastDate: DateTime(2015),
-                                    currentDate: DateTime(2008))
-                                .then((date) {
-                              controller.hiredate.value =
-                                  DateFormat('MMMM dd, y').format(date!);
-                            });
+                            print('Yes');
+                            DateTime? selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2101),
+                            );
+
+                            if (selectedDate != null) {
+                              TimeOfDay? selectedTime = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              );
+
+                              if (selectedTime != null) {
+                                // Combine the selected date and time
+                                DateTime combinedDateTime = DateTime(
+                                  selectedDate.year,
+                                  selectedDate.month,
+                                  selectedDate.day,
+                                  selectedTime.hour,
+                                  selectedTime.minute,
+                                );
+
+                                // Format the combined DateTime as needed
+                                final formattedDateTime =
+                                    "${combinedDateTime.toLocal()}";
+
+                                controller.enddate.value = formattedDateTime;
+                                // If you want to store the full datetime as well, you can store combinedDateTime directly or format it
+                              }
+                            }
                           },
                           child: Container(
-                            width: 187,
+                            width: 188,
                             height: 35,
                             decoration: BoxDecoration(
                               color: Color(0xFFEFF1F6),
@@ -161,14 +210,14 @@ void ViewAppointment(BuildContext context) {
                             ),
                             child: Padding(
                               padding: EdgeInsets.only(top: 7, left: 10),
-                              child: Text(controller.hiredate.value),
+                              child: Text(controller.enddate.value),
                             ),
                           )),
                     ),
                   ],
                 ),
               ),
-               Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -190,6 +239,7 @@ void ViewAppointment(BuildContext context) {
                       width: 385,
                       height: 100,
                       child: CupertinoTextField(
+                        controller: controller.purpose,
                         padding:
                             EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                         style: TextStyles.Text,
@@ -198,6 +248,41 @@ void ViewAppointment(BuildContext context) {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         maxLines: 5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    left: 20,
+                    right: 30,
+                  ),
+                  child: Text(
+                    'Status',
+                    style: TextStyles.Text,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 385,
+                      height: 35,
+                      child: CupertinoTextField(
+                        controller: controller.StatusC,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                        style: TextStyles.Text,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEFF1F6),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                       ),
                     ),
                   ],
@@ -219,8 +304,7 @@ void ViewAppointment(BuildContext context) {
                     TextButton(
                       child: Text("Save"),
                       onPressed: () {
-                        //showSuccessToast(context);
-                        Navigator.of(context).pop();
+                        controller.updateappointment(context, appointment_id);
                       },
                     ),
                   ],

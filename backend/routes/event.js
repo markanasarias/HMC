@@ -118,7 +118,13 @@ router.post('/update', (req, res) => {
     let end_time = req.body.end_time;
     let location = req.body.location;
     let status = req.body.status;
-    let sqlupdate = `UPDATE master_event SET  name = '${name}', description ='${description}', start_time = '${start_time}', end_time ='${end_time}', location ='${location}', status ='${status}' WHERE id ='${id}'`
+    let sqlupdate = `UPDATE master_event SET  
+    name = '${name}', 
+    description ='${description}', 
+    start_time = '${start_time}', 
+    end_time ='${end_time}', 
+    location ='${location}' 
+    WHERE id ='${id}'`
     
     mysql.Update(sqlupdate, (err,result) =>{
       if(err) console.error('Error: ', err);

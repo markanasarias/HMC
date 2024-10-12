@@ -11,7 +11,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:health_system/data/model/center_model.dart';
 
-void ViewStaff(BuildContext context) {
+void ViewStaff(BuildContext context, String id) {
   final StaffController controller = Get.put(StaffController());
   final CenterController branchcontroller = Get.put(CenterController());
   showDialog(
@@ -24,7 +24,7 @@ void ViewStaff(BuildContext context) {
           ),
           child: Container(
             width: 600,
-            height: 500,
+            height: 550,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -41,7 +41,7 @@ void ViewStaff(BuildContext context) {
                   child: Padding(
                     padding: EdgeInsets.only(left: 20, top: 12),
                     child: Text(
-                      'Add New Staff',
+                      'View Staff',
                       style: TextStyles.Text4,
                     ),
                   ),
@@ -110,7 +110,7 @@ void ViewStaff(BuildContext context) {
                       ),
                       Container(
                         width: 380,
-                        height: 400,
+                        height: 450,
                         decoration: BoxDecoration(
                             //color: Colors.black
                             ),
@@ -429,7 +429,7 @@ void ViewStaff(BuildContext context) {
                                   ),
                                   SizedBox(width: 10),
                                   SizedBox(
-                                   width: 220,
+                                    width: 220,
                                     height: 35,
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -585,6 +585,42 @@ void ViewStaff(BuildContext context) {
                                 ],
                               ),
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10,
+                                  left: 10,
+                                  right: 30,
+                                ),
+                                child: Text(
+                                  'Status',
+                                  style: TextStyles.Text,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 0),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 360,
+                                    height: 35,
+                                    child: CupertinoTextField(
+                                      controller: controller.StatusC,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 7, horizontal: 10),
+                                      style: TextStyles.Text,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFEFF1F6),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -612,7 +648,8 @@ void ViewStaff(BuildContext context) {
                           //showSuccessToast(context);
                           // Navigator.of(context).pop();
                           //loadingform(context);
-                          controller.clearFields();
+                          controller.updatestaff(context, id);
+                          // controller.clearFields();
                         },
                       ),
                     ],

@@ -50,6 +50,28 @@ router.post("/getstaff", (req, res) => {
   }
 });
 
+router.get("/getdoctor", (req, res) => {
+  try {
+    let sql = `SELECT * FROM master_staff WHERE type IN ('Doctor', 'Admin')`;
+
+    mysql.SelectResult(sql, (err, result) => {
+      if (err) {
+        return res.json({
+          msg: err,
+        });
+      }
+      res.json({
+        msg: "success",
+        data: result,
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: error,
+    });
+  }
+});
+
 router.post('/save', (req, res) => {
   try {
     let {
@@ -72,26 +94,50 @@ router.post('/save', (req, res) => {
       if (result.length !== 0) {
         return res.json({ msg: 'Staff already exists' });
       }
+
       let data = [[
         type, fullname,
         position, specialization, phone_number, email, address,
         hire_date, years_of_experience, medical_license_number, image, createby,
         status, createddate, center 
       ]];
+      
       mysql.InsertTable("master_staff", data, (err, result) => {
         if (err) {
           console.error('Error: ', err);
           return res.json({ msg: 'error' });
         }
 
-        console.log(result);
-        res.json({ msg: 'success' });
+        let user_id = result.insertId; 
+        let username = fullname;
+        
+        let password = fullname + hire_date.replace(/-/g, '');
+        
+        let usertype = type;
+        let user_status = 'Active';
+        let created_at = createddate;
+
+        let userData = [[
+          user_id, username, password, usertype, user_status, createby, created_at,
+        ]];
+
+        // Insert into master_event
+        mysql.InsertTable("master_users", userData, (err, userResult) => {
+          if (err) {
+            console.error('Error: ', err);
+            return res.json({ msg: 'error' });
+          }
+
+          console.log(userResult);
+          return res.json({ msg: 'success' });
+        });
       });
     });
   } catch (error) {
     res.json({ msg: 'error' });
   }
 });
+
 
 router.post('/saveuser', (req, res) => {
   try {
@@ -157,7 +203,7 @@ router.post('/update', (req, res) => {
     medical_license_number ='${medical_license_number}',
     image = '${image}', 
     status ='${status}',
-    center = '${center}', 
+    center = '${center}'
     WHERE id ='${id}'`
     
     mysql.Update(sqlupdate, (err,result) =>{
