@@ -53,8 +53,21 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 class PatientControllers extends GetxController {
+Rx<File?> selectedFile = Rx<File?>(null);
+Rx<String?> selectedFileName = Rx<String?>(null);
+RxString fileAttachment = RxString('');
   var isChecked1 = false.obs;
   var isChecked2 = false.obs;
   var isChecked3 = false.obs;
@@ -71,9 +84,9 @@ class PatientControllers extends GetxController {
   var fullname = ''.obs;
   var selectedTab = 0.obs;
   var selectedFileNames = ''.obs;
-  RxString fileAttachment = ''.obs;
-  Rx<String?> selectedFileName = Rx<String?>(null);
-  Rx<File?> selectedFile = Rx<File?>(null);
+  // RxString fileAttachment = ''.obs;
+  // Rx<String?> selectedFileName = Rx<String?>(null);
+  // Rx<File?> selectedFile = Rx<File?>(null);
   final TextEditingController medical_record = TextEditingController();
   final TextEditingController first_nameC = TextEditingController();
   final TextEditingController last_nameC = TextEditingController();
@@ -150,45 +163,100 @@ String _formatDate1(String? date) {
     selectedTab.value = index;
   }
 
-  Future<void> addpatient(BuildContext context) async {
-    try {
-      final response = await Patient().addpatient(
-        first_nameC.text,
-        last_nameC.text,
-        middle_nameC.text,
-        age.value,
-        birthdayC.value,
-        birth_placeC.text,
-        selectedGender.value,
-        selectedcivilstatus.value,
-        nationalityC.text,
-        religionC.text,
-        occupationC.text,
-        phone_numberC.text,
-        emailC.text,
-        addressC.text,
-        emergency_contact_nameC.text,
-        emergency_contact_phoneC.text,
-        selectedbloodtype.value,
-        philhealth_numberC.text,
-        allergiesC.text,
-        fullname.value,
-      );
-      if (response.message == 'success') {
-        showSuccessToast(context,
-            title: 'Success!',
-            text: 'Your request has been successfully submitted.');
-        getloadpatient();
-        Navigator.of(context).pop();
-      } else {
-        showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
-      }
-    } catch (e) {
-      print('An error occurred: $e');
-      showErrorToast(context,
-          title: 'Oops!', text: 'There was an issue. Please try again.');
-    }
+    void reload() async {
+    patient.clear();
+    await getloadpatient();
   }
+
+
+    void clear() {
+    first_nameC.clear();
+    last_nameC.clear();
+    middle_nameC.clear();
+    age.value = '';
+    birthdayC.value = '';
+    birth_placeC.clear();
+    selectedGender.value = 'Male';
+    selectedcivilstatus.value = 'Single';
+    nationalityC.clear();
+    religionC.clear();
+    occupationC.clear();
+    phone_numberC.clear();
+    emailC.clear();
+    addressC.clear();
+    emergency_contact_nameC.clear();
+    emergency_contact_phoneC.clear();
+    selectedbloodtype.value = 'O+';
+    philhealth_numberC.clear();
+    allergiesC.clear();
+  }
+
+Future<void> addpatient(BuildContext context) async {
+  try {
+    // Validation for empty fields
+    if (first_nameC.text.isEmpty ||
+        last_nameC.text.isEmpty ||
+        age.value.isEmpty ||
+        birthdayC.value == null ||
+        birth_placeC.text.isEmpty ||
+        selectedGender.value == null ||
+        selectedcivilstatus.value == null ||
+        nationalityC.text.isEmpty ||
+        religionC.text.isEmpty ||
+        occupationC.text.isEmpty ||
+        phone_numberC.text.isEmpty ||
+        addressC.text.isEmpty ||
+        emergency_contact_nameC.text.isEmpty ||
+        emergency_contact_phoneC.text.isEmpty ||
+        selectedbloodtype.value == null ||
+        philhealth_numberC.text.isEmpty ||
+        allergiesC.text.isEmpty ||
+        fullname.value.isEmpty) {
+      showErrorToast(context, title: 'Error!', text: 'All fields must be filled.');
+      return;
+    }
+
+    // Proceed with adding the patient
+    final response = await Patient().addpatient(
+      first_nameC.text,
+      last_nameC.text,
+      middle_nameC.text,
+      age.value,
+      birthdayC.value,
+      birth_placeC.text,
+      selectedGender.value,
+      selectedcivilstatus.value,
+      nationalityC.text,
+      religionC.text,
+      occupationC.text,
+      phone_numberC.text,
+      emailC.text,
+      addressC.text,
+      emergency_contact_nameC.text,
+      emergency_contact_phoneC.text,
+      selectedbloodtype.value,
+      philhealth_numberC.text,
+      allergiesC.text,
+      fullname.value,
+    );
+
+    // Handle the response
+    if (response.message == 'success') {
+      showSuccessToast(context,
+          title: 'Success!',
+          text: 'Your request has been successfully submitted.');
+      getloadpatient();
+      Navigator.of(context).pop();
+    } else {
+      showErrorToast(context, title: 'Oops!', text: 'Center Already Exists!');
+    }
+  } catch (e) {
+    print('An error occurred: $e');
+    showErrorToast(context,
+        title: 'Oops!', text: 'There was an issue. Please try again.');
+  }
+}
+
 
   Future<void> updatepatient(BuildContext context, String patientid) async {
     try {
@@ -230,30 +298,34 @@ String _formatDate1(String? date) {
     }
   }
 
-    Future<void> addmedicalrecord(BuildContext context) async {
-    try {
-      final response = await Patient().addmedicalrecord(
-        patient_id.value,
-        medical_record.text,
-        fileAttachment.value,
-        selectedFileName.value!,
-        createby.value,
-      );
-      if (response.message == 'success') {
-        showSuccessToast(context,
-            title: 'Success!',
-            text: 'Your request has been successfully submitted.');
-        getloadpatient();
-        Navigator.of(context).pop();
-      } else {
-        showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
+Future<void> addmedicalrecord(BuildContext context) async {
+  try {
+    final response = await Patient().addmedicalrecord(
+      patient_id.value,
+      medical_record.text,
+      selectedFileName.value!,
+      createby.value,
+    );
+    if (response.message == 'success') {
+      showSuccessToast(context,
+          title: 'Success!',
+          text: 'Your request has been successfully submitted.');
+
+      if (selectedFile.value != null) {
+        await saveFileToCustomDirectory(selectedFile.value!, selectedFileName.value!);
       }
-    } catch (e) {
-      print('An error occurred: $e');
-      showErrorToast(context,
-          title: 'Oops!', text: 'There was an issue. Please try again.');
+
+      getloadmedicalrecord();
+      Navigator.of(context).pop();
+    } else {
+      showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
     }
+  } catch (e) {
+    print('An error occurred: $e');
+    showErrorToast(context,
+        title: 'Oops!', text: 'There was an issue. Please try again.');
   }
+}
 
 
   int calculateAge(DateTime birthDate) {
@@ -460,11 +532,11 @@ Future<void> openMedicalRecordFile(String base64File, String fileName) async {
       }).toList();
     }
   }
+  
 
 void openFileExplorer() async {
   print('open');
-  
-  // Allow only PDF files
+
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     type: FileType.custom,
     allowedExtensions: ['pdf'],
@@ -481,26 +553,64 @@ void openFileExplorer() async {
       int fileSizeInBytes = fileBytes.length;
       print('File size in bytes: $fileSizeInBytes');
 
-      // Check if the file size exceeds the limit
-      if (fileSizeInBytes > 65535) {
-        print('File exceeds the limit of 65,535 bytes.');
-        return; // Optionally return or handle the limit exceeded case
-      }
-
       String base64File = base64Encode(fileBytes);
       fileAttachment.value = base64File;
 
       // Print the Base64 file
       print('Base64 encoded file: $base64File');
 
-      // Convert Base64 string back to bytes
-      List<int> decodedBytes = base64Decode(fileAttachment.value);
-      // print('Decoded bytes: $decodedBytes');
+      // Save the file to the custom directory
+      await saveFileToCustomDirectory(selectedFile.value!, selectedFileName.value!);
+      
+      // Refresh the directory cache (if required by the system)
+      refreshSavedFile(selectedFile.value!, selectedFileName.value!);
     }
   } else {
     print('No file selected.');
   }
 }
+
+Future<void> saveFileToCustomDirectory(File file, String fileName) async {
+  try {
+    // Specify the directory where you want to save the file
+    String customDirectoryPath = r'C:\HMC\HMC\health_system\assets'; // Change path as needed
+
+    // Check if the directory exists, create it if not
+    Directory customDirectory = Directory(customDirectoryPath);
+    if (!await customDirectory.exists()) {
+      await customDirectory.create(recursive: true);
+    }
+
+    // Save the file to the specified directory
+    String filePath = '$customDirectoryPath\\$fileName';
+    File newFile = await file.copy(filePath);
+
+    print('File saved to: $filePath');
+  } catch (e) {
+    print('Error saving file: $e');
+  }
+}
+
+// Function to manually refresh the file system (optional for your case)
+void refreshSavedFile(File file, String fileName) async {
+  try {
+    // Manually refresh the file to make sure the system recognizes it.
+    // This works by re-opening or checking the file directly in its location
+    if (await file.exists()) {
+      print('File exists after saving: ${file.path}');
+      
+      // Additional action could be to update state or notify the app that the file was saved
+      // For instance, updating an observable or refreshing data in the UI without full rebuild
+
+    } else {
+      print('File does not exist after saving.');
+    }
+  } catch (e) {
+    print('Error refreshing the saved file: $e');
+  }
+}
+
+
 
  Future<void> openMedicalRecord(String base64File, String fileName) async {
     // Decode Base64 string
@@ -518,6 +628,28 @@ void openFileExplorer() async {
     await OpenFile.open(filePath);
   }
 
+  // Future<void> openMedicalRecordFromBase64(String base64File) async {
+  //   try {
+  //     // Decode the Base64 string
+  //     List<int> bytes = base64Decode(base64File);
+
+  //     // Get the temporary directory to store the PDF
+  //     final directory = await getTemporaryDirectory();
+  //     final filePath = '${directory.path}/medical_record.pdf';
+
+  //     // Write the bytes to a PDF file
+  //     File file = File(filePath);
+  //     await file.writeAsBytes(bytes);
+
+  //     // Open the PDF using flutter_cached_pdfview
+  //     Get.to(() => CachedPdfView(
+  //       filePath: filePath,
+  //     ));
+  //   } catch (e) {
+  //     print("Error opening PDF: $e");
+  //   }
+  // }
+
 
 
   void setSelectedFile(String fileName) {
@@ -528,4 +660,6 @@ void openFileExplorer() async {
     selectedFile.value = null;
     selectedFileName.value = null;
   }
+
+
 }

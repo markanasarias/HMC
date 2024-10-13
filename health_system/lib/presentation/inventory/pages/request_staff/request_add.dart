@@ -403,11 +403,12 @@ void RequestStaff(BuildContext context) {
                                   TextButton(
                                     child: Text("Submit"),
                                     onPressed: () {
-                                      List<Map<String, dynamic>> itemsList =
-                                          controller.addedItems
-                                              .map((item) => item.toJson())
-                                              .toList();
-                                      print(itemsList);
+                                      // List<Map<String, dynamic>> itemsList =
+                                      //     controller.addedItems
+                                      //         .map((item) => item.toJson())
+                                      //         .toList();
+                                      // print(itemsList);
+                                      controller.addrequest(context);
                                     },
                                   ),
                                 ],

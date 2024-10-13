@@ -14,6 +14,12 @@ class RequestListPages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RequestAdmin controller = Get.put(RequestAdmin());
+
+       WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.reload();  // Call the reload function
+    });
+
+
     return Scaffold(
       body: Container(
         color: Colors.grey.withOpacity(0.1),

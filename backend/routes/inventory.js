@@ -12,7 +12,18 @@ module.exports = router;
 router.post("/load", (req, res) => {
     try {
       let {branch_id} =  req.body;
-      let sql = `SELECT * FROM master_inventory WHERE branch_id = '${branch_id}'`;
+      let sql = `SELECT 
+    mi.*,
+    mi2.item_name
+FROM 
+    master_inventory mi
+JOIN 
+    master_items mi2
+ON 
+    mi.item_id = mi2.item_id
+WHERE 
+    mi.branch_id = '${branch_id}';
+`;
 
       mysql.SelectResult(sql, (err, result) => {
         if (err) {
@@ -167,7 +178,6 @@ router.post('/check', (req, res) => {
 });
 
 
-// Check if the item exists, and then either update or save based on the result
 router.post('/check1', (req, res) => {
   try {
       let items = req.body.items;
@@ -176,15 +186,14 @@ router.post('/check1', (req, res) => {
           return res.json({ msg: 'error', error: 'No items provided' });
       }
 
-      let updates = [];  // Store items for updating
-      let inserts = [];  // Store items for inserting
-      let completed = 0; // To track the async operations
-      let responseSent = false; // To prevent sending multiple responses
+      let updates = [];
+      let inserts = []; 
+      let completed = 0; 
+      let responseSent = false; 
 
       items.forEach(item => {
           let checkQuery = `SELECT * FROM master_requested_inventory WHERE item_id = '${item.item_id}' AND branch_id = '${item.branch_id}'`;
 
-          // Use SelectResult to check if the item exists
           mysql.SelectResult(checkQuery, (err, results) => {
               if (err) {
                   console.error('Error checking item existence: ', err);
@@ -195,18 +204,14 @@ router.post('/check1', (req, res) => {
               }
 
               if (results.length > 0) {
-                  // Item exists, add it to the updates array
                   updates.push(item);
               } else {
-                  // Item does not exist, add it to the inserts array
                   inserts.push(item);
               }
 
               completed++;
 
-              // After processing all items, decide to update or insert based on the arrays
               if (completed === items.length) {
-                  // Ensure the response is not sent more than once
                   if (!responseSent) {
                       if (updates.length > 0) {
                           updateItems(updates, res, () => {
@@ -237,7 +242,6 @@ router.post('/check1', (req, res) => {
   }
 });
 
-// Function to update existing items
 function updateItems(items, res, callback) {
   let today = new Date();
   let request_date = today.toISOString().split('T')[0];
@@ -251,7 +255,6 @@ function updateItems(items, res, callback) {
       `;
       let data = [item.requested_quantity, item.item_id, item.branch_id];
 
-      // Call the UpdateMultiple function
       mysql.UpdateMultiple(sql, data, (err, result) => {
           if (err) {
               console.error('Error updating record: ', err);
@@ -263,11 +266,9 @@ function updateItems(items, res, callback) {
       });
   });
 
-  // Call the callback once all updates are done
   callback();
 }
 
-// Function to insert new items
 function insertItems(items, res) {
   let data = [];
   let today = new Date();

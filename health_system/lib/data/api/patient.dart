@@ -129,13 +129,13 @@ class Patient {
   }
 
     Future<ResponceModel> addmedicalrecord(
-    String patient_id, String medical_record, String file,
+    String patient_id, String medical_record,
     String file_name, String createby,) async {
     final url = Uri.parse('${Config.apiUrl}${Config.savemedicalrecord}');
     final response = await http.post(url, body: {
       'patient_id': patient_id,
       'medical_record': medical_record,
-      'file': file,
+      'file': '',
       'file_name': file_name,
       'createby': createby,
     });

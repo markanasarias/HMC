@@ -5,6 +5,9 @@ import 'package:health_system/presentation/patient/controllers/patient_controlle
 import 'package:get/get.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:health_system/presentation/patient/pages/medical_record_add.dart';
+import 'package:health_system/presentation/patient/pages/pdf.dart';
+import 'package:health_system/presentation/patient/pages/sample.dart';
+import 'package:health_system/presentation/patient/pages/view_file.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert'; // For base64 decoding
 import 'dart:io'; // For file operations
@@ -890,26 +893,13 @@ void ViewPatient(BuildContext context, String patientid) {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: 130,
+                                    width: 360,
                                     height: 80,
                                     child: Center(
                                         child: Text('Record',
                                             style: TextStyles.AppBartext)),
                                   ),
-                                  Container(
-                                    width: 120,
-                                    height: 80,
-                                    child: Center(
-                                        child: Text('File',
-                                            style: TextStyles.AppBartext)),
-                                  ),
-                                  Container(
-                                    width: 120,
-                                    height: 80,
-                                    child: Center(
-                                        child: Text('Date',
-                                            style: TextStyles.AppBartext)),
-                                  ),
+                                 
                                   Container(
                                     width: 110,
                                     height: 80,
@@ -950,7 +940,7 @@ void ViewPatient(BuildContext context, String patientid) {
                                   child: Row(
                                     children: [
                                       Container(
-                                        width: 130,
+                                        width: 360,
                                         height: 80,
                                         child: Center(
                                           child: Text(
@@ -963,24 +953,7 @@ void ViewPatient(BuildContext context, String patientid) {
                                         height: 80,
                                         child: Center(
                                           child: Text(
-                                              '${medicalrecord.file_name}',
-                                              style: TextStyles.AppBartext),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 120,
-                                        height: 80,
-                                        child: Center(
-                                          child: Text(
                                               '${medicalrecord.created_date}',
-                                              style: TextStyles.AppBartext),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 110,
-                                        height: 80,
-                                        child: Center(
-                                          child: Text('${medicalrecord.status}',
                                               style: TextStyles.AppBartext),
                                         ),
                                       ),
@@ -996,20 +969,28 @@ void ViewPatient(BuildContext context, String patientid) {
                                                     color: Colors.blue),
                                                 onPressed: () {
                                                   // Open the base64 file when the visibility icon is pressed
-                                                  controller
-                                                      .openMedicalRecordFile(
-                                                          medicalrecord.file,
-                                                          medicalrecord
-                                                              .file_name);
+                                                  // controller
+                                                  //     .openMedicalRecordFile(
+                                                  //         medicalrecord.file,
+                                                  //         medicalrecord
+                                                  //             .file_name);
+                                                  // ViewFile(
+                                                  //   context, medicalrecord.file
+                                                  // );
                                                 },
                                               ),
                                               IconButton(
                                                 icon: Icon(Icons.edit,
                                                     color: Colors.blue),
                                                 onPressed: () {
-                                                  controller.openMedicalRecord(
-                                                      medicalrecord.file,
-                                                      medicalrecord.file_name);
+                                                  // print(medicalrecord.file);
+
+                                                  ViewFile(context, medicalrecord.file_name);
+                                                  // controller.openMedicalRecord(
+                                                  //     medicalrecord.file,
+                                                  //     medicalrecord.file_name);
+
+
                                                 },
                                               ),
                                             ],
@@ -1040,6 +1021,8 @@ void ViewPatient(BuildContext context, String patientid) {
                       child: Text("Close"),
                       onPressed: () {
                         controller.updateTab(0);
+                        controller.getloadpatient();
+                        controller.clear();
                         Get.back();
                       },
                     ),
@@ -1047,12 +1030,6 @@ void ViewPatient(BuildContext context, String patientid) {
                       child: Text("Update"),
                       onPressed: () {
                         controller.updatepatient(context, patientid);
-                      },
-                    ),
-                    TextButton(
-                      child: Text("Open Form"),
-                      onPressed: () {
-                        Get.back();
                       },
                     ),
                     TextButton(

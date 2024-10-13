@@ -236,7 +236,7 @@ class RequestStaffListPages extends StatelessWidget {
                                                   Colors.grey.withOpacity(0.01),
                                               child: Center(
                                                 child: Text(
-                                                  requestsstaff.item_id,
+                                                  requestsstaff.request_id,
                                                   style: TextStyles.AppBartext,
                                                 ),
                                               ),

@@ -42,7 +42,7 @@ void ViewDoctor(BuildContext context, String staff_id) {
         ),
         child: Container(
           width: 640,
-          height: 610,
+          height: 615,
           child: Column(
             children: <Widget>[
               // Fixed header
@@ -130,7 +130,7 @@ void ViewDoctor(BuildContext context, String staff_id) {
                 if (controller.selectedTab.value == 0) {
                   return Container(
                     width: 600,
-                    height: 450,
+                    height: 445,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -199,7 +199,7 @@ void ViewDoctor(BuildContext context, String staff_id) {
                               ),
                               Container(
                                 width: 380,
-                                height: 450,
+                                height: 445,
                                 decoration: BoxDecoration(
                                     //color: Colors.black
                                     ),
@@ -699,43 +699,6 @@ void ViewDoctor(BuildContext context, String staff_id) {
                                         ],
                                       ),
                                     ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          top: 10,
-                                          left: 10,
-                                          right: 30,
-                                        ),
-                                        child: Text(
-                                          'Status',
-                                          style: TextStyles.Text,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 0),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 360,
-                                            height: 35,
-                                            child: CupertinoTextField(
-                                              controller: controller.StatusC,
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 7, horizontal: 10),
-                                              style: TextStyles.Text,
-                                              decoration: BoxDecoration(
-                                                color: Color(0xFFEFF1F6),
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -750,7 +713,7 @@ void ViewDoctor(BuildContext context, String staff_id) {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 450,
+                      height: 445,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.white,

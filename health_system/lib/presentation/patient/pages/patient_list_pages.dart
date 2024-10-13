@@ -13,6 +13,10 @@ class PatientListPages extends StatelessWidget {
   Widget build(BuildContext context) {
     final PatientControllers controller = Get.put(PatientControllers());
 
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.reload();
+    });
+
     return Scaffold(
       body: Container(
         color: Colors.grey.withOpacity(0.1),

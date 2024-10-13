@@ -17,7 +17,7 @@ import 'package:health_system/widget/success.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:health_system/presentation/logs/controller/logs_controller.dart'; // Import LogsController
+import 'package:health_system/presentation/logs/controller/logs_controller.dart'; 
 
 class CenterController extends GetxController {
   var selectedFileName = ''.obs;

@@ -46,4 +46,6 @@ class Config {
   static const String savesched = 'schedule/save';
   static const String selectsched = 'schedule/getsched';
   static const String updatesched = 'schedule/update';
+  static const String staffquestinventory = 'inventory/savedata';
+  static const String approvedrequestinventory = 'request_inventory/updatedata';
 }

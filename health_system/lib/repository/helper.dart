@@ -18,6 +18,11 @@ class Helper {
     return userinfo['fullname'] as String;
   }
 
+  Future<String> gettype() async {
+    Map<String, dynamic> userinfo = await readJsonToFile('metadata.json');
+    return userinfo['type'] as String;
+  }
+
    Future<String> getbranchid() async {
     Map<String, dynamic> userinfo = await readJsonToFile('metadata.json');
     return userinfo['center'] as String;

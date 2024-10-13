@@ -49,7 +49,7 @@ void ViewRequestInventory(BuildContext context) {
                     children: <Widget>[
                       SizedBox(height: 10),
                       //content
-                      
+
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: 400,
@@ -135,98 +135,106 @@ void ViewRequestInventory(BuildContext context) {
                             ),
                             Expanded(
                               child: Obx(
-                                () =>
-                              ListView.builder(
-                                itemCount: controller.viewrequestsadmin.length,
-                                itemBuilder: (context, index) {
-                                  final viewrequestsadmin = controller.viewrequestsadmin[index];
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey,
-                                          width: 0.2,
+                                () => ListView.builder(
+                                  itemCount:
+                                      controller.viewrequestsadmin.length,
+                                  itemBuilder: (context, index) {
+                                    final viewrequestsadmin =
+                                        controller.viewrequestsadmin[index];
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.withOpacity(0.1),
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Colors.grey,
+                                            width: 0.2,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: 50,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              viewrequestsadmin.item_id,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 290,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              viewrequestsadmin.item_name,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 150,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: SizedBox(
-                                              width: 100,
-                                              height: 35,
-                                              child: CupertinoTextField(
-                                                controller: controller.Quantity,
-                                                padding: EdgeInsets.symmetric(
-                                                  vertical: 7,
-                                                  horizontal: 10,
-                                                ),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 50,
+                                            height: 80,
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                viewrequestsadmin.item_id,
                                                 style: TextStyles.AppBartext,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xFFEFF1F6),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                ),
-                                                textAlign: TextAlign.center,
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                inputFormatters: [
-                                                  FilteringTextInputFormatter
-                                                      .digitsOnly,
-                                                ],
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        Container(
-                                          width: 50,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: IconButton(
-                                              icon: Icon(
-                                                  Icons.delete_outline_outlined,
-                                                  color: Colors.red),
-                                              onPressed: () {},
+                                          Container(
+                                            width: 290,
+                                            height: 80,
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: Text(
+                                                viewrequestsadmin.item_name,
+                                                style: TextStyles.AppBartext,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
+                                          Container(
+                                            width: 150,
+                                            height: 80,
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: SizedBox(
+                                                width: 100,
+                                                height: 35,
+                                                child: CupertinoTextField(
+                                                  controller: TextEditingController(
+                                                      text: viewrequestsadmin
+                                                          .requested_quantity), // Set the initial value from requested_quantity
+                                                  padding: EdgeInsets.symmetric(
+                                                    vertical: 7,
+                                                    horizontal: 10,
+                                                  ),
+                                                  style: TextStyles.AppBartext,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xFFEFF1F6),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  inputFormatters: [
+                                                    FilteringTextInputFormatter
+                                                        .digitsOnly,
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 50,
+                                            height: 80,
+                                            color:
+                                                Colors.grey.withOpacity(0.01),
+                                            child: Center(
+                                              child: IconButton(
+                                                icon: Icon(
+                                                    Icons
+                                                        .delete_outline_outlined,
+                                                    color: Colors.red),
+                                                onPressed: () {},
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
                             ),
                           ],
                         ),
@@ -250,9 +258,10 @@ void ViewRequestInventory(BuildContext context) {
                       },
                     ),
                     TextButton(
-                      child: Text("Submit"),
+                      child: Text("Approved"),
                       onPressed: () {
                         print(controller.Quantity.text);
+                        controller.approvedrequest(context);
                       },
                     ),
                   ],

@@ -47,6 +47,10 @@ class ItemsController extends GetxController {
     await getloaditems();
   }
 
+  void reload() async {
+  await getloaditems();
+  }
+
 Future<void> getloaditems() async {
   print('getloadcenter');
 item.clear();
