@@ -192,4 +192,22 @@ class TextStyles {
     color: Colors.black,
     overflow: TextOverflow.visible,
   );
+  static final TextStyle Number = TextStyle(
+    decoration: TextDecoration.none,
+    decorationColor: Colors.black,
+    fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.bold).fontFamily,
+    fontSize: 100,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+    overflow: TextOverflow.visible,
+  );
+  static final TextStyle Queue = TextStyle(
+    decoration: TextDecoration.none,
+    decorationColor: Colors.black,
+    fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.w500).fontFamily,
+    fontSize: 50,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+    overflow: TextOverflow.visible,
+  );
 }

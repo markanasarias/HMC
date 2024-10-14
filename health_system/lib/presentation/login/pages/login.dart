@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_system/presentation/login/controllers/login_controllers.dart';
+import 'package:health_system/presentation/queuing/pages/queue_display.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -133,13 +134,17 @@ class Login extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          Get.offNamed('/index');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => QueueDisplay()),
+                          );
                         },
                         child: const Text(
                           'Forgot Password?',
                           style: TextStyle(color: Colors.red, fontSize: 15),
                         ),
-                      ),
+                      )
                     ],
                   );
                 },
