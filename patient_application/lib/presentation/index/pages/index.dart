@@ -1,4 +1,3 @@
-// index.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:patient_application/presentation/center/pages/center.dart';
@@ -78,10 +77,7 @@ class Index extends StatelessWidget {
               leading: Icon(Icons.logout_outlined),
               title: Text('Logout'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                );
+                controller.showDialog('Logout', 'Are you sure?');
               },
             ),
           ],

@@ -9,4 +9,15 @@ class IndexControllers extends GetxController {
   void changePage(String page) {
     selectedPage.value = page;
   }
+
+  void showDialog(String title, String content) {
+    Get.defaultDialog(
+      title: title,
+      middleText: content,
+      textConfirm: 'OK',
+      onConfirm: () {
+        Get.offNamed('/');
+      },
+    );
+  }
 }
