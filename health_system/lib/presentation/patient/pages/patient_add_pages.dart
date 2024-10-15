@@ -23,7 +23,7 @@ void AddPatient(BuildContext context) {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Container(
-          width: 640,
+          width: 645,
           height: 500,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -85,7 +85,7 @@ void AddPatient(BuildContext context) {
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 10,
-                        left: 95,
+                        left: 90,
                         right: 30,
                       ),
                       child: Text(
@@ -758,7 +758,6 @@ void AddPatient(BuildContext context) {
                       child: Text("Save"),
                       onPressed: () {
                         controller.addpatient(context);
-                    
                       },
                     ),
                   ],

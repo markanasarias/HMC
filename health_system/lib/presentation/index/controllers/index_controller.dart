@@ -17,4 +17,5 @@ class IndexController extends GetxController {
   void changePage(int index) {
     sideMenuController.value.changePage(index);
   }
+  
 }

@@ -1,4 +1,3 @@
-// text_styles.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,7 +6,7 @@ class TextStyles {
     decoration: TextDecoration.none,
     decorationColor: Colors.black,
     fontFamily: GoogleFonts.poppins(fontWeight: FontWeight.normal).fontFamily,
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: FontWeight.w500,
     color: Colors.black,
     overflow: TextOverflow.visible,

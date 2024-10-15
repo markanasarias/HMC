@@ -407,86 +407,77 @@ void AddStaff(BuildContext context) {
                                 ),
                               ],
                             ),
-                               Container(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 0),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 130,
-                                            height: 35,
-                                            child: CupertinoTextField(
-                                              controller: controller
-                                                  .years_of_experienceC,
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 7, horizontal: 10),
-                                              style: TextStyles.Text,
-                                              decoration: BoxDecoration(
-                                                color: Color(0xFFEFF1F6),
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(width: 10),
-                                          SizedBox(
-                                            width: 220,
-                                            height: 35,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Color(0xFFEFF1F6),
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                              ),
-                                              child: Obx(() {
-                                                return DropdownButtonHideUnderline(
-                                                  child: DropdownButton2(
-                                                    items: branchcontroller
-                                                        .center
-                                                        .map((CenterModel
-                                                            center) {
-                                                      return DropdownMenuItem<
-                                                          String>(
-                                                        value: center.branch_id,
-                                                        child: Text(
-                                                          center.branch_name,
-                                                          style:
-                                                              TextStyles.Text,
-                                                        ),
-                                                      );
-                                                    }).toList(),
-                                                    value: branchcontroller
-                                                        .selectedBranchId.value,
-                                                    onChanged:
-                                                        (String? newValue) {
-                                                      if (newValue != null) {
-                                                        branchcontroller
-                                                            .selectedBranchId
-                                                            .value = newValue;
-
-                                                        controller
-                                                                .selectedbranch
-                                                                .value =
-                                                            branchcontroller
-                                                                .selectedBranchId
-                                                                .value;
-                                                        print(controller
-                                                            .selectedbranch
-                                                            .value);
-                                                      }
-                                                    },
-                                                    hint: Text(
-                                                      'Select Branch',
-                                                      style: TextStyles.Text,
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                            ),
-                                          ),
-                                        ],
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 0),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 130,
+                                    height: 35,
+                                    child: CupertinoTextField(
+                                      controller:
+                                          controller.years_of_experienceC,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 7, horizontal: 10),
+                                      style: TextStyles.Text,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFEFF1F6),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
                                       ),
                                     ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  SizedBox(
+                                    width: 220,
+                                    height: 35,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFEFF1F6),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      child: Obx(() {
+                                        return DropdownButtonHideUnderline(
+                                          child: DropdownButton2(
+                                            items: branchcontroller.center
+                                                .map((CenterModel center) {
+                                              return DropdownMenuItem<String>(
+                                                value: center.branch_id,
+                                                child: Text(
+                                                  center.branch_name,
+                                                  style: TextStyles.Text,
+                                                ),
+                                              );
+                                            }).toList(),
+                                            value: branchcontroller
+                                                .selectedBranchId.value,
+                                            onChanged: (String? newValue) {
+                                              if (newValue != null) {
+                                                branchcontroller
+                                                    .selectedBranchId
+                                                    .value = newValue;
+
+                                                controller
+                                                        .selectedbranch.value =
+                                                    branchcontroller
+                                                        .selectedBranchId.value;
+                                                print(controller
+                                                    .selectedbranch.value);
+                                              }
+                                            },
+                                            hint: Text(
+                                              'Select Branch',
+                                              style: TextStyles.Text,
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             Row(
                               children: [
                                 Align(

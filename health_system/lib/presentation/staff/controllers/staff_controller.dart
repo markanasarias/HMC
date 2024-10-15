@@ -316,6 +316,7 @@ class StaffController extends GetxController {
             attendanceInfo['status'].toString(),
             attendanceInfo['createby'].toString(),
             attendanceInfo['createddate'].toString(),
+            attendanceInfo['fullname'].toString(),
           );
           sched.add(loadstaff);
         }
@@ -343,6 +344,7 @@ class StaffController extends GetxController {
             attendanceInfo['status'].toString(),
             attendanceInfo['createby'].toString(),
             attendanceInfo['createddate'].toString(),
+            attendanceInfo['fullname'].toString(),
           );
           sched.add(loadstaff);
           SchedDaysC.text = loadstaff.work_date;

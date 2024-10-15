@@ -121,3 +121,27 @@ router.post('/update', (req, res) => {
     })
   }
   });
+
+  router.post("/loadmobile", (req, res) => {
+    try {
+      let {work_date} =  req.body;
+      let sql = `SELECT master_schedule.*, master_staff.fullname
+  FROM master_schedule
+  JOIN master_staff ON master_schedule.staff_id = master_staff.id WHERE master_schedule.work_date = '${work_date}';`;
+      mysql.SelectResult(sql, (err, result) => {
+        if (err) {
+          return res.json({
+            msg: err,
+          });
+        }
+        res.json({
+          msg: "success",
+          data: result,
+        });
+      });
+    } catch (error) {
+      res.json({
+        msg: error,
+      });
+    }
+  });
