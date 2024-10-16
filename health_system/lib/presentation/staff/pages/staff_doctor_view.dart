@@ -515,7 +515,7 @@ void ViewDoctor(BuildContext context, String staff_id) {
                                       child: Row(
                                         children: [
                                           SizedBox(
-                                            width: 130,
+                                            width: 100,
                                             height: 35,
                                             child: CupertinoTextField(
                                               controller: controller
@@ -532,7 +532,7 @@ void ViewDoctor(BuildContext context, String staff_id) {
                                           ),
                                           SizedBox(width: 10),
                                           SizedBox(
-                                            width: 220,
+                                            width: 250,
                                             height: 35,
                                             child: Container(
                                               decoration: BoxDecoration(

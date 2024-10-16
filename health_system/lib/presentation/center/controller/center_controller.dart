@@ -28,6 +28,7 @@ class CenterController extends GetxController {
   var branchId = ''.obs;
   var branchName = ''.obs;
   var selectedBranchId = ''.obs;
+  var selectedBranchId1 = Rxn<String>();
   var clickedLocation = Rxn<LatLng>();
   var activelocation = LatLng(0.0, 0.0).obs;
   Helper helper = Helper();
@@ -85,11 +86,11 @@ class CenterController extends GetxController {
 
         for (var centerinfo in json.decode(jsondata)) {
           CenterModel loadcenter = CenterModel(
-            centerinfo['branch_id']?.toString() ?? '',
-            centerinfo['branch_name']?.toString() ?? '',
+            centerinfo['branch_id'].toString(),
+            centerinfo['branch_name'].toString(),
             centerinfo['address']?.toString() ?? '',
-            _parseToDouble(centerinfo['latitude']), // safely convert to double
-            _parseToDouble(centerinfo['longitude']), // safely convert to double
+            _parseToDouble(centerinfo['latitude']),
+            _parseToDouble(centerinfo['longitude']),
             centerinfo['createdby']?.toString() ?? '',
             centerinfo['createddate']?.toString() ?? '',
             centerinfo['status']?.toString() ?? '',

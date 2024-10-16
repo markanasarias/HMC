@@ -102,7 +102,7 @@ class InvertoryListPages extends StatelessWidget {
                           //if (controller.type.value == 'Admin')
                           if (controller.usertype.value == 'Admin')
                             SizedBox(
-                              width: 220,
+                              width: 250,
                               height: 35,
                               child: Container(
                                 decoration: BoxDecoration(
@@ -123,15 +123,15 @@ class InvertoryListPages extends StatelessWidget {
                                         );
                                       }).toList(),
                                       value: branchcontroller
-                                          .selectedBranchId.value,
+                                          .selectedBranchId1.value,
                                       onChanged: (String? newValue) {
                                         if (newValue != null) {
-                                          branchcontroller.selectedBranchId
+                                          branchcontroller.selectedBranchId1
                                               .value = newValue;
 
                                           controller.selectedbranch.value =
                                               branchcontroller
-                                                  .selectedBranchId.value;
+                                                  .selectedBranchId1.value.toString();
                                           print(
                                               controller.selectedbranch.value);
 

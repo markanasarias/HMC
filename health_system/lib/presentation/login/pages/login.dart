@@ -132,19 +132,19 @@ class Login extends StatelessWidget {
                           ),
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => QueueDisplay()),
-                          );
-                        },
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: Colors.red, fontSize: 15),
-                        ),
-                      )
+                      // TextButton(
+                      //   onPressed: () {
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //           builder: (context) => QueueDisplay()),
+                      //     );
+                      //   },
+                      //   child: const Text(
+                      //     'Forgot Password?',
+                      //     style: TextStyle(color: Colors.red, fontSize: 15),
+                      //   ),
+                      // )
                     ],
                   );
                 },

@@ -340,7 +340,7 @@ void ViewStaff(BuildContext context, String id) {
                               child: Row(
                                 children: [
                                   SizedBox(
-                                    width: 130,
+                                    width: 100,
                                     height: 35,
                                     child: CupertinoTextField(
                                       controller:
@@ -357,7 +357,7 @@ void ViewStaff(BuildContext context, String id) {
                                   ),
                                   SizedBox(width: 10),
                                   SizedBox(
-                                    width: 220,
+                                    width: 250,
                                     height: 35,
                                     child: Container(
                                       decoration: BoxDecoration(

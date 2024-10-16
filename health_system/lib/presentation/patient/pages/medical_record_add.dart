@@ -21,7 +21,7 @@ void AddMedicalRecord(BuildContext context) {
         ),
         child: Container(
           width: 425,
-          height: 280,
+          height: 290,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[

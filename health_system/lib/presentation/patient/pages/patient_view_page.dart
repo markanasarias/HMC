@@ -962,24 +962,24 @@ void ViewPatient(BuildContext context, String patientid) {
                                         child: Center(
                                           child: Row(
                                             children: [
-                                              SizedBox(width: 20),
+                                              SizedBox(width: 30),
+                                              // IconButton(
+                                              //   icon: Icon(Icons.visibility,
+                                              //       color: Colors.blue),
+                                              //   onPressed: () {
+                                              //     // Open the base64 file when the visibility icon is pressed
+                                              //     // controller
+                                              //     //     .openMedicalRecordFile(
+                                              //     //         medicalrecord.file,
+                                              //     //         medicalrecord
+                                              //     //             .file_name);
+                                              //     // ViewFile(
+                                              //     //   context, medicalrecord.file
+                                              //     // );
+                                              //   },
+                                              // ),
                                               IconButton(
                                                 icon: Icon(Icons.visibility,
-                                                    color: Colors.blue),
-                                                onPressed: () {
-                                                  // Open the base64 file when the visibility icon is pressed
-                                                  // controller
-                                                  //     .openMedicalRecordFile(
-                                                  //         medicalrecord.file,
-                                                  //         medicalrecord
-                                                  //             .file_name);
-                                                  // ViewFile(
-                                                  //   context, medicalrecord.file
-                                                  // );
-                                                },
-                                              ),
-                                              IconButton(
-                                                icon: Icon(Icons.edit,
                                                     color: Colors.blue),
                                                 onPressed: () {
                                                   // print(medicalrecord.file);

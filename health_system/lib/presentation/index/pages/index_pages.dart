@@ -183,6 +183,7 @@ class Index extends StatelessWidget {
                     ItemsListPages(),
                     InvertoryListPages(),
                     RequestListPages(),
+                    if (controllers.usertype.value == 'Doctor')
                     RequestStaffListPages(),
                     AppointmentListPages(),
                     CalendarListPages(),
