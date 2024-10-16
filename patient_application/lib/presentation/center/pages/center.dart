@@ -60,7 +60,6 @@ class Centers extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Move the map to the center of the location with the specified zoom level
           mapController.move(controller.activelocation.value, 13.0);
         },
         child: Icon(Icons.location_searching),

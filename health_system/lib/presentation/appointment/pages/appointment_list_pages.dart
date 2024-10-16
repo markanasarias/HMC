@@ -6,6 +6,7 @@ import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:health_system/widget/nodata.dart';
 
 class AppointmentListPages extends StatelessWidget {
   const AppointmentListPages({super.key});
@@ -108,6 +109,10 @@ class AppointmentListPages extends StatelessWidget {
                                   child: Icon(Icons.search,
                                       color: Color(0xFF9E9E9E)),
                                 ),
+                                onChanged: (value) {
+                                  controller.searchQuery.value = value;
+                                  controller.filterAppointments();
+                                },
                               ),
                             ),
                           ),
@@ -165,20 +170,11 @@ class AppointmentListPages extends StatelessWidget {
                                       ),
                                     ),
                                     Container(
-                                      width: 300,
+                                      width: 460,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
                                         child: Text('Purpose',
-                                            style: TextStyles.AppBartext),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 160,
-                                      height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                      child: Center(
-                                        child: Text('Date',
                                             style: TextStyles.AppBartext),
                                       ),
                                     ),
@@ -197,103 +193,99 @@ class AppointmentListPages extends StatelessWidget {
                             ),
                             SizedBox(height: 5),
                             Expanded(
-                              child: Obx(
-                                () => ListView.builder(
-                                  itemCount: controller.appointment.length,
-                                  itemBuilder: (context, index) {
-                                    final appointment =
-                                        controller.appointment[index];
-                                    return Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.withOpacity(0.1),
-                                        border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey, width: 0.2),
+                              child: Obx(() {
+                                if (controller.filteredappointment.isEmpty) {
+                                  return NoDataFound();
+                                } else {
+                                  return ListView.builder(
+                                    itemCount:
+                                        controller.filteredappointment.length,
+                                    itemBuilder: (context, index) {
+                                      final appointment =
+                                          controller.filteredappointment[index];
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.1),
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: Colors.grey,
+                                              width: 0.2,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            width: 200,
-                                            height: 80,
-                                            color:
-                                                Colors.grey.withOpacity(0.01),
-                                            child: Center(
-                                              child: Text(
-                                                appointment.staff_fullname,
-                                                style: TextStyles.AppBartext,
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              width: 200,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  appointment.staff_fullname,
+                                                  style: TextStyles.AppBartext,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Container(
-                                            width: 200,
-                                            height: 80,
-                                            color:
-                                                Colors.grey.withOpacity(0.01),
-                                            child: Center(
-                                              child: Text(
-                                                appointment
-                                                    .requestedby_fullname,
-                                                style: TextStyles.AppBartext,
+                                            Container(
+                                              width: 200,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  appointment
+                                                      .requestedby_fullname,
+                                                  style: TextStyles.AppBartext,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Container(
-                                            width: 300,
-                                            height: 80,
-                                            color:
-                                                Colors.grey.withOpacity(0.01),
-                                            child: Center(
-                                              child: Text(
-                                                appointment.purpose,
-                                                style: TextStyles.AppBartext,
+                                            Container(
+                                              width: 460,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  appointment.purpose,
+                                                  style: TextStyles.AppBartext,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Container(
-                                            width: 160,
-                                            height: 80,
-                                            color:
-                                                Colors.grey.withOpacity(0.01),
-                                            child: Center(
-                                              child: Text(
-                                                '${appointment.startdate} - ${appointment.enddate}',
-                                                style: TextStyles.AppBartext,
+                                            Container(
+                                              width: 118,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(width: 40),
+                                                    IconButton(
+                                                      icon: Icon(Icons.edit,
+                                                          color: Colors.blue),
+                                                      onPressed: () {
+                                                        ViewAppointment(
+                                                            context,
+                                                            appointment
+                                                                .appointment_id
+                                                                .toString());
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Container(
-                                            width: 118,
-                                            height: 80,
-                                            color:
-                                                Colors.grey.withOpacity(0.01),
-                                            child: Center(
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(width: 40),
-                                                  IconButton(
-                                                    icon: Icon(Icons.edit,
-                                                        color: Colors.blue),
-                                                    onPressed: () {
-                                                      ViewAppointment(
-                                                          context,
-                                                          appointment
-                                                              .appointment_id
-                                                              .toString());
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
+                              }),
                             ),
                           ],
                         ),

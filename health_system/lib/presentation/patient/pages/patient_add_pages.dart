@@ -235,7 +235,7 @@ void AddPatient(BuildContext context) {
                     ),
                     SizedBox(width: 10),
                     SizedBox(
-                      width: 250,
+                      width: 240,
                       height: 35,
                       child: CupertinoTextField(
                         controller: controller.birth_placeC,
@@ -250,7 +250,7 @@ void AddPatient(BuildContext context) {
                     ),
                     SizedBox(width: 10),
                     SizedBox(
-                      width: 148,
+                      width: 158,
                       height: 35,
                       child: Container(
                         decoration: BoxDecoration(
@@ -751,6 +751,7 @@ void AddPatient(BuildContext context) {
                     TextButton(
                       child: Text("Cancel"),
                       onPressed: () {
+                        controller.clear();
                         Navigator.of(context).pop();
                       },
                     ),

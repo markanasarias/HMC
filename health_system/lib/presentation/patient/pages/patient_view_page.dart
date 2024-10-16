@@ -31,7 +31,7 @@ void ViewPatient(BuildContext context, String patientid) {
         ),
         child: Container(
           width: 640,
-          height: 570,
+          height: 600,
           child: Column(
             children: <Widget>[
               // Fixed header
@@ -123,7 +123,7 @@ void ViewPatient(BuildContext context, String patientid) {
                 if (controller.selectedTab.value == 0) {
                   return Container(
                       width: double.infinity,
-                      height: 400,
+                      height: 420,
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -163,7 +163,7 @@ void ViewPatient(BuildContext context, String patientid) {
                                   child: Padding(
                                     padding: EdgeInsets.only(
                                       top: 10,
-                                      left: 95,
+                                      left: 85,
                                       right: 30,
                                     ),
                                     child: Text(
@@ -322,7 +322,7 @@ void ViewPatient(BuildContext context, String patientid) {
                                   ),
                                   SizedBox(width: 10),
                                   SizedBox(
-                                    width: 250,
+                                    width: 240,
                                     height: 35,
                                     child: CupertinoTextField(
                                       controller: controller.birth_placeC,
@@ -338,7 +338,7 @@ void ViewPatient(BuildContext context, String patientid) {
                                   ),
                                   SizedBox(width: 10),
                                   SizedBox(
-                                    width: 148,
+                                    width: 158,
                                     height: 35,
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -899,7 +899,6 @@ void ViewPatient(BuildContext context, String patientid) {
                                         child: Text('Record',
                                             style: TextStyles.AppBartext)),
                                   ),
-                                 
                                   Container(
                                     width: 110,
                                     height: 80,
@@ -985,12 +984,11 @@ void ViewPatient(BuildContext context, String patientid) {
                                                 onPressed: () {
                                                   // print(medicalrecord.file);
 
-                                                  ViewFile(context, medicalrecord.file_name);
+                                                  ViewFile(context,
+                                                      medicalrecord.file_name);
                                                   // controller.openMedicalRecord(
                                                   //     medicalrecord.file,
                                                   //     medicalrecord.file_name);
-
-
                                                 },
                                               ),
                                             ],

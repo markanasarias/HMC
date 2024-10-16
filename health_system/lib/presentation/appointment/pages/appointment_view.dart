@@ -20,7 +20,7 @@ void ViewAppointment(BuildContext context, String appointment_id) {
         ),
         child: Container(
           width: 425,
-          height: 430,
+          height: 435,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -298,6 +298,7 @@ void ViewAppointment(BuildContext context, String appointment_id) {
                     TextButton(
                       child: Text("Cancel"),
                       onPressed: () {
+                        controller.clear();
                         Navigator.of(context).pop();
                       },
                     ),

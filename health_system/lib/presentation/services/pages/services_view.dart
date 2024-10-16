@@ -20,7 +20,7 @@ void ViewServices(BuildContext context, String id) {
         ),
         child: Container(
           width: 425,
-          height: 360,
+          height: 370,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -91,7 +91,7 @@ void ViewServices(BuildContext context, String id) {
                   ),
                 ),
               ),
-               Container(
+              Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   children: [
@@ -177,7 +177,7 @@ void ViewServices(BuildContext context, String id) {
                   ],
                 ),
               ),
-               Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -222,6 +222,7 @@ void ViewServices(BuildContext context, String id) {
                     TextButton(
                       child: Text("Cancel"),
                       onPressed: () {
+                        controller.clear();
                         controller.getloadservice();
                         Navigator.of(context).pop();
                       },

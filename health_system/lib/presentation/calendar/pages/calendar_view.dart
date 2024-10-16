@@ -20,7 +20,7 @@ void ViewCalendar(BuildContext context, String id) {
         ),
         child: Container(
           width: 425,
-          height: 410,
+          height: 420,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -332,6 +332,7 @@ void ViewCalendar(BuildContext context, String id) {
                     TextButton(
                       child: Text("Cancel"),
                       onPressed: () {
+                        controller.clear();
                         Navigator.of(context).pop();
                       },
                     ),

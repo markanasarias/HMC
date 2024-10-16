@@ -19,7 +19,7 @@ void AddInventory(BuildContext context) {
         ),
         child: Container(
           width: 600,
-          height: 600,
+          height: 605,
           child: Column(
             children: <Widget>[
               // Fixed header

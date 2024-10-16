@@ -20,7 +20,7 @@ void ViewRequestInventory(BuildContext context) {
         ),
         child: Container(
           width: 600,
-          height: 520,
+          height: 525,
           child: Column(
             children: <Widget>[
               Container(
@@ -225,7 +225,14 @@ void ViewRequestInventory(BuildContext context) {
                                                     Icons
                                                         .delete_outline_outlined,
                                                     color: Colors.red),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  print(viewrequestsadmin
+                                                      .request_id);
+                                                  controller.reject(
+                                                      context,
+                                                      viewrequestsadmin
+                                                          .request_id);
+                                                },
                                               ),
                                             ),
                                           ),

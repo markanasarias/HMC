@@ -7,6 +7,7 @@ import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:health_system/widget/nodata.dart';
 
 class RequestStaffListPages extends StatelessWidget {
   const RequestStaffListPages({super.key});
@@ -111,6 +112,10 @@ class RequestStaffListPages extends StatelessWidget {
                                   child: Icon(Icons.search,
                                       color: Color(0xFF9E9E9E)),
                                 ),
+                                onChanged: (value) {
+                                  controller.searchQuery.value = value;
+                                  controller.filterPatients();
+                                },
                               ),
                             ),
                           ),
@@ -159,7 +164,7 @@ class RequestStaffListPages extends StatelessWidget {
                                       ),
                                     ),
                                     Container(
-                                      width: 250,
+                                      width: 365,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
@@ -194,26 +199,22 @@ class RequestStaffListPages extends StatelessWidget {
                                             style: TextStyles.AppBartext),
                                       ),
                                     ),
-                                    Container(
-                                      width: 115,
-                                      height: 80,
-                                      color: Colors.grey.withOpacity(0.01),
-                                      child: Center(
-                                        child: Text('Action',
-                                            style: TextStyles.AppBartext),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
                             ),
                             SizedBox(height: 5),
                             Expanded(
-                              child: Obx(() => ListView.builder(
-                                    itemCount: controller.requestsstaff.length,
+                              child: Obx(() {
+                                if (controller.filteredrequestsstaff.isEmpty) {
+                                  return NoDataFound(); // Show this widget when no requests are found
+                                } else {
+                                  return ListView.builder(
+                                    itemCount:
+                                        controller.filteredrequestsstaff.length,
                                     itemBuilder: (context, index) {
-                                      final requestsstaff =
-                                          controller.requestsstaff[index];
+                                      final requestsstaff = controller
+                                          .filteredrequestsstaff[index];
                                       return Container(
                                         width:
                                             MediaQuery.of(context).size.width,
@@ -242,7 +243,7 @@ class RequestStaffListPages extends StatelessWidget {
                                               ),
                                             ),
                                             Container(
-                                              width: 250,
+                                              width: 365,
                                               height: 80,
                                               color:
                                                   Colors.grey.withOpacity(0.01),
@@ -290,35 +291,13 @@ class RequestStaffListPages extends StatelessWidget {
                                                 ),
                                               ),
                                             ),
-                                            Container(
-                                              width: 115,
-                                              height: 80,
-                                              color:
-                                                  Colors.grey.withOpacity(0.01),
-                                              child: Center(
-                                                child: Row(
-                                                  children: [
-                                                    SizedBox(width: 20),
-                                                    IconButton(
-                                                      icon: Icon(
-                                                          Icons.visibility,
-                                                          color: Colors.blue),
-                                                      onPressed: () {},
-                                                    ),
-                                                    IconButton(
-                                                      icon: Icon(Icons.edit,
-                                                          color: Colors.blue),
-                                                      onPressed: () {},
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
                                           ],
                                         ),
                                       );
                                     },
-                                  )),
+                                  );
+                                }
+                              }),
                             ),
                           ],
                         ),

@@ -48,4 +48,5 @@ class Config {
   static const String updatesched = 'schedule/update';
   static const String staffquestinventory = 'inventory/savedata';
   static const String approvedrequestinventory = 'request_inventory/updatedata';
+  static const String reject = 'request_inventory/reject';
 }

@@ -108,6 +108,8 @@ exports.InsertTable = (tablename, data, callback) => {
     let sql = `INSERT INTO master_branches(
         branch_name,
         address,
+        latitude,
+        longitude,
         createddate,
         createdby,
         status) VALUES ?`;
@@ -180,6 +182,19 @@ exports.InsertTable = (tablename, data, callback) => {
   if (tablename === "master_users") {
     let sql = `INSERT INTO master_users(
         user_id,
+        username,
+        password,
+        usertype,
+        status,
+        createby,
+        createddate) VALUES ?`;
+
+    this.Insert(sql, data, callback); 
+  }
+
+  if (tablename === "master_patient_users") {
+    let sql = `INSERT INTO master_patient_users(
+        patient_id,
         username,
         password,
         usertype,

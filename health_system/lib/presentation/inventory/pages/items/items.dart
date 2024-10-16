@@ -7,6 +7,7 @@ import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:health_system/widget/nodata.dart';
 
 class ItemsListPages extends StatelessWidget {
   const ItemsListPages({super.key});
@@ -34,7 +35,8 @@ class ItemsListPages extends StatelessWidget {
                       SizedBox(width: 5),
                       Text('>', style: TextStyles.Text1),
                       SizedBox(width: 5),
-                      Text('Medical & Equipment List', style: TextStyles.Tableloc),
+                      Text('Medical & Equipment List',
+                          style: TextStyles.Tableloc),
                     ],
                   ),
                 ],
@@ -56,7 +58,8 @@ class ItemsListPages extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.symmetric(horizontal: 20, vertical: 10),
+                  padding: EdgeInsetsDirectional.symmetric(
+                      horizontal: 20, vertical: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -65,7 +68,6 @@ class ItemsListPages extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                             
                               AddItems(context);
                             },
                             child: Container(
@@ -84,7 +86,8 @@ class ItemsListPages extends StatelessWidget {
                                 ],
                               ),
                               child: Center(
-                                child: Text('Add Inventory', style: TextStyles.Textwhite),
+                                child: Text('Add Inventory',
+                                    style: TextStyles.Textwhite),
                               ),
                             ),
                           ),
@@ -103,8 +106,13 @@ class ItemsListPages extends StatelessWidget {
                                 ),
                                 prefix: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Icon(Icons.search, color: Color(0xFF9E9E9E)),
+                                  child: Icon(Icons.search,
+                                      color: Color(0xFF9E9E9E)),
                                 ),
+                                onChanged: (value) {
+                                  controller.searchQuery.value = value;
+                                  controller.filterPatients();
+                                },
                               ),
                             ),
                           ),
@@ -148,7 +156,8 @@ class ItemsListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('ID', style: TextStyles.AppBartext),
+                                        child: Text('ID',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -156,7 +165,8 @@ class ItemsListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Name', style: TextStyles.AppBartext),
+                                        child: Text('Name',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -164,7 +174,8 @@ class ItemsListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Category', style: TextStyles.AppBartext),
+                                        child: Text('Category',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -172,7 +183,8 @@ class ItemsListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Created Date', style: TextStyles.AppBartext),
+                                        child: Text('Created Date',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -180,7 +192,8 @@ class ItemsListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Status', style: TextStyles.AppBartext),
+                                        child: Text('Status',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                     Container(
@@ -188,7 +201,8 @@ class ItemsListPages extends StatelessWidget {
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
                                       child: Center(
-                                        child: Text('Action', style: TextStyles.AppBartext),
+                                        child: Text('Action',
+                                            style: TextStyles.AppBartext),
                                       ),
                                     ),
                                   ],
@@ -197,104 +211,120 @@ class ItemsListPages extends StatelessWidget {
                             ),
                             SizedBox(height: 5),
                             Expanded(
-                              child: Obx(() => ListView.builder(
-                                itemCount: controller.item.length,
-                                itemBuilder: (context, index) {
-                                  final item = controller.item[index];
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey,
-                                          width: 0.2,
-                                        ),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: 100,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              item.item_id,
-                                              style: TextStyles.AppBartext,
+                              child: Obx(() {
+                                if (controller.filtereditem.isEmpty) {
+                                  return NoDataFound();
+                                } else {
+                                  return ListView.builder(
+                                    itemCount: controller.filtereditem.length,
+                                    itemBuilder: (context, index) {
+                                      final item =
+                                          controller.filtereditem[index];
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.1),
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: Colors.grey,
+                                              width: 0.2,
                                             ),
                                           ),
                                         ),
-                                        Container(
-                                          width: 250,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              item.item_name,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 250,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              item.item_type,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 130,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              item.created_date,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 130,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Text(
-                                              item.status,
-                                              style: TextStyles.AppBartext,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 115,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(
-                                            child: Row(
-                                              children: [
-                                                SizedBox(width: 40),
-                                                
-                                                IconButton(
-                                                  icon: Icon(Icons.edit, color: Colors.blue),
-                                                  onPressed: () {
-                                                    controller.selectitems(item.item_id);
-                                                    ViewItems(context, item.item_id);
-                                                  },
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              width: 100,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  item.item_id,
+                                                  style: TextStyles.AppBartext,
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
+                                            Container(
+                                              width: 250,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  item.item_name,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 250,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  item.item_type,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 130,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  item.created_date,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 130,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  item.status,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 115,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(width: 40),
+                                                    IconButton(
+                                                      icon: Icon(Icons.edit,
+                                                          color: Colors.blue),
+                                                      onPressed: () {
+                                                        controller.selectitems(
+                                                            item.item_id);
+                                                        ViewItems(context,
+                                                            item.item_id);
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      );
+                                    },
                                   );
-                                },
-                              )),
+                                }
+                              }),
                             ),
                           ],
                         ),

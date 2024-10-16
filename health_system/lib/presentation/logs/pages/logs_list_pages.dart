@@ -5,6 +5,7 @@ import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:health_system/widget/nodata.dart';
 
 class LogsListPages extends StatelessWidget {
   const LogsListPages({super.key});
@@ -53,7 +54,8 @@ class LogsListPages extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.symmetric(horizontal: 20, vertical: 10),
+                  padding: EdgeInsetsDirectional.symmetric(
+                      horizontal: 20, vertical: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -75,11 +77,13 @@ class LogsListPages extends StatelessWidget {
                                 ),
                                 prefix: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Icon(
-                                    Icons.search,
-                                    color: Color(0xFF9E9E9E),
-                                  ),
+                                  child: Icon(Icons.search,
+                                      color: Color(0xFF9E9E9E)),
                                 ),
+                                onChanged: (value) {
+                                  controller.searchQuery.value = value;
+                                  controller.filterPatients();
+                                },
                               ),
                             ),
                           ),
@@ -122,25 +126,33 @@ class LogsListPages extends StatelessWidget {
                                       width: 150,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                      child: Center(child: Text('ID', style: TextStyles.AppBartext)),
+                                      child: Center(
+                                          child: Text('ID',
+                                              style: TextStyles.AppBartext)),
                                     ),
                                     Container(
                                       width: 310,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                      child: Center(child: Text('Action', style: TextStyles.AppBartext)),
+                                      child: Center(
+                                          child: Text('Action',
+                                              style: TextStyles.AppBartext)),
                                     ),
                                     Container(
                                       width: 310,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                      child: Center(child: Text('Name', style: TextStyles.AppBartext)),
+                                      child: Center(
+                                          child: Text('Name',
+                                              style: TextStyles.AppBartext)),
                                     ),
                                     Container(
                                       width: 200,
                                       height: 80,
                                       color: Colors.grey.withOpacity(0.01),
-                                      child: Center(child: Text('Date', style: TextStyles.AppBartext)),
+                                      child: Center(
+                                          child: Text('Date',
+                                              style: TextStyles.AppBartext)),
                                     ),
                                   ],
                                 ),
@@ -148,53 +160,77 @@ class LogsListPages extends StatelessWidget {
                             ),
                             SizedBox(height: 5),
                             Expanded(
-                              child: Obx(() => ListView.builder(
-                                itemCount: controller.logs.length,
-                                itemBuilder: (context, index) {
-                                  final logs = controller.logs[index];
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey,
-                                          width: 0.2,
+                              child: Obx(() {
+                                if (controller.filteredlogs.isEmpty) {
+                                  return NoDataFound();
+                                } else {
+                                  return ListView.builder(
+                                    itemCount: controller.filteredlogs.length,
+                                    itemBuilder: (context, index) {
+                                      final logs =
+                                          controller.filteredlogs[index];
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.1),
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: Colors.grey,
+                                              width: 0.2,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: 150,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(child: Text(logs.log_id, style: TextStyles.AppBartext)),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              width: 150,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                  child: Text(logs.log_id,
+                                                      style: TextStyles
+                                                          .AppBartext)),
+                                            ),
+                                            Container(
+                                              width: 310,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                  child: Text(logs.action,
+                                                      style: TextStyles
+                                                          .AppBartext)),
+                                            ),
+                                            Container(
+                                              width: 310,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                  child: Text(logs.fullname,
+                                                      style: TextStyles
+                                                          .AppBartext)),
+                                            ),
+                                            Container(
+                                              width: 200,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                  child: Text(logs.created_at,
+                                                      style: TextStyles
+                                                          .AppBartext)),
+                                            ),
+                                          ],
                                         ),
-                                        Container(
-                                          width: 310,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(child: Text(logs.action, style: TextStyles.AppBartext)),
-                                        ),
-                                        Container(
-                                          width: 310,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(child: Text(logs.fullname, style: TextStyles.AppBartext)),
-                                        ),
-                                        Container(
-                                          width: 200,
-                                          height: 80,
-                                          color: Colors.grey.withOpacity(0.01),
-                                          child: Center(child: Text(logs.created_at, style: TextStyles.AppBartext)),
-                                        ),
-                                      ],
-                                    ),
+                                      );
+                                    },
                                   );
-                                },
-                              )),
+                                }
+                              }),
                             ),
                           ],
                         ),

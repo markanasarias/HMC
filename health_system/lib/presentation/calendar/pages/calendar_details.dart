@@ -17,7 +17,7 @@ void Calendar_details(BuildContext context) {
         ),
         child: Container(
           width: 640,
-          height: 485,
+          height: 495,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[

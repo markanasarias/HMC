@@ -8,7 +8,9 @@ import 'package:http/http.dart' as http;
 class RequestAdminInventory {
   Future<ResponceModel> getrequestadmininventory() async {
     final url = Uri.parse('${Config.apiUrl}${Config.loadadminrequest}');
-    final response = await http.get(url,);
+    final response = await http.get(
+      url,
+    );
 
     final responseData = json.decode(response.body);
     final status = response.statusCode;
@@ -21,11 +23,10 @@ class RequestAdminInventory {
     ResponceModel data = ResponceModel(message, status, result, description);
     return data;
   }
-    Future<ResponceModel> getviewrequest(String branch_id) async {
+
+  Future<ResponceModel> getviewrequest(String branch_id) async {
     final url = Uri.parse('${Config.apiUrl}${Config.loadviewrequest}');
-    final response = await http.post(url, body: {
-      'branch_id': branch_id
-    });
+    final response = await http.post(url, body: {'branch_id': branch_id});
 
     final responseData = json.decode(response.body);
     final status = response.statusCode;
@@ -39,32 +40,50 @@ class RequestAdminInventory {
     return data;
   }
 
-  Future<ResponceModel> approvedrequeststaffinventory(Map<String, List<Map<String, String>>> items) async {
-  final url = Uri.parse('${Config.apiUrl}${Config.approvedrequestinventory}');
-  final itemsJson = json.encode(items);
+  Future<ResponceModel> reject(String id) async {
+    print(id);
+    final url = Uri.parse('${Config.apiUrl}${Config.reject}');
+    final response = await http.post(url, body: {'request_id': id});
 
-  final response = await http.post(
-    url,
-    headers: {
-      'Content-Type': 'application/json', 
-    },
-    body: itemsJson, 
-  );
+    final responseData = json.decode(response.body);
+    final status = response.statusCode;
+    final message = responseData['msg'];
+    final result = responseData['data'] ?? [];
+    final description = responseData['description'] ?? "";
 
-  print('items: $itemsJson');
+    print('request admin result: $result');
 
-  final responseData = json.decode(response.body);
-  final status = response.statusCode;
-  final message = responseData['msg'];
-  final result = responseData['data'] ?? [];
-  final description = responseData['description'] ?? "";
+    ResponceModel data = ResponceModel(message, status, result, description);
+    return data;
+  }
 
-  print(result);
-  print(status);
-  print(message);
-  print(responseData);
+  Future<ResponceModel> approvedrequeststaffinventory(
+      Map<String, List<Map<String, String>>> items) async {
+    final url = Uri.parse('${Config.apiUrl}${Config.approvedrequestinventory}');
+    final itemsJson = json.encode(items);
 
-  ResponceModel data = ResponceModel(message, status, result, description);
-  return data;
-}
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: itemsJson,
+    );
+
+    print('items: $itemsJson');
+
+    final responseData = json.decode(response.body);
+    final status = response.statusCode;
+    final message = responseData['msg'];
+    final result = responseData['data'] ?? [];
+    final description = responseData['description'] ?? "";
+
+    print(result);
+    print(status);
+    print(message);
+    print(responseData);
+
+    ResponceModel data = ResponceModel(message, status, result, description);
+    return data;
+  }
 }

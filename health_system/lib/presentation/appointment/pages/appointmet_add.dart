@@ -21,7 +21,7 @@ void AddAppointment(BuildContext context) {
         ),
         child: Container(
           width: 425,
-          height: 365,
+          height: 370,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[

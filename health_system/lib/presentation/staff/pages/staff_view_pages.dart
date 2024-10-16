@@ -310,78 +310,6 @@ void ViewStaff(BuildContext context, String id) {
                                     padding: EdgeInsets.only(
                                       top: 10,
                                       left: 5,
-                                      right: 30,
-                                    ),
-                                    child: Text(
-                                      'Specialization',
-                                      style: TextStyles.Text,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      top: 10,
-                                      left: 55,
-                                      right: 30,
-                                    ),
-                                    child: Text(
-                                      'License Number',
-                                      style: TextStyles.Text,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 0),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 175,
-                                    height: 35,
-                                    child: CupertinoTextField(
-                                      controller: controller.specializationC,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 7, horizontal: 10),
-                                      style: TextStyles.Text,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFEFF1F6),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  SizedBox(
-                                    width: 175,
-                                    height: 35,
-                                    child: CupertinoTextField(
-                                      controller:
-                                          controller.medical_license_numberC,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 7, horizontal: 10),
-                                      style: TextStyles.Text,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFEFF1F6),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      top: 10,
-                                      left: 5,
                                       right: 10,
                                     ),
                                     child: Text(
@@ -572,42 +500,6 @@ void ViewStaff(BuildContext context, String id) {
                                     height: 35,
                                     child: CupertinoTextField(
                                       controller: controller.addressC,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 7, horizontal: 10),
-                                      style: TextStyles.Text,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFEFF1F6),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  top: 10,
-                                  left: 10,
-                                  right: 30,
-                                ),
-                                child: Text(
-                                  'Status',
-                                  style: TextStyles.Text,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 0),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 360,
-                                    height: 35,
-                                    child: CupertinoTextField(
-                                      controller: controller.StatusC,
                                       padding: EdgeInsets.symmetric(
                                           vertical: 7, horizontal: 10),
                                       style: TextStyles.Text,

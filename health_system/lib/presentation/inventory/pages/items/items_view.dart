@@ -20,7 +20,7 @@ void ViewItems(BuildContext context, String item_id) {
         ),
         child: Container(
           width: 425,
-          height: 300,
+          height: 305,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[

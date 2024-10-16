@@ -34,11 +34,37 @@ class LogsController extends GetxController {
   Helper helper = Helper();
 
   var logs = <LogsModel>[].obs;
+  var filteredlogs = <LogsModel>[].obs;
+  var searchQuery = ''.obs;
 
   @override
   void onInit() async {
     super.onInit();
     await getloadlogs();
+  }
+
+  void filterPatients() {
+    if (searchQuery.value.isEmpty) {
+      filteredlogs.value = logs;
+    } else {
+      List<String> queryParts = searchQuery.value.split(' ');
+
+      filteredlogs.value = logs.where((center) {
+        if (queryParts.length > 1) {
+          return center.fullname
+                  .toLowerCase()
+                  .contains(queryParts[0].toLowerCase()) &&
+              center.action.toLowerCase().contains(queryParts[1].toLowerCase());
+        } else {
+          return center.fullname
+                  .toLowerCase()
+                  .contains(searchQuery.value.toLowerCase()) ||
+              center.action
+                  .toLowerCase()
+                  .contains(searchQuery.value.toLowerCase());
+        }
+      }).toList();
+    }
   }
 
   Future<void> getloadlogs() async {
@@ -66,6 +92,7 @@ class LogsController extends GetxController {
           );
 
           logs.add(logsinfo);
+          filterPatients();
         }
       } else {
         print('Error: ${response.message}');
@@ -75,8 +102,7 @@ class LogsController extends GetxController {
     }
   }
 
-  Future<void> addlogs(
-      BuildContext context, String user_id, String action) async {
+  Future<void> addlogs(String user_id, String action) async {
     //isloading = true.obs;
     try {
       final response = await Logs().savelogs(

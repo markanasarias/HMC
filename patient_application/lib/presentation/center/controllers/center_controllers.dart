@@ -9,6 +9,7 @@ import 'package:patient_application/repository/repository.dart';
 
 class CenterControllers extends GetxController {
   var activelocation = LatLng(0.0, 0.0).obs;
+
   var center = <CenterModel>[].obs;
 
   Helper helper = Helper();

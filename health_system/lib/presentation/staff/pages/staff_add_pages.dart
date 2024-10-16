@@ -600,6 +600,7 @@ void AddStaff(BuildContext context) {
                       TextButton(
                         child: Text("Cancel"),
                         onPressed: () {
+                          controller.clearFields();
                           Navigator.of(context).pop();
                         },
                       ),

@@ -205,20 +205,38 @@ router.post('/save', (req, res) => {
         emergency_contact_phone, blood_type, philhealth_number, allergies,
         status, createby, createddate
       ]];
+      
       mysql.InsertTable("master_patient", data, (err, result) => {
         if (err) {
           console.error('Error: ', err);
           return res.json({ msg: 'error' });
         }
 
-        console.log(result);
-        res.json({ msg: 'success' });
+        let patient_id = result.insertId; 
+
+        let username = `${first_name.charAt(0)}${last_name}`.replace(/\s+/g, '').toLowerCase();
+        let password = `${first_name}${date_of_birth.replace(/-/g, '')}`.replace(/\s+/g, '').toLowerCase();
+        
+        let userData = [[
+          patient_id, username, password, 'user', 'active', createby, createddate
+        ]];
+
+        mysql.InsertTable("master_patient_users", userData, (err, userResult) => {
+          if (err) {
+            console.error('Error: ', err);
+            return res.json({ msg: 'error' });
+          }
+
+          console.log(userResult);
+          return res.json({ msg: 'success' });
+        });
       });
     });
   } catch (error) {
     res.json({ msg: 'error' });
   }
 });
+
 
 
 

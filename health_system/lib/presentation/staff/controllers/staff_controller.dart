@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:health_system/data/api/staff.dart';
 import 'package:health_system/data/model/staff_model.dart';
+import 'package:health_system/presentation/logs/controller/logs_controller.dart';
 import 'package:health_system/repository/helper.dart';
 import 'dart:async';
 import 'dart:io';
@@ -30,7 +31,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 
 class StaffController extends GetxController {
   var selectedFileNames = ''.obs;
-  var staffid = '';
+
+  var staffid = ''.obs;
   var hiredate = ''.obs;
   var fullname = ''.obs;
   var selectedrole = 'Admin'.obs;
@@ -114,6 +116,23 @@ class StaffController extends GetxController {
   }
 
   Future<void> addstaff(BuildContext context) async {
+    if (selectedrole.value == null ||
+        fullnameC.text.isEmpty ||
+        positionC.text.isEmpty ||
+        specializationC.text.isEmpty ||
+        phone_numberC.text.isEmpty ||
+        emailC.text.isEmpty ||
+        addressC.text.isEmpty ||
+        hiredate.value == null ||
+        fileAttachment.value == null ||
+        fullname.value == null ||
+        selectedbranch.value == null) {
+      showErrorToast(context,
+          title: 'Missing Fields!',
+          text: 'Please fill in all required fields.');
+      return;
+    }
+
     try {
       final response = await Staff().addstaff(
         selectedrole.value,
@@ -132,11 +151,14 @@ class StaffController extends GetxController {
       );
       if (response.message == 'success') {
         showSuccessToast(context,
-            title: 'Success!', text: 'Patient added successfully.');
+            title: 'Success!', text: 'Staff added successfully.');
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(staffid.value, 'Added Staff');
+        clearFields();
         getloadstaff();
         Navigator.of(context).pop();
       } else {
-        showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
+        showErrorToast(context, title: 'Oops!', text: 'Center Already Exists!');
       }
     } catch (e) {
       print('An error occurred: $e');
@@ -166,6 +188,9 @@ class StaffController extends GetxController {
       if (response.message == 'success') {
         showSuccessToast(context,
             title: 'Success!', text: 'Staff update successfully.');
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(staffid.value, 'Update Staff');
+        clearFields();
         getloadstaff();
         Navigator.of(context).pop();
       } else {
@@ -371,6 +396,9 @@ class StaffController extends GetxController {
       if (response.message == 'success') {
         showSuccessToast(context,
             title: 'Success!', text: 'Schedule added successfully.');
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(staffid.value, 'Added Doctor Schedule');
+        clearFields();
         getsched(staff_id);
         Navigator.of(context).pop();
       } else {
@@ -395,7 +423,10 @@ class StaffController extends GetxController {
       );
       if (response.message == 'success') {
         showSuccessToast(context,
-            title: 'Success!', text: 'Schedule added successfully.');
+            title: 'Success!', text: 'Schedule update successfully.');
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(staffid.value, 'Update Doctor Schedule');
+        clearFields();
         getsched(staff_id);
         Navigator.of(context).pop();
       } else {
@@ -422,6 +453,8 @@ class StaffController extends GetxController {
     emailC.clear();
     addressC.clear();
     fileAttachment.value = '';
+    SchedDaysC.clear();
+    timeRange.value = '';
   }
 
   void setSelectedFile(String fileName) {

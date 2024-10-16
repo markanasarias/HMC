@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:health_system/data/api/calendar.dart';
 import 'package:health_system/data/model/calendar_model.dart';
+import 'package:health_system/presentation/logs/controller/logs_controller.dart';
 import 'package:health_system/repository/helper.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ import 'package:intl/intl.dart';
 class CalendarController extends GetxController {
   var selectedFileName = ''.obs;
   var start_date = ''.obs;
+  var staffid = ''.obs;
   var end_date = ''.obs;
   var fullname = ''.obs;
   Helper helper = Helper();
@@ -56,7 +58,16 @@ class CalendarController extends GetxController {
   void onInit() async {
     super.onInit();
     fullname.value = await helper.getfullname();
+    staffid.value = await helper.getstaffid();
     await getloadevent();
+  }
+
+  void clear() {
+    NameC.clear();
+    LocationC.clear();
+    DescriptionC.clear();
+    start_date.value = '';
+    end_date.value = '';
   }
 
   Future<void> getloadevent() async {
@@ -121,11 +132,9 @@ class CalendarController extends GetxController {
         final jsondata = json.encode(response.result);
 
         for (var attendanceInfo in json.decode(jsondata)) {
-          // Parse the start_time and end_time
           DateTime startTime = DateTime.parse(attendanceInfo['start_time']);
           DateTime endTime = DateTime.parse(attendanceInfo['end_time']);
 
-          // Format the date to "yyyy-MM-dd HH:mm:ss"
           String formattedStartTime =
               DateFormat('yyyy-MM-dd HH:mm:ss').format(startTime);
           String formattedEndTime =
@@ -134,8 +143,8 @@ class CalendarController extends GetxController {
             attendanceInfo['id'].toString(),
             attendanceInfo['name'].toString(),
             attendanceInfo['description'].toString(),
-            formattedStartTime, // Use formatted time here
-            formattedEndTime, // Use formatted time here
+            formattedStartTime,
+            formattedEndTime,
             attendanceInfo['location'].toString(),
             attendanceInfo['createby'].toString(),
             attendanceInfo['createddate'].toString(),
@@ -199,24 +208,42 @@ class CalendarController extends GetxController {
   }
 
   Future<void> addevent(BuildContext context) async {
-    //isloading = true.obs;
+    // Validate required fields
+    if (NameC.text.isEmpty ||
+        DescriptionC.text.isEmpty ||
+        start_date.value == null ||
+        end_date.value == null ||
+        LocationC.text.isEmpty ||
+        fullname.value == null) {
+      showErrorToast(context,
+          title: 'Missing Fields!',
+          text: 'Please fill in all required fields.');
+      return;
+    }
+
     try {
       final response = await Calendar().savecalendar(
-          NameC.text,
-          DescriptionC.text,
-          start_date.value,
-          end_date.value,
-          LocationC.text,
-          fullname.value);
+        NameC.text,
+        DescriptionC.text,
+        start_date.value,
+        end_date.value,
+        LocationC.text,
+        fullname.value,
+      );
+
       if (response.message == 'success') {
         showSuccessToast(context,
             title: 'Success!', text: 'Event added successfully.');
-        await Future.delayed(Duration(seconds: 1));
-        //isloading = false.obs;
-        getloadevent();
-        Navigator.of(context).pop();
+
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(staffid.value, 'Added Event');
+
+        clear(); // Clear form fields after successful submission
+
+        getloadevent(); // Reload the list of events
+        Navigator.of(context).pop(); // Close the dialog/page
       } else {
-        showErrorToast(context, title: 'Oops!', text: 'Event Already Exist!');
+        showErrorToast(context, title: 'Oops!', text: 'Event Already Exists!');
       }
     } catch (e) {
       print('An error occurred: $e');
@@ -233,8 +260,8 @@ class CalendarController extends GetxController {
       if (response.message == 'success') {
         showSuccessToast(context,
             title: 'Success!', text: 'Event update successfully.');
-        await Future.delayed(Duration(seconds: 1));
-        //isloading = false.obs;
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(staffid.value, 'Update Event');
         getloadevent();
         Navigator.of(context).pop();
       } else {

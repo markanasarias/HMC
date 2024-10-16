@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_system/presentation/center/controller/center_controller.dart';
 import 'package:health_system/presentation/inventory/controller/stocks/stocks_controller.dart';
 import 'package:health_system/presentation/inventory/pages/stocks/inventory_add_pages.dart';
 import 'package:health_system/widget/admin_appbar.dart';
@@ -6,6 +7,8 @@ import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:health_system/data/model/center_model.dart';
+import 'package:health_system/widget/nodata.dart';
 
 class InvertoryListPages extends StatelessWidget {
   const InvertoryListPages({super.key});
@@ -13,9 +16,9 @@ class InvertoryListPages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final StocksController controller = Get.put(StocksController());
-
-     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.reload();  // Call the reload function
+    final CenterController branchcontroller = Get.put(CenterController());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.reload(); // Call the reload function
     });
 
     return Scaffold(
@@ -97,8 +100,9 @@ class InvertoryListPages extends StatelessWidget {
                             width: 420,
                           ),
                           //if (controller.type.value == 'Admin')
+                          if (controller.usertype.value == 'Admin')
                             SizedBox(
-                              width: 148,
+                              width: 220,
                               height: 35,
                               child: Container(
                                 decoration: BoxDecoration(
@@ -108,25 +112,35 @@ class InvertoryListPages extends StatelessWidget {
                                 child: Obx(() {
                                   return DropdownButtonHideUnderline(
                                     child: DropdownButton2(
-                                      items: controller.center
-                                          .map((String branch) {
+                                      items: branchcontroller.center
+                                          .map((CenterModel center) {
                                         return DropdownMenuItem<String>(
-                                          value: branch,
+                                          value: center.branch_id,
                                           child: Text(
-                                            branch,
+                                            center.branch_name,
                                             style: TextStyles.Text,
                                           ),
                                         );
                                       }).toList(),
-                                      value: controller.selectedcenter.value,
+                                      value: branchcontroller
+                                          .selectedBranchId.value,
                                       onChanged: (String? newValue) {
                                         if (newValue != null) {
-                                          controller.selectedcenter.value =
-                                              newValue;
+                                          branchcontroller.selectedBranchId
+                                              .value = newValue;
+
+                                          controller.selectedbranch.value =
+                                              branchcontroller
+                                                  .selectedBranchId.value;
+                                          print(
+                                              controller.selectedbranch.value);
+
+                                          controller.getloadstocks(
+                                              controller.selectedbranch.value);
                                         }
                                       },
                                       hint: Text(
-                                        'Select Center',
+                                        'Select Branch',
                                         style: TextStyles.Text,
                                       ),
                                     ),
@@ -152,11 +166,13 @@ class InvertoryListPages extends StatelessWidget {
                                 ),
                                 prefix: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Icon(
-                                    Icons.search,
-                                    color: Color(0xFF9E9E9E),
-                                  ),
+                                  child: Icon(Icons.search,
+                                      color: Color(0xFF9E9E9E)),
                                 ),
+                                onChanged: (value) {
+                                  controller.searchQuery.value = value;
+                                  controller.filterPatients();
+                                },
                               ),
                             ),
                           ),
@@ -234,69 +250,83 @@ class InvertoryListPages extends StatelessWidget {
                             SizedBox(height: 5),
                             Expanded(
                               child: Obx(() {
-                                return ListView.builder(
-                                  itemCount: controller.stocks.length,
-                                  itemBuilder: (context, index) {
-                                    final stocks = controller.stocks[index];
-                                    return Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.withOpacity(0.1),
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: Colors.grey,
-                                            width: 0.2,
+                                if (controller.filteredstocks.isEmpty) {
+                                  return NoDataFound(); // Show this widget when no stocks are found
+                                } else {
+                                  return ListView.builder(
+                                    itemCount: controller.filteredstocks.length,
+                                    itemBuilder: (context, index) {
+                                      final stocks =
+                                          controller.filteredstocks[index];
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.1),
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: Colors.grey,
+                                              width: 0.2,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            width: 100,
-                                            height: 80,
-                                            color:
-                                                Colors.grey.withOpacity(0.01),
-                                            child: Center(
-                                              child: Text(stocks.item_id,
-                                                  style: TextStyles.AppBartext),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              width: 100,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  stocks.item_id,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                          Container(
-                                            width: 550,
-                                            height: 80,
-                                            color:
-                                                Colors.grey.withOpacity(0.01),
-                                            child: Center(
-                                              child: Text(stocks.item_name,
-                                                  style: TextStyles.AppBartext),
+                                            Container(
+                                              width: 550,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  stocks.item_name,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                          Container(
-                                            width: 200,
-                                            height: 80,
-                                            color:
-                                                Colors.grey.withOpacity(0.01),
-                                            child: Center(
-                                              child: Text(stocks.quantity,
-                                                  style: TextStyles.AppBartext),
+                                            Container(
+                                              width: 200,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  stocks.quantity,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                          Container(
-                                            width: 100,
-                                            height: 80,
-                                            color:
-                                                Colors.grey.withOpacity(0.01),
-                                            child: Center(
-                                              child: Text(stocks.purchase_date,
-                                                  style: TextStyles.AppBartext),
+                                            Container(
+                                              width: 100,
+                                              height: 80,
+                                              color:
+                                                  Colors.grey.withOpacity(0.01),
+                                              child: Center(
+                                                child: Text(
+                                                  stocks.purchase_date,
+                                                  style: TextStyles.AppBartext,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
                               }),
                             ),
                           ],

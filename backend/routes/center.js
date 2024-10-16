@@ -58,6 +58,8 @@ router.post('/save', (req, res) => {
   try {
     let branch_name = req.body.branch_name;
     let address = req.body.address;
+    let latitude = req.body.latitude;
+    let longitude = req.body.longitude;
     let createby = req.body.createby; 
     let status = 'Active';
     let today = new Date();
@@ -76,7 +78,7 @@ router.post('/save', (req, res) => {
 
       let data = [];
       data.push([
-        branch_name, address, createddate, createby, status,
+        branch_name, address, latitude, longitude, createddate, createby, status,
       ]);
 
       mysql.InsertTable("master_branches", data, (err, result) => {
@@ -104,19 +106,18 @@ router.post('/update', (req, res) => {
     let branch_id = req.body.branch_id;
     let branch_name = req.body.branch_name;
     let address = req.body.address;
+    let latitude = req.body.latitude;
+    let longitude = req.body.longitude;
     let status = req.body.status;
-    let sqlupdate = `UPDATE master_branches SET  branch_name = '${branch_name}', address ='${address}', status ='${status}' WHERE branch_id ='${branch_id}'`
+    let sqlupdate = `UPDATE master_branches SET  branch_name = '${branch_name}', address ='${address}', latitude ='${latitude}', longitude ='${longitude}', status ='${status}' WHERE branch_id ='${branch_id}'`
     
     mysql.Update(sqlupdate, (err,result) =>{
       if(err) console.error('Error: ', err);
-  
       console.log(result);
-  
       res.json({
         msg: 'success'
       })
     })
-  
   } catch (error) {
     res.json({
       msg: 'error'

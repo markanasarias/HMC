@@ -20,7 +20,7 @@ void AddItems(BuildContext context) {
         ),
         child: Container(
           width: 425,
-          height: 235,
+          height: 240,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[

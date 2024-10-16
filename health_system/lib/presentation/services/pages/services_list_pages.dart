@@ -6,6 +6,7 @@ import 'package:health_system/widget/admin_appbar.dart';
 import 'package:health_system/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:health_system/widget/nodata.dart';
 
 class ServicesListPages extends StatelessWidget {
   const ServicesListPages({super.key});
@@ -123,11 +124,13 @@ class ServicesListPages extends StatelessWidget {
                                 ),
                                 prefix: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Icon(
-                                    Icons.search,
-                                    color: Color(0xFF9E9E9E),
-                                  ),
+                                  child: Icon(Icons.search,
+                                      color: Color(0xFF9E9E9E)),
                                 ),
+                                onChanged: (value) {
+                                  controller.searchQuery.value = value;
+                                  controller.filterPatients();
+                                },
                               ),
                             ),
                           ),
@@ -219,12 +222,17 @@ class ServicesListPages extends StatelessWidget {
                             SizedBox(
                               height: 5,
                             ),
-                            // Wrap the ListView.builder with Obx
-                            Obx(() => Expanded(
-                                  child: ListView.builder(
-                                    itemCount: controller.service.length,
+                            Expanded(
+                              child: Obx(() {
+                                if (controller.filteredservice.isEmpty) {
+                                  return NoDataFound();
+                                } else {
+                                  return ListView.builder(
+                                    itemCount:
+                                        controller.filteredservice.length,
                                     itemBuilder: (context, index) {
-                                      final service = controller.service[index];
+                                      final service =
+                                          controller.filteredservice[index];
                                       return Container(
                                         width:
                                             MediaQuery.of(context).size.width,
@@ -284,9 +292,7 @@ class ServicesListPages extends StatelessWidget {
                                               child: Center(
                                                 child: Row(
                                                   children: [
-                                                    SizedBox(
-                                                      width: 40,
-                                                    ),
+                                                    SizedBox(width: 40),
                                                     IconButton(
                                                       icon: Icon(Icons.edit,
                                                           color: Colors.blue),
@@ -294,7 +300,8 @@ class ServicesListPages extends StatelessWidget {
                                                         controller
                                                             .selectservice(
                                                                 service.id);
-                                                        ViewServices(context, service.id);
+                                                        ViewServices(context,
+                                                            service.id);
                                                       },
                                                     ),
                                                   ],
@@ -305,8 +312,10 @@ class ServicesListPages extends StatelessWidget {
                                         ),
                                       );
                                     },
-                                  ),
-                                )),
+                                  );
+                                }
+                              }),
+                            )
                           ],
                         ),
                       ),

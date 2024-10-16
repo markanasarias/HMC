@@ -11,6 +11,7 @@ import 'package:health_system/data/model/calendar_model.dart';
 import 'package:health_system/data/model/center_model.dart';
 import 'package:health_system/data/model/items_model.dart';
 import 'package:health_system/data/model/stocks.dart';
+import 'package:health_system/presentation/logs/controller/logs_controller.dart';
 import 'package:health_system/repository/helper.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:intl/intl.dart';
@@ -54,6 +55,9 @@ class AppointmentControllers extends GetxController {
   Helper helper = Helper();
 
   var appointment = <AppointmentModel>[].obs;
+  var filteredappointment = <AppointmentModel>[].obs;
+  var searchQuery = ''.obs;
+
   var staff = <StaffModel>[].obs;
 
   final TextEditingController purpose = TextEditingController();
@@ -67,6 +71,40 @@ class AppointmentControllers extends GetxController {
     staffid.value = (await helper.getstaffid()).toString();
     await getloadappointment();
     await getdoctor();
+  }
+
+  void clear() {
+    purpose.clear();
+    StatusC.clear();
+    startdate.value = '';
+    enddate.value = '';
+    selecteddoctor.value = '';
+  }
+
+  void filterAppointments() {
+    if (searchQuery.value.isEmpty) {
+      filteredappointment.value = appointment;
+    } else {
+      List<String> queryParts = searchQuery.value.split(' ');
+
+      filteredappointment.value = appointment.where((appointment) {
+        if (queryParts.length > 1) {
+          return appointment.requestedby_fullname
+                  .toLowerCase()
+                  .contains(queryParts[0].toLowerCase()) &&
+              appointment.staff_fullname
+                  .toLowerCase()
+                  .contains(queryParts[1].toLowerCase());
+        } else {
+          return appointment.requestedby_fullname
+                  .toLowerCase()
+                  .contains(searchQuery.value.toLowerCase()) ||
+              appointment.staff_fullname
+                  .toLowerCase()
+                  .contains(searchQuery.value.toLowerCase());
+        }
+      }).toList();
+    }
   }
 
   Future<void> getloadappointment() async {
@@ -101,6 +139,7 @@ class AppointmentControllers extends GetxController {
           enddate.value = appoinments.enddate;
           StatusC.text = appoinments.status;
         }
+        filterAppointments();
       } else {
         print('Error: ${response.message}');
       }
@@ -180,6 +219,19 @@ class AppointmentControllers extends GetxController {
   }
 
   Future<void> addappointment(BuildContext context) async {
+    // Validate required fields before proceeding
+    if (selecteddoctor.value == null ||
+        staffid.value == null ||
+        purpose.text.isEmpty ||
+        startdate.value == null ||
+        enddate.value == null ||
+        StatusC.text.isEmpty) {
+      showErrorToast(context,
+          title: 'Missing Fields!',
+          text: 'Please fill in all required fields.');
+      return;
+    }
+
     try {
       final response = await Appointment().addappointment(
         selecteddoctor.value,
@@ -189,14 +241,19 @@ class AppointmentControllers extends GetxController {
         enddate.value,
         StatusC.text,
       );
+
       if (response.message == 'success') {
         showSuccessToast(context,
             title: 'Success!', text: 'Appointment added successfully.');
+
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(staffid.value, 'Request Appointment');
+
         getloadappointment();
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(); // Close the dialog/page after success
       } else {
         showErrorToast(context,
-            title: 'Oops!', text: 'Appointment Already Exist!');
+            title: 'Oops!', text: 'Appointment Already Exists!');
       }
     } catch (e) {
       print('An error occurred: $e');
@@ -217,6 +274,9 @@ class AppointmentControllers extends GetxController {
       if (response.message == 'success') {
         showSuccessToast(context,
             title: 'Success!', text: 'Appointment update successfully.');
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(staffid.value, 'Update Appointment');
+        clear();
         getloadappointment();
         Navigator.of(context).pop();
       } else {

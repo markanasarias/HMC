@@ -20,7 +20,7 @@ void AddSchedule(BuildContext context, String staff_id) {
         ),
         child: Container(
           width: 350,
-          height: 240,
+          height: 245,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[

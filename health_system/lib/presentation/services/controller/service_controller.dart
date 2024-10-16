@@ -7,6 +7,7 @@ import 'package:health_system/data/api/service.dart';
 import 'package:health_system/data/model/calendar_model.dart';
 import 'package:health_system/data/model/center_model.dart';
 import 'package:health_system/data/model/service_model.dart';
+import 'package:health_system/presentation/logs/controller/logs_controller.dart';
 import 'package:health_system/repository/helper.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'dart:convert';
@@ -34,9 +35,12 @@ class ServiceController extends GetxController {
   var fullname = ''.obs;
   var schedule_days = ''.obs;
   var schedule_time = ''.obs;
+  var staffid = ''.obs;
   Helper helper = Helper();
 
   var service = <ServiceModel>[].obs;
+  var filteredservice = <ServiceModel>[].obs;
+  var searchQuery = ''.obs;
 
   final TextEditingController NameC = TextEditingController();
   final TextEditingController StatusC = TextEditingController();
@@ -45,7 +49,36 @@ class ServiceController extends GetxController {
   void onInit() async {
     super.onInit();
     fullname.value = await helper.getfullname();
+    staffid.value = await helper.getstaffid();
     await getloadservice();
+  }
+
+  void clear() {
+    NameC.clear();
+    StatusC.clear();
+    daysC.clear();
+    schedule_days.value = '';
+    schedule_time.value = '';
+  }
+
+  void filterPatients() {
+    if (searchQuery.value.isEmpty) {
+      filteredservice.value = service;
+    } else {
+      List<String> queryParts = searchQuery.value.split(' ');
+
+      filteredservice.value = service.where((center) {
+        if (queryParts.length > 1) {
+          return center.service_name
+              .toLowerCase()
+              .contains(queryParts[0].toLowerCase());
+        } else {
+          return center.service_name
+              .toLowerCase()
+              .contains(searchQuery.value.toLowerCase());
+        }
+      }).toList();
+    }
   }
 
   Future<void> getloadservice() async {
@@ -68,6 +101,7 @@ class ServiceController extends GetxController {
           );
 
           service.add(services);
+          filterPatients();
         }
       } else {
         print('Error: ${response.message}');
@@ -110,17 +144,39 @@ class ServiceController extends GetxController {
   }
 
   Future<void> addservice(BuildContext context) async {
-    //isloading = true.obs;
+    // Validate required fields
+    if (NameC.text.isEmpty ||
+        schedule_days.value == null ||
+        schedule_time.value == null ||
+        fullname.value == null) {
+      showErrorToast(context,
+          title: 'Missing Fields!',
+          text: 'Please fill in all required fields.');
+      return;
+    }
+
     try {
       final response = await Service().saveservice(
-          NameC.text, schedule_days.value, schedule_time.value, fullname.value);
+        NameC.text,
+        schedule_days.value,
+        schedule_time.value,
+        fullname.value,
+      );
+
       if (response.message == 'success') {
         showSuccessToast(context,
             title: 'Success!', text: 'Service added successfully.');
+
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(staffid.value, 'Added Service');
+
+        clear();
+
         getloadservice();
         Navigator.of(context).pop();
       } else {
-        showErrorToast(context, title: 'Oops!', text: 'Service Already Exist!');
+        showErrorToast(context,
+            title: 'Oops!', text: 'Service Already Exists!');
       }
     } catch (e) {
       print('An error occurred: $e');
@@ -128,14 +184,18 @@ class ServiceController extends GetxController {
           title: 'Oops!', text: 'There was an issue. Please try again.');
     }
   }
-    Future<void> updateservice(BuildContext context, String id) async {
+
+  Future<void> updateservice(BuildContext context, String id) async {
     //isloading = true.obs;
     try {
       final response = await Service().updateservice(
-          id,NameC.text, daysC.text, schedule_time.value, StatusC.text);
+          id, NameC.text, daysC.text, schedule_time.value, StatusC.text);
       if (response.message == 'success') {
         showSuccessToast(context,
-            title: 'Success!', text: 'Service added successfully.');
+            title: 'Success!', text: 'Service update successfully.');
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(staffid.value, 'update Service');
+        clear();
         getloadservice();
         Navigator.of(context).pop();
       } else {

@@ -20,7 +20,7 @@ void AddServices(BuildContext context) {
         ),
         child: Container(
           width: 425,
-          height: 300,
+          height: 310,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -210,6 +210,7 @@ void AddServices(BuildContext context) {
                     TextButton(
                       child: Text("Cancel"),
                       onPressed: () {
+                        controller.clear();
                         controller.getloadservice();
                         Navigator.of(context).pop();
                       },

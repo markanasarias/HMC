@@ -297,6 +297,28 @@ router.post('/updatedata', async (req, res) => {
     }
 });
 
+router.post('/reject', (req, res) => {
+    try {
+      let request_id = req.body.request_id;
+      let sqlupdate = `UPDATE master_requested_inventory SET  status = 'Rejected' WHERE request_id ='${request_id}'`
+      
+      mysql.Update(sqlupdate, (err,result) =>{
+        if(err) console.error('Error: ', err);
+    
+        console.log(result);
+    
+        res.json({
+          msg: 'success'
+        })
+      })
+    
+    } catch (error) {
+      res.json({
+        msg: 'error'
+      })
+    }
+    });
+
 
 
 

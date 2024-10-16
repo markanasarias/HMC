@@ -96,15 +96,11 @@ class CalendarListPages extends StatelessWidget {
                       cellAspectRatio: 2.5,
                       onPageChange: (DateTime date, int pageIndex) {},
                       onCellTap: (events, date) {
-                        if (events.isNotEmpty) {
-                          // Format the date to 'yyyy-MM-dd'
-                          
-                          String formattedDate =
-                              DateFormat('yyyy-MM-dd').format(date);
-                          print("Selected date: $formattedDate");
-                          controller.selectevents(formattedDate);
-                          Calendar_details(context);
-                        }
+                        String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(date);
+                        print("Selected date: $formattedDate");
+                        controller.selectevents(formattedDate);
+                        Calendar_details(context);
                       },
                     ),
                   ),

@@ -22,7 +22,7 @@ class BranchCenter {
     return data;
   }
 
-    Future<ResponceModel> selectcenter(String branch_id) async {
+  Future<ResponceModel> selectcenter(String branch_id) async {
     final url = Uri.parse('${Config.apiUrl}${Config.selectcenter}');
     final response = await http.post(url, body: {
       'branch_id': branch_id,
@@ -39,11 +39,15 @@ class BranchCenter {
     ResponceModel data = ResponceModel(message, status, result, description);
     return data;
   }
-    Future<ResponceModel> addcenter(String Name, String Location, String createdby) async {
+
+  Future<ResponceModel> addcenter(String Name, String Location, String latitude,
+      String longitude, String createdby) async {
     final url = Uri.parse('${Config.apiUrl}${Config.addcenter}');
     final response = await http.post(url, body: {
       'branch_name': Name,
       'address': Location,
+      'latitude': latitude,
+      'longitude': longitude,
       'createdby': createdby,
     });
 
@@ -58,12 +62,21 @@ class BranchCenter {
     ResponceModel data = ResponceModel(message, status, result, description);
     return data;
   }
-    Future<ResponceModel> updatecenter(String branch_id, String Name, String Location, String statuss) async {
+
+  Future<ResponceModel> updatecenter(
+      String branch_id,
+      String Name,
+      String Location,
+      String latitude,
+      String longitude,
+      String statuss) async {
     final url = Uri.parse('${Config.apiUrl}${Config.updatecenter}');
     final response = await http.post(url, body: {
       'branch_id': branch_id,
       'branch_name': Name,
       'address': Location,
+      'latitude': latitude,
+      'longitude': longitude,
       'status': statuss,
     });
 

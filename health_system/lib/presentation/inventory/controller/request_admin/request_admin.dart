@@ -49,143 +49,195 @@ import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:health_system/presentation/logs/controller/logs_controller.dart';
 
-
 class RequestAdmin extends GetxController {
+  var staffid = ''.obs;
   var branch_id = ''.obs;
   var requestbranch_id = ''.obs;
   Helper helper = Helper();
 
   final TextEditingController Quantity = TextEditingController();
 
-
   var requestsadmin = <RequestAdminModel>[].obs;
   var viewrequestsadmin = <ViewRequestAdminModel>[].obs;
+  var filteredrequestsadmin = <RequestAdminModel>[].obs;
+  var searchQuery = ''.obs;
 
   @override
   void onInit() async {
     super.onInit();
     branch_id.value = await helper.getbranchid();
+    staffid.value = await helper.getstaffid();
     await getloadrequestadmin();
   }
 
-    void reload() async {
+  void reload() async {
     viewrequestsadmin.clear();
     await getloadrequestadmin();
   }
 
+  void filterPatients() {
+    if (searchQuery.value.isEmpty) {
+      filteredrequestsadmin.value = requestsadmin;
+    } else {
+      List<String> queryParts = searchQuery.value.split(' ');
 
-Future<void> getloadrequestadmin() async {
-  print('getloadcenter');
-requestsadmin.clear();
-  try {
-    final response = await RequestAdminInventory().getrequestadmininventory();
+      filteredrequestsadmin.value = requestsadmin.where((requestsadmin) {
+        if (queryParts.length > 1) {
+          return requestsadmin.branch_name
+              .toLowerCase()
+              .contains(queryParts[0].toLowerCase());
+        } else {
+          return requestsadmin.branch_name
+              .toLowerCase()
+              .contains(searchQuery.value.toLowerCase());
+        }
+      }).toList();
+    }
+  }
 
-    if (helper.getStatusString(APIStatus.success) == response.message) {
-      final jsondata = json.encode(response.result);
+  Future<void> getloadrequestadmin() async {
+    print('getloadcenter');
+    requestsadmin.clear();
+    try {
+      final response = await RequestAdminInventory().getrequestadmininventory();
 
-      for (var itemsinfo in json.decode(jsondata)) {
-        DateTime first_request_date = DateTime.parse(itemsinfo['first_request_date'].toString());
-        String formattedfirstDate = DateFormat('dd/MM/yyyy').format(first_request_date);
-        DateTime last_request_date = DateTime.parse(itemsinfo['last_request_date'].toString());
-        String formattedlastDate = DateFormat('dd/MM/yyyy').format(last_request_date);
-        RequestAdminModel requestsadmins = RequestAdminModel(
-          itemsinfo['branch_id'].toString(),
-          itemsinfo['branch_name'].toString(),
-          itemsinfo['total_requests'].toString(),
-          itemsinfo['total_requested_quantity'].toString(),
-          formattedfirstDate,
-          formattedlastDate,
-          itemsinfo['latest_status'].toString(),
-          itemsinfo['last_requested_by'].toString(),
-          
-        );
+      if (helper.getStatusString(APIStatus.success) == response.message) {
+        final jsondata = json.encode(response.result);
 
-        requestsadmin.add(requestsadmins);
+        for (var itemsinfo in json.decode(jsondata)) {
+          DateTime first_request_date =
+              DateTime.parse(itemsinfo['first_request_date'].toString());
+          String formattedfirstDate =
+              DateFormat('dd/MM/yyyy').format(first_request_date);
+          DateTime last_request_date =
+              DateTime.parse(itemsinfo['last_request_date'].toString());
+          String formattedlastDate =
+              DateFormat('dd/MM/yyyy').format(last_request_date);
+          RequestAdminModel requestsadmins = RequestAdminModel(
+            itemsinfo['branch_id'].toString(),
+            itemsinfo['branch_name'].toString(),
+            itemsinfo['total_requests'].toString(),
+            itemsinfo['total_requested_quantity'].toString(),
+            formattedfirstDate,
+            formattedlastDate,
+            itemsinfo['latest_status'].toString(),
+            itemsinfo['last_requested_by'].toString(),
+          );
+
+          requestsadmin.add(requestsadmins);
+        }
+        filterPatients();
+      } else {
+        print('Error: ${response.message}');
       }
-    } else {
-      print('Error: ${response.message}');
+    } catch (e) {
+      print('An error occurred while loading patient data: $e');
     }
-  } catch (e) {
-    print('An error occurred while loading patient data: $e');
   }
-}
 
-Future<void> getviewrequest() async {
-  print('getloadcenter');
-  viewrequestsadmin.clear();
-  try {
-    final response = await RequestAdminInventory().getviewrequest(requestbranch_id.value);
+  Future<void> getviewrequest() async {
+    print('getloadcenter');
+    viewrequestsadmin.clear();
+    try {
+      final response =
+          await RequestAdminInventory().getviewrequest(requestbranch_id.value);
 
-    if (helper.getStatusString(APIStatus.success) == response.message) {
-      final jsondata = json.encode(response.result);
+      if (helper.getStatusString(APIStatus.success) == response.message) {
+        final jsondata = json.encode(response.result);
 
-      for (var itemsinfo in json.decode(jsondata)) {
-        // Parse the date correctly
-        DateTime first_request_date = DateTime.parse(itemsinfo['first_request_date'].toString());
+        for (var itemsinfo in json.decode(jsondata)) {
+          // Parse the date correctly
+          DateTime first_request_date =
+              DateTime.parse(itemsinfo['first_request_date'].toString());
 
-        // Format the date as 'dd/MM/yyyy'
-        String formattedfirstDate = DateFormat('dd/MM/yyyy').format(first_request_date);
+          // Format the date as 'dd/MM/yyyy'
+          String formattedfirstDate =
+              DateFormat('dd/MM/yyyy').format(first_request_date);
 
-        Quantity.text = itemsinfo['requested_quantity'].toString();
+          Quantity.text = itemsinfo['requested_quantity'].toString();
 
-        ViewRequestAdminModel viewrequestsadmins = ViewRequestAdminModel(
-          itemsinfo['request_id'].toString(),
-          itemsinfo['item_id'].toString(),
-          itemsinfo['item_name'].toString(),
-          itemsinfo['requested_quantity'].toString(),
-          formattedfirstDate,  // formatted date
-          itemsinfo['status'].toString(),
-          itemsinfo['requested_by'].toString(),
-          itemsinfo['branch_id'].toString(),
-        );
+          ViewRequestAdminModel viewrequestsadmins = ViewRequestAdminModel(
+            itemsinfo['request_id'].toString(),
+            itemsinfo['item_id'].toString(),
+            itemsinfo['item_name'].toString(),
+            itemsinfo['requested_quantity'].toString(),
+            formattedfirstDate, // formatted date
+            itemsinfo['status'].toString(),
+            itemsinfo['requested_by'].toString(),
+            itemsinfo['branch_id'].toString(),
+          );
 
-        viewrequestsadmin.add(viewrequestsadmins);
-      
+          viewrequestsadmin.add(viewrequestsadmins);
+        }
+        filterPatients();
+      } else {
+        print('Error: ${response.message}');
       }
-    } else {
-      print('Error: ${response.message}');
+    } catch (e) {
+      print('An error occurred while loading patient data: $e');
     }
-  } catch (e) {
-    print('An error occurred while loading patient data: $e');
   }
-}
 
+  Future<void> approvedrequest(BuildContext context) async {
+    try {
+      // Prepare the list of items
+      var itemsData = viewrequestsadmin.map((item) {
+        return {
+          "request_id": item.request_id,
+          "requested_quantity": item.requested_quantity,
+          "item_id": item.item_id,
+          "branch_id": item.branch_id,
+        };
+      }).toList();
 
-    Future<void> approvedrequest(BuildContext context) async {
-  try {
-    // Prepare the list of items
-    var itemsData = viewrequestsadmin.map((item) {
-      return {
-        "request_id": item.request_id,               
-        "requested_quantity": item.requested_quantity,
-        "item_id": item.item_id, 
-        "branch_id": item.branch_id,            
-      };
-    }).toList();
+      var requestData = {"items": itemsData};
+      final response = await RequestAdminInventory()
+          .approvedrequeststaffinventory(requestData);
 
+      if (response.message == 'success') {
+        showSuccessToast(context,
+            title: 'Success!', text: 'Request Approved successfully.');
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(staffid.value, 'Approved Request');
+        await Future.delayed(Duration(seconds: 1));
 
-    var requestData = {
-      "items": itemsData
-    };
-    final response = await RequestAdminInventory().approvedrequeststaffinventory(requestData);
-
-    if (response.message == 'success') {
-      showSuccessToast(context,
-          title: 'Success!', text: 'Request Approved successfully.');
-      await Future.delayed(Duration(seconds: 1));
-
-      // If you have additional logic, like adding logs or reloading data:
-      // final logsController = Get.put(LogsController());
-      // await logsController.addlogs(context, staffid.value, 'Added request');
-      getviewrequest();
-      Navigator.of(context).pop();
-    } else {
-      showErrorToast(context, title: 'Oops!', text: 'Request already exists!');
+        // If you have additional logic, like adding logs or reloading data:
+        // final logsController = Get.put(LogsController());
+        // await logsController.addlogs(context, staffid.value, 'Added request');
+        getviewrequest();
+        Navigator.of(context).pop();
+      } else {
+        showErrorToast(context,
+            title: 'Oops!', text: 'Request already exists!');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      showErrorToast(context,
+          title: 'Oops!', text: 'There was an issue. Please try again.');
     }
-  } catch (e) {
-    print('An error occurred: $e');
-    showErrorToast(context,
-        title: 'Oops!', text: 'There was an issue. Please try again.');
   }
-}
+
+  Future<void> reject(BuildContext context, String id) async {
+    try {
+      final response = await RequestAdminInventory().reject(
+        id,
+      );
+      if (response.message == 'success') {
+        showSuccessToast(context,
+            title: 'Success!', text: 'Center updated successfully.');
+
+        viewrequestsadmin.clear();
+        await getviewrequest();
+        final logsController = Get.put(LogsController());
+        await logsController.addlogs(
+            staffid.value, 'Request Inventory Rejected');
+      } else {
+        showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+      showErrorToast(context,
+          title: 'Oops!', text: 'There was an issue. Please try again.');
+    }
+  }
 }

@@ -102,14 +102,14 @@ class Index extends StatelessWidget {
                     title: "Inventory",
                     icon: const Icon(Icons.inventory_2_outlined),
                     children: [
-                      //if (controllers.usertype.value == 'Admin')
-                      SideMenuItem(
-                        title: 'Items',
-                        onTap: (index, _) {
-                          controller.changePage(index);
-                        },
-                        icon: const Icon(Icons.medication_outlined),
-                      ),
+                      if (controllers.usertype.value == 'Admin')
+                        SideMenuItem(
+                          title: 'Items',
+                          onTap: (index, _) {
+                            controller.changePage(index);
+                          },
+                          icon: const Icon(Icons.medication_outlined),
+                        ),
                       SideMenuItem(
                         title: 'Stocks',
                         onTap: (index, _) {
@@ -125,13 +125,14 @@ class Index extends StatelessWidget {
                         },
                         icon: const Icon(Icons.medication_outlined),
                       ),
-                      SideMenuItem(
-                        title: 'Request',
-                        onTap: (index, _) {
-                          controller.changePage(index);
-                        },
-                        icon: const Icon(Icons.medication_outlined),
-                      ),
+                      if (controllers.usertype.value == 'Doctor')
+                        SideMenuItem(
+                          title: 'Request',
+                          onTap: (index, _) {
+                            controller.changePage(index);
+                          },
+                          icon: const Icon(Icons.medication_outlined),
+                        ),
                     ],
                   ),
                   SideMenuItem(

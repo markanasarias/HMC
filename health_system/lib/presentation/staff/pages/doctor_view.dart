@@ -20,7 +20,7 @@ void ViewSchedule(BuildContext context, scheduleid, staff_id) {
         ),
         child: Container(
           width: 350,
-          height: 300,
+          height: 305,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
