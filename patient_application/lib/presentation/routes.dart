@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:patient_application/presentation/index/pages/index.dart';
 import 'package:patient_application/presentation/login/pages/login.dart';
 
 class Routes {
@@ -6,6 +7,10 @@ class Routes {
     GetPage(
       name: '/',
       page: () => Login(),
+    ),
+    GetPage(
+      name: '/index',
+      page: () => Index(),
     ),
   ];
 }

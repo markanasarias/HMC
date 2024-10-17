@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 
+import 'package:patient_application/data/api/login.dart';
+import 'package:patient_application/presentation/index/pages/index.dart';
+import 'package:patient_application/repository/repository.dart';
+import 'package:patient_application/widget/alert.dart';
+
 class LoginControllers extends GetxController {
   var isLoading = false.obs;
   var isPasswordObscured = true.obs;
-  //Helper helper = Helper();
+  Helper helper = Helper();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -25,24 +30,24 @@ class LoginControllers extends GetxController {
   Future<void> login() async {
     print('login');
     isLoading.value = true;
-    // try {
-    //   final response =
-    //       await Login().login(usernameController.text, passwordController.text);
-    //   if (helper.getStatusString(APIStatus.success) == response.message) {
-    //     final jsonData = json.encode(response.result);
-    //     for (var userinfo in json.decode(jsonData)) {
-    //       helper.writeJsonToFile(userinfo, 'metadata.json');
-    //     }
-    //     Get.offNamed('/index');
-    //     isLoading.value = false;
-    //   } else {
-    //    // Alert(title: 'Oops!', text: 'Username or Password is Incorrect');
-    //     isLoading.value = false;
-    //   }
-    // } catch (error) {
-    //   print(error);
-    //   isLoading.value = false;
-    // }
+    try {
+      final response =
+          await Login().login(usernameController.text, passwordController.text);
+      if (helper.getStatusString(APIStatus.success) == response.message) {
+        final jsonData = json.encode(response.result);
+        for (var userinfo in json.decode(jsonData)) {
+          helper.writeJsonToFile(userinfo, 'metadata.json');
+        }
+        Get.offNamed('/index');
+        isLoading.value = false;
+      } else {
+        Alert(title: 'Oops!', text: 'Username or Password is Incorrect');
+        isLoading.value = false;
+      }
+    } catch (error) {
+      print(error);
+      isLoading.value = false;
+    }
   }
 
   void showDialog(String title, String content) {
