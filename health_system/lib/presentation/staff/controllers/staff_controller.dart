@@ -36,7 +36,7 @@ class StaffController extends GetxController {
   var hiredate = ''.obs;
   var fullname = ''.obs;
   var selectedrole = 'Admin'.obs;
-  var selectedbranch = ''.obs;
+  var selectedbranch = 'Main Branches Langgam'.obs;
   var timeRange = ''.obs;
   TimeOfDay? startTime;
   TimeOfDay? endTime;

@@ -1,6 +1,7 @@
 const mysql = require('./repository/healthcare');
 var express = require('express');
 var router = express.Router();
+const path = require('path');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -8,6 +9,38 @@ router.get('/', function (req, res, next) {
 });
 
 module.exports = router;
+
+router.get('/getfile', (req, res) => {
+  try {
+    const filename = req.query.filename; 
+
+    if (!filename) {
+      return res.status(400).json({
+        msg: 'Filename is required',
+      });
+    }
+
+    // Manually set the path to the correct assets folder
+    const filePath = path.join('C:/HMC/HMC/health_system/assets', filename);
+
+    // Print the file path to the console for verification
+    console.log('File path:', filePath);
+
+    // Check if the file exists and send it
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error('File not found:', err);
+        return res.status(404).json({
+          msg: 'File not found',
+        });
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: error.message,
+    });
+  }
+});
 
 router.get('/load', (req, res) => {
   try {

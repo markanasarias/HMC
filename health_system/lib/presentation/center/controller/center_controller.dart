@@ -25,9 +25,9 @@ class CenterController extends GetxController {
   var fullname = ''.obs;
   var staffid = ''.obs;
   var isloading = false.obs;
-  var branchId = ''.obs;
+  var branchId = '1'.obs;
   var branchName = ''.obs;
-  var selectedBranchId = ''.obs;
+  var selectedBranchId = '1'.obs;
   var selectedBranchId1 = Rxn<String>();
   var clickedLocation = Rxn<LatLng>();
   var activelocation = LatLng(0.0, 0.0).obs;

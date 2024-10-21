@@ -39,6 +39,7 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_map: ^7.0.2
   panara_dialogs: ^0.1.5
+  syncfusion_flutter_pdfviewer: ^27.1.53
 
 dev_dependencies:
   flutter_test:

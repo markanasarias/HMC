@@ -8,9 +8,9 @@ enum APIStatus { success, error }
 enum Logtype { clockin, clockout }
 
 class Helper {
-  Future<String> getstaffid() async {
+  Future<String> getpatient_id() async {
     Map<String, dynamic> userinfo = await readJsonToFile('metadata.json');
-    return userinfo['id'].toString();
+    return userinfo['patient_id'].toString();
   }
 
   Future<String> getfullname() async {
