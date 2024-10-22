@@ -11,7 +11,6 @@ import 'dart:io'; // For file operations
 import 'package:path_provider/path_provider.dart'; // To get the temporary directory
 import 'dart:typed_data';
 
-
 class MedicalRecords extends StatelessWidget {
   final MedicalRecordController controller = Get.put(MedicalRecordController());
 
@@ -27,7 +26,7 @@ class MedicalRecords extends StatelessWidget {
             child: Obx(() {
               return ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                itemCount: controller.record.length, // Reactive list length
+                itemCount: controller.record.length,
                 itemBuilder: (context, index) {
                   final record = controller.record[index];
                   return Padding(
@@ -98,7 +97,9 @@ class MedicalRecords extends StatelessWidget {
                                 GestureDetector(
                                   onTap: () {
                                     print(record.file_name);
-                                    Get.to(() => FileRecord(fileName: record.file_name,));
+                                    Get.to(() => FileRecord(
+                                          fileName: record.file_name,
+                                        ));
                                   },
                                   child: Icon(
                                     Icons.visibility,

@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:patient_application/app/Textstyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:patient_application/presentation/medical_record/controllers/medical_record_controller.dart';
 import 'package:patient_application/presentation/profile/controllers/profile_controllers.dart';
 
 class Profile extends StatelessWidget {
   final ProfileControllers controller = Get.put(ProfileControllers());
+  final MedicalRecordController medicalRecordController =
+      Get.put(MedicalRecordController());
+  final ProfileControllers schedulecontroller = Get.put(ProfileControllers());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,23 +17,23 @@ class Profile extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 20,
+              height: 10,
             ),
-            Center(
-                child: ClipOval(
-              child: Image.asset(
-                'assets/default_profile.jpg',
-                width: 150.0,
-                height: 150.0,
-                fit: BoxFit.cover,
-              ),
-            )),
-            IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () {
-                print("Icon button pressed");
-              },
-            ),
+            // Center(
+            //     child: ClipOval(
+            //   child: Image.asset(
+            //     'assets/default_profile.jpg',
+            //     width: 150.0,
+            //     height: 150.0,
+            //     fit: BoxFit.cover,
+            //   ),
+            // )),
+            // IconButton(
+            //   icon: Icon(Icons.edit),
+            //   onPressed: () {
+            //     print("Icon button pressed");
+            //   },
+            // ),
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(

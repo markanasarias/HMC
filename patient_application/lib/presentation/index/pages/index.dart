@@ -16,6 +16,7 @@ class Index extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Patient Portal'),
+        elevation: 0,
       ),
       drawer: Drawer(
         child: ListView(
