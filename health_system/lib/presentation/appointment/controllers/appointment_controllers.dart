@@ -221,11 +221,11 @@ class AppointmentControllers extends GetxController {
   Future<void> addappointment(BuildContext context) async {
     // Validate required fields before proceeding
     if (selecteddoctor.value == null ||
-        staffid.value == null ||
+        
         purpose.text.isEmpty ||
         startdate.value == null ||
-        enddate.value == null ||
-        StatusC.text.isEmpty) {
+        enddate.value == null 
+        ) {
       showErrorToast(context,
           title: 'Missing Fields!',
           text: 'Please fill in all required fields.');
@@ -239,7 +239,7 @@ class AppointmentControllers extends GetxController {
         purpose.text,
         startdate.value,
         enddate.value,
-        StatusC.text,
+        fullname.value
       );
 
       if (response.message == 'success') {
@@ -269,7 +269,8 @@ class AppointmentControllers extends GetxController {
         purpose.text,
         startdate.value,
         enddate.value,
-        fullname.value,
+        StatusC.text,
+       
       );
       if (response.message == 'success') {
         showSuccessToast(context,

@@ -42,7 +42,7 @@ class FileRecord extends StatelessWidget {
         children: [
           Expanded(
             child:SfPdfViewer.network(
-              'http://192.168.1.7:3000/patient/getfile?filename=$fileName')
+              'http://172.20.10.4:3000/patient/getfile?filename=$fileName')
           ),
         ],
       ),

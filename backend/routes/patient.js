@@ -122,6 +122,8 @@ WHERE
   }
 });
 
+
+
 router.post('/update', (req, res) => {
   try {
     let {
@@ -176,14 +178,17 @@ router.post('/savemedicalrecord', (req, res) => {
     let medical_record = req.body.medical_record;
     let file = req.body.file;
     let file_name = req.body.file_name;
-    let createby = req.body.createby; 
+    let createby = req.body.createby;
+    let medicine = req.body.medicine; 
     let status = 'Active';
     let today = new Date();
     let createddate = today.toISOString().split('T')[0];
 
+    console.log('Medicine:', medicine);
+
     let data = [];
     data.push([
-      patient_id, medical_record, file, status, createby, createddate, file_name,
+      patient_id, medical_record, file, status, createby, createddate, file_name, medicine
     ]);
 
     mysql.InsertTable("master_medical_record", data, (err, result) => {
@@ -269,6 +274,62 @@ router.post('/save', (req, res) => {
     res.json({ msg: 'error' });
   }
 });
+
+router.post('/updatebranchinv', (req, res) => {
+  try {
+    // Log the request body to see what is being received
+    console.log(req.body);
+
+    // Parse the 'items' field, assuming it's a string representation of a JSON array
+    let items = req.body.items ? JSON.parse(req.body.items) : [];
+
+    if (!Array.isArray(items)) {
+      console.error('Invalid request: items should be an array');
+      return res.status(400).json({ msg: 'Items should be an array' });
+    }
+
+    let updates = [];
+    
+    items.forEach(item => {
+      const { item_id, branch_id, quantity } = item;
+
+      if (!item_id || !branch_id || !quantity) {
+        console.error('Missing required fields:', item);
+        return res.status(400).json({ msg: 'Missing required fields for an item' });
+      }
+
+      const sqlupdate = `
+        UPDATE master_inventory
+        SET quantity = quantity - ${quantity}
+        WHERE item_id = ${item_id} AND branch_id = ${branch_id};
+      `;
+      updates.push(sqlupdate);
+    });
+
+    updates.forEach((sqlupdate, index) => {
+      mysql.Update(sqlupdate, (err, result) => {
+        if (err) {
+          console.error('Error:', err);
+          return res.status(500).json({ msg: 'Error occurred while updating inventory' });
+        }
+
+        console.log(result);
+        if (index === updates.length - 1) {
+          res.json({ msg: 'success' });
+        }
+      });
+    });
+
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+
+
+
+
 
 
 

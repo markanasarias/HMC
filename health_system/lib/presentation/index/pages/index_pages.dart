@@ -1,3 +1,5 @@
+// index.dart
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
@@ -21,6 +23,7 @@ class Index extends StatelessWidget {
   Widget build(BuildContext context) {
     final IndexController controller = Get.put(IndexController());
     final DashboardController controllers = Get.put(DashboardController());
+
     return Scaffold(
       body: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -32,7 +35,7 @@ class Index extends StatelessWidget {
                   showHamburger: false,
                   hoverColor: Colors.blue[100],
                   selectedHoverColor: Colors.blue[100],
-                  selectedColor: Colors.lightBlue,
+                  //selectedColor: Colors.lightBlue,
                   selectedTitleTextStyle: const TextStyle(color: Colors.white),
                   selectedIconColor: Colors.white,
                   openSideMenuWidth: 220,
@@ -70,31 +73,29 @@ class Index extends StatelessWidget {
                 items: [
                   SideMenuItem(
                     title: 'Dashboard',
-                    onTap: (index, _) {
-                      controller.changePage(index);
+                    onTap: (_, __) {
+                      controller.changePage(PageEnum.dashboard);
                     },
                     icon: const Icon(Icons.home),
                   ),
                   SideMenuItem(
                     title: 'Patients',
-                    onTap: (index, _) {
-                      controller.changePage(index);
+                    onTap: (_, __) {
+                      controller.changePage(PageEnum.patients);
                     },
                     icon: const Icon(Icons.supervisor_account),
                   ),
-                  //if (controllers.usertype.value == 'Admin')
                   SideMenuItem(
                     title: 'Staff',
-                    onTap: (index, _) {
-                      controller.changePage(index);
+                    onTap: (_, __) {
+                      controller.changePage(PageEnum.staff);
                     },
                     icon: const Icon(Icons.person_outline_outlined),
                   ),
-                  //if (controllers.usertype.value == 'Admin')
                   SideMenuItem(
                     title: 'Center',
-                    onTap: (index, _) {
-                      controller.changePage(index);
+                    onTap: (_, __) {
+                      controller.changePage(PageEnum.center);
                     },
                     icon: const Icon(Icons.health_and_safety_outlined),
                   ),
@@ -105,31 +106,31 @@ class Index extends StatelessWidget {
                       if (controllers.usertype.value == 'Admin')
                         SideMenuItem(
                           title: 'Items',
-                          onTap: (index, _) {
-                            controller.changePage(index);
+                          onTap: (_, __) {
+                            controller.changePage(PageEnum.inventory);
                           },
                           icon: const Icon(Icons.medication_outlined),
                         ),
                       SideMenuItem(
                         title: 'Stocks',
-                        onTap: (index, _) {
-                          controller.changePage(index);
+                        onTap: (_, __) {
+                          controller.changePage(PageEnum.stocks);
                         },
                         icon: const Icon(Icons.medication_outlined),
                       ),
-                      //if (controllers.usertype.value == 'Admin')
-                      SideMenuItem(
-                        title: 'Center Request',
-                        onTap: (index, _) {
-                          controller.changePage(index);
-                        },
-                        icon: const Icon(Icons.medication_outlined),
-                      ),
+                      if (controllers.usertype.value == 'Admin')
+                        SideMenuItem(
+                          title: 'Center Request',
+                          onTap: (_, __) {
+                            controller.changePage(PageEnum.centerrequest);
+                          },
+                          icon: const Icon(Icons.medication_outlined),
+                        ),
                       if (controllers.usertype.value == 'Doctor')
                         SideMenuItem(
                           title: 'Request',
-                          onTap: (index, _) {
-                            controller.changePage(index);
+                          onTap: (_, __) {
+                            controller.changePage(PageEnum.Request);
                           },
                           icon: const Icon(Icons.medication_outlined),
                         ),
@@ -137,32 +138,31 @@ class Index extends StatelessWidget {
                   ),
                   SideMenuItem(
                     title: 'Appointment',
-                    onTap: (index, _) {
-                      controller.changePage(index);
+                    onTap: (_, __) {
+                      controller.changePage(PageEnum.appointment);
                     },
                     icon: const Icon(Icons.person_outline_outlined),
                   ),
-                  //if (controllers.usertype.value == 'Admin')
                   SideMenuItem(
                     title: 'Calendar',
-                    onTap: (index, _) {
-                      controller.changePage(index);
+                    onTap: (_, __) {
+                      controller.changePage(PageEnum.calendar);
+
+                      print(controller.sideMenuController.value);
                     },
                     icon: const Icon(Icons.calendar_today_outlined),
                   ),
-                  //if (controllers.usertype.value == 'Admin')
                   SideMenuItem(
                     title: 'Services',
-                    onTap: (index, _) {
-                      controller.changePage(index);
+                    onTap: (_, __) {
+                      controller.changePage(PageEnum.services);
                     },
                     icon: const Icon(Icons.design_services_outlined),
                   ),
-                  //if (controllers.usertype.value == 'Admin')
                   SideMenuItem(
                     title: 'Logs',
-                    onTap: (index, _) {
-                      controller.changePage(index);
+                    onTap: (_, __) {
+                      controller.changePage(PageEnum.logs);
                     },
                     icon: const Icon(Icons.list_alt_outlined),
                   ),
@@ -174,22 +174,7 @@ class Index extends StatelessWidget {
           Expanded(
             child: Obx(() => PageView(
                   controller: controller.pageController.value,
-                  children: [
-                    DashboardPages(),
-                    PatientListPages(),
-                    // DoctorListPages(),
-                    StaffListPages(),
-                    BranchListPages(),
-                    ItemsListPages(),
-                    InvertoryListPages(),
-                    RequestListPages(),
-                    if (controllers.usertype.value == 'Doctor')
-                    RequestStaffListPages(),
-                    AppointmentListPages(),
-                    CalendarListPages(),
-                    ServicesListPages(),
-                    LogsListPages(),
-                  ],
+                  children: controller.pages.values.toList(),
                 )),
           ),
         ],

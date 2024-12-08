@@ -12,6 +12,18 @@ class Helper {
     Map<String, dynamic> userinfo = await readJsonToFile('metadata.json');
     return userinfo['patient_id'].toString();
   }
+    Future<String> fname() async {
+    Map<String, dynamic> userinfo = await readJsonToFile('metadata.json');
+    return userinfo['first_name'].toString();
+  }
+    Future<String> lname() async {
+    Map<String, dynamic> userinfo = await readJsonToFile('metadata.json');
+    return userinfo['last_name'].toString();
+  }
+    Future<String> mname() async {
+    Map<String, dynamic> userinfo = await readJsonToFile('metadata.json');
+    return userinfo['middle_name'].toString();
+  }
 
   Future<String> getfullname() async {
     Map<String, dynamic> userinfo = await readJsonToFile('metadata.json');

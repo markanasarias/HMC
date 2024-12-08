@@ -398,7 +398,6 @@ class StaffController extends GetxController {
             title: 'Success!', text: 'Schedule added successfully.');
         final logsController = Get.put(LogsController());
         await logsController.addlogs(staffid.value, 'Added Doctor Schedule');
-        clearFields();
         getsched(staff_id);
         Navigator.of(context).pop();
       } else {

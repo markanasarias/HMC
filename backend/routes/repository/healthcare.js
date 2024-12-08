@@ -125,7 +125,8 @@ exports.InsertTable = (tablename, data, callback) => {
         status,
         created_by,
         created_date,
-        file_name) VALUES ?`;
+        file_name,
+        medicine) VALUES ?`;
 
    
     this.Insert(sql, data, callback); 

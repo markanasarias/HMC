@@ -64,6 +64,47 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:health_system/data/api/calendar.dart';
+import 'package:health_system/data/api/center.dart';
+import 'package:health_system/data/api/item.dart';
+import 'package:health_system/data/api/request_staff.dart';
+import 'package:health_system/data/model/calendar_model.dart';
+import 'package:health_system/data/model/center_model.dart';
+import 'package:health_system/data/model/items_model.dart';
+import 'package:health_system/data/model/request_staff_model.dart';
+import 'package:health_system/repository/helper.dart';
+import 'package:calendar_view/calendar_view.dart';
+import 'package:intl/intl.dart';
+import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:health_system/data/api/calendar.dart';
+import 'package:health_system/data/api/center.dart';
+import 'package:health_system/data/model/calendar_model.dart';
+import 'package:health_system/data/model/center_model.dart';
+import 'package:health_system/repository/helper.dart';
+import 'package:health_system/widget/error.dart';
+import 'package:health_system/widget/success.dart';
+import 'package:flutter/material.dart';
+import 'package:health_system/app/Textstyles.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:health_system/presentation/center/controller/center_controller.dart';
+import 'package:health_system/presentation/staff/controllers/staff_controller.dart';
+import 'package:health_system/widget/success.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:health_system/presentation/logs/controller/logs_controller.dart';
+import 'package:health_system/data/model/stocks.dart';
+import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:health_system/data/api/calendar.dart';
+import 'package:health_system/data/api/center.dart';
+import 'package:health_system/data/api/item.dart';
+import 'package:health_system/data/api/stocks.dart';
 
 class PatientControllers extends GetxController {
   Rx<File?> selectedFile = Rx<File?>(null);
@@ -79,6 +120,9 @@ class PatientControllers extends GetxController {
   var age = ''.obs;
   var patient_id = ''.obs;
   var staffid = ''.obs;
+  var branch_id = ''.obs;
+  var itemId = ''.obs;
+  var itemQuantity = ''.obs;
   var createby = 'Mark'.obs;
   var selectedGender = 'Male'.obs;
   var selectedcivilstatus = 'Single'.obs;
@@ -118,15 +162,31 @@ class PatientControllers extends GetxController {
   var medicalrecord = <MedicalRecordModel>[].obs;
   var filteredPatients = <PatientModel>[].obs;
   var searchQuery = ''.obs;
+  var addedItems = <InventoryItem>[].obs;
+  var stocks = <StocksModel>[].obs;
 
   @override
   void onInit() async {
     super.onInit();
     fullname.value = await helper.getfullname();
     staffid.value = await helper.getstaffid();
+    branch_id.value = await helper.getbranchid();
+    await getloadstocks();
     await getloadpatient();
     filteredPatients.value = patient;
   }
+
+  void clearFields() {
+  // Clear the TextEditingController value
+  medical_record.clear();
+
+  // Reset the Rx<String?> value
+  selectedFileName.value = null;
+
+  // Clear the observable list
+  addedItems.clear();
+}
+
 
   String _formatDate(String? date) {
     if (date == null || date.isEmpty) return '';
@@ -160,6 +220,19 @@ class PatientControllers extends GetxController {
     } catch (e) {
       return ''; // Return empty string if parsing fails
     }
+  }
+
+  void printItemsAsJson() {
+    var jsonData = addedItems.map((item) => item.toJson()).toList();
+    var result = {"data": jsonData};
+
+    // Print the result in JSON-like format
+    print(result);
+  }
+
+  void addItem(String itemid, String itemName, String quantity) {
+    addedItems.add(
+        InventoryItem(itemid: itemid, itemName: itemName, quantity: quantity));
   }
 
   void updateTab(int index) {
@@ -304,38 +377,73 @@ class PatientControllers extends GetxController {
     }
   }
 
-  Future<void> addmedicalrecord(BuildContext context) async {
-    try {
-      final response = await Patient().addmedicalrecord(
+Future<void> addmedicalrecord(
+    BuildContext context, List<Map<String, dynamic>> updatedItems) async {
+  try {
+    print("Processing Medical Record with Items: $updatedItems");
+
+    updatedItems.forEach((item) {
+      itemId.value = item['item_id'].toString();  
+      itemQuantity.value = item['quantity'].toString();  
+
+      print("Extracted item_id: ${itemId.value}, item_quantity: ${itemQuantity.value}");
+    });
+
+    final response = await Patient().addmedicalrecord(
         patient_id.value,
         medical_record.text,
         selectedFileName.value!,
         createby.value,
-      );
-      if (response.message == 'success') {
-        showSuccessToast(context,
-            title: 'Success!',
-            text: 'Your request has been successfully submitted.');
-        final logsController = Get.put(LogsController());
-        await logsController.addlogs(
-            staffid.value, 'Added Patient Medical Record');
+        jsonEncode(updatedItems));
 
-        if (selectedFile.value != null) {
-          await saveFileToCustomDirectory(
-              selectedFile.value!, selectedFileName.value!);
-        }
+    if (response.message == 'success') {
+      showSuccessToast(context,
+          title: 'Success!',
+          text: 'Your request has been successfully submitted.');
 
-        getloadmedicalrecord();
-        Navigator.of(context).pop();
-      } else {
-        showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
+      final logsController = Get.put(LogsController());
+      await logsController.addlogs(staffid.value, 'Added Patient Medical Record');
+
+      if (selectedFile.value != null) {
+        await saveFileToCustomDirectory(
+            selectedFile.value!, selectedFileName.value!);
       }
-    } catch (e) {
-      print('An error occurred: $e');
-      showErrorToast(context,
-          title: 'Oops!', text: 'There was an issue. Please try again.');
+     await updatebranchinv(context, updatedItems);
+      getloadmedicalrecord();
+      clearFields();
+      Navigator.of(context).pop();
+    } else {
+      showErrorToast(context, title: 'Oops!', text: 'Center Already Exist!');
     }
+  } catch (e) {
+    print('An error occurred: $e');
+    showErrorToast(context,
+        title: 'Oops!', text: 'There was an issue. Please try again.');
   }
+}
+
+
+
+
+Future<void> updatebranchinv(BuildContext context, updatedItems) async {
+  try {
+
+
+    final response = await Patient().updatebranchinv(updatedItems);
+
+    print('Response: ${response.message}');
+    if (response.message == 'success') {
+      // Handle success
+    } else {
+      // Handle failure
+    }
+  } catch (e) {
+    print('An error occurred: $e');
+    showErrorToast(context,
+        title: 'Oops!', text: 'There was an issue. Please try again.');
+  }
+}
+
 
   int calculateAge(DateTime birthDate) {
     final currentDate = DateTime.now();
@@ -677,5 +785,90 @@ class PatientControllers extends GetxController {
   void removeSelectedFile() {
     selectedFile.value = null;
     selectedFileName.value = null;
+  }
+
+  Future<void> getloadstocks() async {
+    print('getloadcenter');
+    stocks.clear();
+    try {
+      final response = await Stocks().getstocks(branch_id.value);
+
+      if (helper.getStatusString(APIStatus.success) == response.message) {
+        final jsondata = json.encode(response.result);
+
+        for (var itemsinfo in json.decode(jsondata)) {
+          // Print raw createddate and expiry_date to debug
+          print('Raw createddate: ${itemsinfo['createddate']}');
+          print('Raw expiry_date: ${itemsinfo['expiry_date']}');
+
+          // Try parsing createddate and expiry_date
+          DateTime createdDate;
+          DateTime expiryDate;
+
+          try {
+            createdDate = DateTime.parse(itemsinfo['createddate'].toString());
+          } catch (e) {
+            print('Error parsing createddate: ${itemsinfo['createddate']}');
+            createdDate = DateTime.now(); // Default value
+          }
+
+          try {
+            expiryDate = DateTime.parse(itemsinfo['expiry_date'].toString());
+          } catch (e) {
+            print('Error parsing expiry_date: ${itemsinfo['expiry_date']}');
+            expiryDate = DateTime.now(); // Default value
+          }
+
+          // Format dates using DateFormat
+          String formattedCreatedDate =
+              DateFormat('dd/MM/yyyy').format(createdDate);
+          String formattedExpiryDate =
+              DateFormat('dd/MM/yyyy').format(expiryDate);
+
+          // Create StocksModel object
+          StocksModel stock = StocksModel(
+            itemsinfo['item_id'].toString(),
+            itemsinfo['item_name'].toString(),
+            itemsinfo['category'].toString(),
+            itemsinfo['quantity'].toString(),
+            formattedCreatedDate,
+            itemsinfo['purchase_date'].toString(),
+            formattedExpiryDate,
+            itemsinfo['createby'].toString(),
+            itemsinfo['branch_id'].toString(),
+            itemsinfo['status'].toString(),
+          );
+
+          stocks.add(stock);
+        }
+        filterPatients();
+      } else {
+        print('Error: ${response.message}');
+      }
+    } catch (e) {
+      print('An error occurred while loading patient data: $e');
+    }
+  }
+}
+
+class InventoryItem {
+  final String itemid;
+  final String itemName;
+  final String quantity;
+
+  InventoryItem(
+      {required this.itemid, required this.itemName, required this.quantity});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'itemid': itemid,
+      'itemName': itemName,
+      'quantity': quantity,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'ItemID: $itemid,  Item: $itemName, Quantity: $quantity';
   }
 }

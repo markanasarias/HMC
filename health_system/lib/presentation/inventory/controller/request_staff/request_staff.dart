@@ -59,6 +59,11 @@ class RequestStaffController extends GetxController {
     await getloadrequeststaff();
   }
 
+    void clearFields() {
+  addedItems.clear();
+}
+
+
   void filterPatients() {
     if (searchQuery.value.isEmpty) {
       filteredrequestsstaff.value = requestsstaff;

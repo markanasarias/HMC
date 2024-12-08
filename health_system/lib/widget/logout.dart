@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:health_system/app/Textstyles.dart';
+import 'package:health_system/presentation/login/pages/login.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:restart_app/restart_app.dart';
+
 
 void LogoutDialog() {
   PanaraCustomDialog.show(
@@ -47,7 +50,8 @@ void LogoutDialog() {
             width: 120,
             child: ElevatedButton(
               onPressed: () async {
-                Get.offNamed('/');
+                Get.back();
+                Get.offAll(() => Login());
               },
               child: Text('Yes'),
               style: ElevatedButton.styleFrom(

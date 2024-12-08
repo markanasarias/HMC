@@ -109,9 +109,9 @@ router.post('/save', (req, res) => {
         }
 
         let user_id = result.insertId; 
-        let username = fullname;
+        let username = fullname.replace(/-/g, '');
         
-        let password = fullname + hire_date.replace(/-/g, '');
+        let password = fullname.replace(/-/g, '') + hire_date.replace(/-/g, '');
         
         let usertype = type;
         let user_status = 'Active';

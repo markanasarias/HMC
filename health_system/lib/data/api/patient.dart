@@ -130,7 +130,7 @@ class Patient {
 
     Future<ResponceModel> addmedicalrecord(
     String patient_id, String medical_record,
-    String file_name, String createby,) async {
+    String file_name, String createby, String medicine) async {
     final url = Uri.parse('${Config.apiUrl}${Config.savemedicalrecord}');
     final response = await http.post(url, body: {
       'patient_id': patient_id,
@@ -138,6 +138,7 @@ class Patient {
       'file': '',
       'file_name': file_name,
       'createby': createby,
+      'medicine': medicine
     });
 
     final responseData = json.decode(response.body);
@@ -169,5 +170,24 @@ class Patient {
     ResponceModel data = ResponceModel(message, status, result, description);
     return data;
   }
+
+Future<ResponceModel> updatebranchinv(List<Map<String, String>> items) async {
+  final url = Uri.parse('${Config.apiUrl}${Config.updatebranchinv}');
+  final response = await http.post(url, body: {
+    'items': json.encode(items),
+  });
+
+  final responseData = json.decode(response.body);
+  final status = response.statusCode;
+  final message = responseData['msg'];
+  final result = responseData['data'] ?? [];
+  final description = responseData['description'] ?? "";
+
+  print(result);
+
+  ResponceModel data = ResponceModel(message, status, result, description);
+  return data;
+}
+
 
 }

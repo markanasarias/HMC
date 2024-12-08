@@ -23,7 +23,6 @@ class Home extends StatelessWidget {
   final HomeControllers controller = Get.put(HomeControllers());
   final MedicalRecordController medicalRecordController =
       Get.put(MedicalRecordController());
-  final ScheduleControllers schedulecontroller = Get.put(ScheduleControllers());
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +82,11 @@ class Home extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Hey Good Day!', style: TextStyles.Text1),
-                    Text('Mark Anasarias', style: TextStyles.Text3),
+                   Obx(() => Text(
+    '${controller.fname.value} ${controller.mname.value} ${controller.lname.value}', 
+    style: TextStyles.Text3,
+))
+
                   ],
                 ),
               ),
@@ -177,10 +180,10 @@ class Home extends StatelessWidget {
               child: Text('Doctor Today', style: TextStyles.AppBarHeader)),
           Expanded(
             child: Obx(() {
-              final displayCount = schedulecontroller.sched.length < 2
-                  ? schedulecontroller.sched.length
+              final displayCount = controller.sched.length < 2
+                  ? controller.sched.length
                   : 2;
-              if (schedulecontroller.sched.isEmpty) {
+              if (controller.sched.isEmpty) {
                 return Center(
                   child: Text(
                     'No records available',
@@ -192,9 +195,9 @@ class Home extends StatelessWidget {
               return ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 scrollDirection: Axis.horizontal,
-                itemCount: schedulecontroller.sched.length,
+                itemCount: controller.sched.length,
                 itemBuilder: (context, index) {
-                  final sched = schedulecontroller.sched[index];
+                  final sched = controller.sched[index];
                   return Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: Container(

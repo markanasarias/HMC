@@ -134,10 +134,7 @@ class Login extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Index()),
-                          );
+                          // R
                         },
                         child: const Text(
                           'Forgot Password?',

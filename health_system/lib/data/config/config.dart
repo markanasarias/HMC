@@ -49,4 +49,5 @@ class Config {
   static const String staffquestinventory = 'inventory/savedata';
   static const String approvedrequestinventory = 'request_inventory/updatedata';
   static const String reject = 'request_inventory/reject';
+  static const String updatebranchinv = 'patient/updatebranchinv';
 }

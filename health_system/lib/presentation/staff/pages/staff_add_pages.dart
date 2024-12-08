@@ -412,7 +412,7 @@ void AddStaff(BuildContext context) {
                               child: Row(
                                 children: [
                                   SizedBox(
-                                    width: 130,
+                                    width: 110,
                                     height: 35,
                                     child: CupertinoTextField(
                                       controller:
@@ -429,7 +429,7 @@ void AddStaff(BuildContext context) {
                                   ),
                                   SizedBox(width: 10),
                                   SizedBox(
-                                    width: 220,
+                                    width: 240,
                                     height: 35,
                                     child: Container(
                                       decoration: BoxDecoration(
