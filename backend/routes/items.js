@@ -58,6 +58,7 @@ router.get("/load", (req, res) => {
       let item_name = req.body.item_name;
       let item_type = req.body.item_type;
       let created_by = req.body.created_by;
+      let item_limit = req.body.item_limit;
       let status = 'Active';
       let today = new Date();
       let createddate = today.toISOString().split('T')[0];
@@ -74,7 +75,7 @@ router.get("/load", (req, res) => {
         }
   
         let data = [[
-          item_name, item_type, created_by, createddate, status
+          item_name, item_type, item_limit,  created_by, createddate, status
         ]];
         mysql.InsertTable("master_items", data, (err, result) => {
           if (err) {

@@ -831,6 +831,7 @@ Future<void> updatebranchinv(BuildContext context, updatedItems) async {
             itemsinfo['item_name'].toString(),
             itemsinfo['category'].toString(),
             itemsinfo['quantity'].toString(),
+             itemsinfo['stock_limit'].toString(),
             formattedCreatedDate,
             itemsinfo['purchase_date'].toString(),
             formattedExpiryDate,

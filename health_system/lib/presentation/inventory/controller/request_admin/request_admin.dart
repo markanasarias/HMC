@@ -67,11 +67,12 @@ class RequestAdmin extends GetxController {
     super.onInit();
     branch_id.value = await helper.getbranchid();
     staffid.value = await helper.getstaffid();
-    await getloadrequestadmin();
+    requestsadmin.clear();
+    //await getloadrequestadmin();
   }
 
   void reload() async {
-    viewrequestsadmin.clear();
+    requestsadmin.clear();
     await getloadrequestadmin();
   }
 
@@ -97,7 +98,7 @@ class RequestAdmin extends GetxController {
 
   Future<void> getloadrequestadmin() async {
     print('getloadcenter');
-    requestsadmin.clear();
+    filteredrequestsadmin.clear();
     try {
       final response = await RequestAdminInventory().getrequestadmininventory();
 
@@ -137,7 +138,7 @@ class RequestAdmin extends GetxController {
 
   Future<void> getviewrequest() async {
     print('getloadcenter');
-    viewrequestsadmin.clear();
+    filteredrequestsadmin.clear();
     try {
       final response =
           await RequestAdminInventory().getviewrequest(requestbranch_id.value);

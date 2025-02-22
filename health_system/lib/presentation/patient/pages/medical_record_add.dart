@@ -304,27 +304,47 @@ void AddMedicalRecord(BuildContext context) {
                               }),
                             ),
                             SizedBox(width: 30),
-                            SizedBox(
-                              width: 125,
-                              height: 35,
-                              child: CupertinoTextField(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 7, horizontal: 10),
-                                style: TextStyles.Text,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFEFF1F6),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                ],
-                                onChanged: (value) {
-                                  quantity = value;
-                                },
-                              ),
-                            ),
+                         SizedBox(
+  width: 125,
+  height: 35,
+  child: CupertinoTextField(
+    padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+    style: TextStyles.Text,
+    decoration: BoxDecoration(
+      color: Color(0xFFEFF1F6),
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    textAlign: TextAlign.center,
+    keyboardType: TextInputType.number,
+    inputFormatters: [
+      FilteringTextInputFormatter.digitsOnly,
+    ],
+    onChanged: (value) {
+      if (int.tryParse(value) != null && int.parse(value) > 1000) {
+        showCupertinoDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text('Limit Exceeded'),
+              content: Text('The maximum value allowed is 1000.'),
+              actions: [
+                CupertinoDialogAction(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        quantity = value;
+      }
+    },
+  ),
+),
+
                             SizedBox(width: 5),
                             GestureDetector(
                               onTap: () {
@@ -564,8 +584,8 @@ void AddMedicalRecord(BuildContext context) {
 
                                       print("Submitted Items: $updatedItems");
                                        controllers.clearFields();
-                                      // controller.addmedicalrecord(
-                                      //     context, updatedItems);
+                                      controller.addmedicalrecord(
+                                          context, updatedItems);
                                     },
                                   ),
                                 ],

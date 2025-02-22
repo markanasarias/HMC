@@ -304,7 +304,7 @@ class InvertoryListPages extends StatelessWidget {
                                                   Colors.grey.withOpacity(0.01),
                                               child: Center(
                                                 child: Text(
-                                                  stocks.quantity,
+                                                  '${stocks.quantity}/${stocks.stock_limit} box',
                                                   style: TextStyles.AppBartext,
                                                 ),
                                               ),

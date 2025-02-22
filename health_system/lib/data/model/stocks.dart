@@ -3,6 +3,7 @@ class StocksModel {
   final String item_name;
   final String category;
   final String quantity;
+  final String stock_limit;
   final String purchase_date;
   final String expiry_date;
   final String createby;
@@ -14,6 +15,7 @@ class StocksModel {
       this.item_name,
       this.category,
       this.quantity,
+      this.stock_limit,
       this.purchase_date,
       this.expiry_date,
       this.createby,
@@ -26,6 +28,7 @@ class StocksModel {
       json['item_name'],
       json['category'],
       json['quantity'],
+      json['stock_limit'],
       json['purchase_date'],
       json['expiry_date'],
       json['createby'],

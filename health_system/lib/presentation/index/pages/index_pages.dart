@@ -35,9 +35,9 @@ class Index extends StatelessWidget {
                   showHamburger: false,
                   hoverColor: Colors.blue[100],
                   selectedHoverColor: Colors.blue[100],
-                  //selectedColor: Colors.lightBlue,
-                  selectedTitleTextStyle: const TextStyle(color: Colors.white),
-                  selectedIconColor: Colors.white,
+                  selectedColor: Colors.white,
+                  selectedTitleTextStyle: const TextStyle(color: Colors.black54),
+                  selectedIconColor: Colors.black54,
                   openSideMenuWidth: 220,
                   compactSideMenuWidth: 80,
                 ),
@@ -75,6 +75,7 @@ class Index extends StatelessWidget {
                     title: 'Dashboard',
                     onTap: (_, __) {
                       controller.changePage(PageEnum.dashboard);
+                      print(controllers.usertype.value);
                     },
                     icon: const Icon(Icons.home),
                   ),

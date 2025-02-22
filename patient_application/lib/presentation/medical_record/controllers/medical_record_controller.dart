@@ -34,7 +34,7 @@ class MedicalRecordController extends GetxController {
     Future<void> fetchFile(String fileName) async {
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.1.7:3000/patient/getfile?filename=$fileName'),
+        Uri.parse('http://192.168.43.57:3000/patient/getfile?filename=$fileName'),
       );
 
       if (response.statusCode == 200) {

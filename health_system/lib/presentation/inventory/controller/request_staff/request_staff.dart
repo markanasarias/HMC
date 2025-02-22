@@ -140,6 +140,7 @@ class RequestStaffController extends GetxController {
   }
 
   Future<void> addrequest(BuildContext context) async {
+    requestsstaff.clear();
     // Validate required fields
     if (addedItems.isEmpty ||
         requestdate.value == null ||

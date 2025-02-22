@@ -261,8 +261,8 @@ class RequestStaffListPages extends StatelessWidget {
                                                   Colors.grey.withOpacity(0.01),
                                               child: Center(
                                                 child: Text(
-                                                  requestsstaff
-                                                      .requested_quantity,
+                                                  '${requestsstaff
+                                                      .requested_quantity} box',
                                                   style: TextStyles.AppBartext,
                                                 ),
                                               ),

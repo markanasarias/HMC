@@ -136,6 +136,7 @@ exports.InsertTable = (tablename, data, callback) => {
     let sql = `INSERT INTO master_items(
         item_name,
         item_type,
+        item_limit,
         created_by,
         created_date,
         status) VALUES ?`;

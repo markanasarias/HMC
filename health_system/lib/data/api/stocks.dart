@@ -18,7 +18,7 @@ class Stocks {
     final result = responseData['data'] ?? [];
     final description = responseData['description'] ?? "";
 
-    print(result);
+    print('resultsss: $result');
 
     ResponceModel data = ResponceModel(message, status, result, description);
     return data;

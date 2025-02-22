@@ -10,38 +10,42 @@ router.get('/', function (req, res, next) {
 module.exports = router;
 
 router.post("/load", (req, res) => {
-    try {
-      let {branch_id} =  req.body;
-      let sql = `SELECT 
-    mi.*,
-    mi2.item_name
-FROM 
-    master_inventory mi
-JOIN 
-    master_items mi2
-ON 
-    mi.item_id = mi2.item_id
-WHERE 
-    mi.branch_id = '${branch_id}';
-`;
+console.log('ito yun');
+  try {
+      let { branch_id } = req.body;
+      let sql = `
+      SELECT 
+          mi.*,
+          mi2.item_name,
+          mi2.item_limit
+      FROM 
+          master_inventory mi
+      JOIN 
+          master_items mi2
+      ON 
+          mi.item_id = mi2.item_id
+      WHERE 
+          mi.branch_id = '${branch_id}';
+      `;
 
       mysql.SelectResult(sql, (err, result) => {
-        if (err) {
-          return res.json({
-            msg: err,
+          if (err) {
+              return res.json({
+                  msg: err,
+              });
+          }
+          res.json({
+              msg: "success",
+              data: result,
           });
-        }
-        res.json({
-          msg: "success",
-          data: result,
-        });
       });
-    } catch (error) {
+  } catch (error) {
       res.json({
-        msg: error,
+          msg: error,
       });
-    }
-  });
+  }
+});
+
 
   router.post("/loadwithout", (req, res) => {
     try {
@@ -133,7 +137,7 @@ WHERE
 
         mysql.InsertTable("master_requested_inventory", data, (err, result) => {
             if (err) {
-                console.error('Error: ', err);
+                console.error('Errorssssss: ', err);
                 return res.json({ msg: 'error' });
             }
 
